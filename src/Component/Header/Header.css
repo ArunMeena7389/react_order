@@ -1,0 +1,33 @@
+
+
+/* Media Queries for Responsiveness */
+/* @media (max-width: 768px) {
+    .sidebar {
+      width: 100%;
+    }
+  } */
+
+  .sidebar {
+    position: absolute;
+    height:100%;
+    width: 16%;
+    text-align: center;
+}
+
+.nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.nav li {
+    margin: 10px 0;
+}
+
+.nav a {
+    text-decoration: none;
+    color: #000; /* Change to your desired link color */
+}
+
+.nav a:hover {
+    text-decoration: underline;
+}

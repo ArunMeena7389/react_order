@@ -1,25 +1,21 @@
-import logo from './logo.svg';
+import React from 'react';
+import Navbar from './Component/Navbar/Navbar';
+import Header from './Component/Header/Header';
 import './App.css';
+import { Provider } from "react-redux";
+import store from "./Redux/store";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => {
+    return (
+        <Provider store={store}>
+            <Navbar />
+            <div style={{
+                display:'inline'
+            }}>
+            <Header />
+            </div>
+        </Provider>
+    );
+};
 
 export default App;
