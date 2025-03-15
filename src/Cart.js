@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addItem, deleteItem } from "./Redux/Action";
+import { addItem, deleteItem, getmenueDataAction } from "./Redux/Action";
 
 
 const Cart = () => {
@@ -13,9 +13,15 @@ const Cart = () => {
       <button className="green" onClick={()=>{
         dispatch(addItem())
       }}>+</button>
-      <button className="red" onClick={()=>{
+      <button className="green" onClick={()=>{
         dispatch(deleteItem())
       }}>-</button>
+      <br/>
+      <br/>
+      <button className="red" onClick={()=>{
+        dispatch(getmenueDataAction())
+      }}>Api Call</button>
+
     </div>
   );
 };

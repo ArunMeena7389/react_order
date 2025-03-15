@@ -11,23 +11,15 @@ const Header = () => {
             {/* Sidebar */}
             <Grid item xs={12} sm={3} md={2} style={{
             }}>
-                <Paper elevation={3} className="sidebar">
-                    <nav className="nav">
-                        <ul>
-                            <li>
-                                <Link to="/">Item</Link>
-                            </li>
-                            <li>
-                                <Link to="/order">Order</Link>
-                            </li>
-                            <li>
-                                <Link to="/setting">Setting</Link>
-                            </li>
-                            <li>
-                                <Cart />
-                            </li>
-                        </ul>
-                    </nav>
+                <Paper elevation={3} style={{colorInterpolation:"red"}}>
+                    <div class="sidebar">
+                    <ul>
+                        <li><Link href="#">Home</Link></li>
+                        <li><Link href="#">About</Link></li>
+                        <li><Link href="#">Services</Link></li>
+                        <li><Link href="#">Contact</Link></li>
+                    </ul>
+                </div>
                 </Paper>
             </Grid>
 
