@@ -4,15 +4,16 @@ import Header from './Component/Header/Header';
 import './App.css';
 import { Provider } from "react-redux";
 import store from "./Redux/store";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = () => {
     return (
         <Provider store={store}>
             <Navbar />
             <div style={{
-                display:'inline'
+                display: 'inline'
             }}>
-            <Header />
+                <Header />
             </div>
         </Provider>
     );
