@@ -15,10 +15,17 @@ const deleteItem = () => {
   };
 };
 
-const getmenueDataAction = (data) => {
+const getmenueDataAction = (datas) => {
+  console.log(datas,'datasdatas');
+  
   return async (dispatch) => {
     try {
-      const response = await axios.get(Config.url + '/menu');
+      const response = await axios.post(Config.url + '/menu',datas, {
+        headers: {
+          "Content-Type": "application/json",
+          // Authorization: `Bearer ${token}`, // Uncomment if needed
+        },
+      });
       const data = response;
       dispatch({ type: typeData.GET_MENUE_DATA_SUCSESS, payload: data });
     } catch (error) {
@@ -31,8 +38,6 @@ const getmenueDataAction = (data) => {
 const addMenuDataAction = (payload) => {
   return async (dispatch) => {
     try {
-      console.log(payload, "payload");
-
       // Create FormData object
       const formData = new FormData();
 
@@ -84,4 +89,36 @@ const deleteMenuDataAction = (id) => {
   };
 };
 
-export { addItem, deleteItem, getmenueDataAction, addMenuDataAction, deleteMenuDataAction };
+const updateMenuDataAction = (id, payload) => {
+  return async (dispatch) => {
+    try {
+      const formData = new FormData();
+
+      // Append fields dynamically to formData
+      Object.keys(payload).forEach((key) => {
+        formData.append(key, payload[key]);
+      });
+
+      const response = await axios.put(`${Config.url}/menu/${id}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          // Authorization: `Bearer ${token}` // Add this if needed
+        },
+      });
+
+      dispatch({
+        type: typeData.UPDATE_MENU_DATA_SUCCESS,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.error("Error updating menu data:", error);
+
+      dispatch({
+        type: typeData.UPDATE_MENU_DATA_ERROR,
+        payload: error.response?.data || error.message,
+      });
+    }
+  };
+};
+
+export { addItem, deleteItem, getmenueDataAction, addMenuDataAction, deleteMenuDataAction, updateMenuDataAction };

@@ -1,0 +1,43 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+.sidebar {
+    width: 300px;
+    height: 100%;
+    background: #ffffff;
+    padding-top: 30px;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+
+.sidebar div p {
+    padding: 10px;
+    margin-left: 10px;
+    border-bottom: 1px solid #0000;
+}
+.sidebar div a{
+    color: #000000;
+    text-decoration: none;
+    font-size: 25px;
+
+}
+
+.sidebar div .deactive p:hover{
+    cursor: pointer;
+    background: rgb(107, 184, 107);
+    border-radius: 20px 0px 0px 0px;
+    color: #ffffff;
+}
+
+.nav-link.active p {
+    cursor: pointer;
+    background: green;
+    border-radius: 20px 0px 0px 0px;
+    color: #ffffff;
+  }

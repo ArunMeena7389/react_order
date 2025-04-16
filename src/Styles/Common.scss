@@ -1,0 +1,18 @@
+$primary-color: #b13c3c;
+.MuiButton-containedSuccess {
+    background-color: #2e7d32 !important;
+  }
+  
+  .MuiButton-containedSuccess:hover {
+    background-color: #1b5e20 !important;
+  }
+.error-color{
+    color: $primary-color;
+}
+.image-error-border{
+    border: 2px solid $primary-color;
+}
+
+.btn-save{
+    color: #b13c3c;
+}

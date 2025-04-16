@@ -8,6 +8,21 @@ const initialStateMenue = {
   data: []
 }
 
+const initialLoaderState = {
+  loading:false
+}
+export const loaderReducer = (state = initialLoaderState, action) => {
+  switch (action.type) {
+    case 'SHOW_LOADER':
+      return { ...state, loading: true };
+    case 'HIDE_LOADER':
+      return { ...state, loading: false };
+    default:
+      return state;
+  }
+};
+
+
 export const cartReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_ITEM:
@@ -26,9 +41,7 @@ export const cartReducer = (state = initialState, action) => {
   }
 };
 
-export const menueDataReducer = (state = initialStateMenue, action) => {
-  console.log(action);
-  
+export const menueDataReducer = (state = initialStateMenue, action) => {  
   switch (action.type) {
     case typeData.GET_MENUE_DATA_SUCSESS:
       return {

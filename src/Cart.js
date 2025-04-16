@@ -7,7 +7,6 @@ const Cart = () => {
     const state = useSelector((state) => state);
     const dispatch = useDispatch();
 
-    console.log("store", state);
   return (
     <div className="cart">
       <button className="green" onClick={()=>{
