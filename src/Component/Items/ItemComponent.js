@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deleteMenuDataAction, getmenueDataAction } from '../../Redux/Action';
 import Config from '../../Config';
 import PopupComponent from '../../Common/PopupComponent';
-import { setLoading } from '../../Common/setLoading';
 import DailogComponent from '../../Common/DailogComponent';
 import { showCustomLoader } from '../../Common/showCustomLoader';
 
@@ -22,7 +21,9 @@ const ItemComponent = () => {
   const dataItem = selectorData.data || [];
 
   useEffect(() => {
+    showCustomLoader(true);
     dispatch(getmenueDataAction(payloadData));
+    showCustomLoader(false);
     // eslint-disable-next-line
   }, []);
   
@@ -49,7 +50,6 @@ const ItemComponent = () => {
   }
 
   const handleAction = () => {
-    setLoading(true);
     setEditOpen(!editOpen)
   };
 
@@ -59,7 +59,7 @@ const ItemComponent = () => {
 
   return (
     <Fragment>
-      <div className="m-2" style={{ overflowY: 'auto' }}>
+      <div className="m-2">
         {dataItem?.map((item, index) => (
           <div className="card m-2 bg-dark position-relative" key={index}>
             <div className="card-img-container position-relative overflow-hidden">

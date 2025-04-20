@@ -26,7 +26,7 @@ const Sidebar = () => {
                 <p>Setting</p>
               </NavLink>
 
-              <NavLink
+              {/* <NavLink
                 to="/service"
                 className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link deactive'}
               >
@@ -38,7 +38,7 @@ const Sidebar = () => {
                 className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link deactive'}
               >
                 <p>Contact Us</p>
-              </NavLink>
+              </NavLink> */}
             </div>
           </div>
         </Paper>

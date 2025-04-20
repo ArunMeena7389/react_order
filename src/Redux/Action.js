@@ -1,20 +1,8 @@
 import Config from "../Config";
-import { ADD_ITEM, DELETE_ITEM, typeData } from "./type";
+import { typeData } from "./type";
 import axios from 'axios';
 
-
-const addItem = () => {
-  return {
-    type: ADD_ITEM,
-  };
-};
-
-const deleteItem = () => {
-  return {
-    type: DELETE_ITEM,
-  };
-};
-
+const token = localStorage.getItem('token');
 const getmenueDataAction = (datas) => {
   console.log(datas,'datasdatas');
   
@@ -23,7 +11,7 @@ const getmenueDataAction = (datas) => {
       const response = await axios.post(Config.url + '/menu',datas, {
         headers: {
           "Content-Type": "application/json",
-          // Authorization: `Bearer ${token}`, // Uncomment if needed
+          Authorization: `Bearer ${token}`,
         },
       });
       const data = response;
@@ -49,7 +37,7 @@ const addMenuDataAction = (payload) => {
       const response = await axios.post(`${Config.url}/menu/create`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          // Authorization: `Bearer ${token}`, // Uncomment if needed
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -71,15 +59,17 @@ const addMenuDataAction = (payload) => {
 const deleteMenuDataAction = (id) => {
   return async (dispatch) => {
     try {
-      await axios.delete(`${Config.url}/menu/${id}`);
+      await axios.delete(`${Config.url}/menu/${id}`,{
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        }});
 
       dispatch({
         type: typeData.DELETE_MENU_DATA_SUCCESS,
         payload: id
       });
 
-      // Optionally, fetch updated data after deletion
-      // dispatch(getMenuDataAction());
     } catch (error) {
       dispatch({
         type: typeData.DELETE_MENU_DATA_ERROR,
@@ -102,7 +92,7 @@ const updateMenuDataAction = (id, payload) => {
       const response = await axios.put(`${Config.url}/menu/${id}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          // Authorization: `Bearer ${token}` // Add this if needed
+          Authorization: `Bearer ${token}`
         },
       });
 
@@ -121,4 +111,4 @@ const updateMenuDataAction = (id, payload) => {
   };
 };
 
-export { addItem, deleteItem, getmenueDataAction, addMenuDataAction, deleteMenuDataAction, updateMenuDataAction };
+export { getmenueDataAction, addMenuDataAction, deleteMenuDataAction, updateMenuDataAction };

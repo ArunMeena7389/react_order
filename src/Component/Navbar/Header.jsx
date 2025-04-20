@@ -3,6 +3,7 @@ import './Header.scss'; // Import the CSS for styling
 import { Button } from '@material-ui/core';
 import DailogComponent from '../../Common/DailogComponent';
 import { Autocomplete, TextField } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const tasteDropdownData = [
     { title: 'Sweet'},
@@ -11,6 +12,7 @@ const tasteDropdownData = [
 ];
 const Header = () => {
     const [open, setOpen] = React.useState(false);
+    const navigate = useNavigate();
 
     const handleClickToOpen = () => {
         setOpen(true);
@@ -71,7 +73,12 @@ const Header = () => {
                     sx={{ width: '500px' }}
                 />
                 </div>
-            <button className="logout-button">
+            <button className="logout-button" onClick={()=>{
+                localStorage.removeItem('token')
+                navigate("/sign-in")
+
+            }}
+                >
                 <img src={"https://images.ctfassets.net/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg?w=1200&h=992&fl=progressive&q=70&fm=jpg"} alt="Profile" className="profile-logo" />
                 Logout
             </button>
