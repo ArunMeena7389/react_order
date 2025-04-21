@@ -30,11 +30,10 @@ const Login = () => {
     const handleSubmit = async(e) => {
         showCustomLoader(true);
         e.preventDefault();
-        console.log("Submitted Data: ", formData);
         await dispatch(LoginAction(formData,(data)=>{
             setTimeout(() => {
                 navigate("/");
-            }, 1000);
+            }, 500);
         },
         (err)=>{
 
@@ -53,7 +52,7 @@ const Login = () => {
             <Card sx={{ width: 400, boxShadow: 3 }}>
                 <CardContent>
                     <Typography variant="h5" textAlign="center" mb={2}>
-                        Log In
+                        Sign In
                     </Typography>
                     <form onSubmit={handleSubmit}>
                         <Grid container spacing={2}>

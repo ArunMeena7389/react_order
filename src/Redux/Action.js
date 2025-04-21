@@ -5,11 +5,12 @@ import axios from 'axios';
 const token = localStorage.getItem('token');
 const getmenueDataAction = (datas) => {    
   return async (dispatch) => {
+    const token_st = localStorage.getItem('token');
     try {
       const response = await axios.post(Config.url + '/menu',datas, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token_st}`,
         },
       });
       const data = response;
