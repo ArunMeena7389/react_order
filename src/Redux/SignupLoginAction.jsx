@@ -47,8 +47,8 @@ const LoginAction = (datas,onSucces,onError) => {
             "Content-Type": "application/json",
           },
         });
-        const data = response;          
-        await localStorage.setItem('token', data?.data?.token);
+        const data = response;             
+        localStorage.setItem('token', data?.data?.token);
         onSucces(data);  
         dispatch({ type: typeData.SUBMIT_LOGIN_ACCOUNT, payload: data });
       } catch (error) {

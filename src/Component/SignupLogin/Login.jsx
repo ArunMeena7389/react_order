@@ -32,7 +32,9 @@ const Login = () => {
         e.preventDefault();
         console.log("Submitted Data: ", formData);
         await dispatch(LoginAction(formData,(data)=>{
-            navigate("/")
+            setTimeout(() => {
+                navigate("/");
+            }, 1000);
         },
         (err)=>{
 
@@ -51,7 +53,7 @@ const Login = () => {
             <Card sx={{ width: 400, boxShadow: 3 }}>
                 <CardContent>
                     <Typography variant="h5" textAlign="center" mb={2}>
-                        Sign In..
+                        Log In
                     </Typography>
                     <form onSubmit={handleSubmit}>
                         <Grid container spacing={2}>

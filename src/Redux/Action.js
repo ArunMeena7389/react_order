@@ -3,9 +3,7 @@ import { typeData } from "./type";
 import axios from 'axios';
 
 const token = localStorage.getItem('token');
-const getmenueDataAction = (datas) => {
-  console.log(datas,'datasdatas');
-  
+const getmenueDataAction = (datas) => {    
   return async (dispatch) => {
     try {
       const response = await axios.post(Config.url + '/menu',datas, {
