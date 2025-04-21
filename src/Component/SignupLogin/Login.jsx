@@ -51,7 +51,7 @@ const Login = () => {
             <Card sx={{ width: 400, boxShadow: 3 }}>
                 <CardContent>
                     <Typography variant="h5" textAlign="center" mb={2}>
-                        Sign In
+                        Sign In..
                     </Typography>
                     <form onSubmit={handleSubmit}>
                         <Grid container spacing={2}>

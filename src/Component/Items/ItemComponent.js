@@ -20,10 +20,13 @@ const ItemComponent = () => {
   const selectorData = useSelector((state) => state.user.data);
   const dataItem = selectorData.data || [];
 
-  useEffect(() => {
+  const getmenueData = async()=>{
     showCustomLoader(true);
-    dispatch(getmenueDataAction(payloadData));
+    await dispatch(getmenueDataAction(payloadData));
     showCustomLoader(false);
+  }
+  useEffect(() => {
+   getmenueData()
     // eslint-disable-next-line
   }, []);
   
