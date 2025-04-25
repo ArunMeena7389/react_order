@@ -5,7 +5,7 @@ import axios from 'axios';
 const token = localStorage.getItem('token');
 const selectTasteAction = (data)=>{
   return async (dispatch) => {
-  dispatch({ type: typeData.SET_TASTE_DATA_SUCSESS, payload: {data:data} });
+  dispatch({ type: typeData.SET_TASTE_DATA_SUCSESS, payload: data });
   }
 }
 const getmenueDataAction = (datas) => {  

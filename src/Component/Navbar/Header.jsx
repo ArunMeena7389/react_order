@@ -14,10 +14,10 @@ const tasteDropdownData = [
 ];
 const Header = () => {
     const [open, setOpen] = React.useState(false);
-    const selectorDataTaste = useSelector((state) => state.taste.data);
-    console.log(selectorDataTaste,'22222');
-    
-    const [selectedData, setSelectedData] = useState(selectorDataTaste.data);
+    const selectorDataTaste = useSelector((state) => state.taste.data);  
+    console.log(selectorDataTaste,'222222');
+      
+    const [selectedData, setSelectedData] = useState(selectorDataTaste);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     
@@ -27,7 +27,9 @@ const Header = () => {
     const handleToClose = () => {
         setOpen(false);
     };
-
+useEffect(()=>{
+    // setSelectedData(selectorDataTaste)
+},[]);
     // dispatch(selectTasteAction("this the taste reducer"))
     return (
         <nav className="header">
