@@ -8,15 +8,15 @@ import { getmenueDataAction, selectTasteAction } from '../../Redux/Action';
 import { useDispatch, useSelector } from 'react-redux';
 
 let initialPayload = {
-    "fields": ["name", "price", "image_url","taste","description"],
+    "fields": ["name", "price", "image_url", "taste", "description"],
     "filter": {
     }
-  }
+}
 
 const tasteDropdownData = [
-    {id:"1", label: 'Sweet',title: 'Sweet' },
-    { id:"2", label: 'Spicy',title: 'Spicy', },
-    { id:"3",label: 'Sour',title: 'Sour' },
+    { id: "1", label: 'Sweet', title: 'Sweet' },
+    { id: "2", label: 'Spicy', title: 'Spicy', },
+    { id: "3", label: 'Sour', title: 'Sour' },
 ];
 const Header = () => {
     const [open, setOpen] = React.useState(false);
@@ -24,7 +24,7 @@ const Header = () => {
     const [selectedData, setSelectedData] = useState(selectorDataTaste);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    
+
     const handleClickToOpen = () => {
         setOpen(true);
     };
@@ -34,11 +34,11 @@ const Header = () => {
 
     useEffect(() => {
         const matched = tasteDropdownData?.filter(option =>
-          selectorDataTaste.some(selected => selected.id === option.id)
+            selectorDataTaste.some(selected => selected.id === option.id)
         );
         setSelectedData(matched);
         // eslint-disable-next-line
-      }, [selectorDataTaste.data, tasteDropdownData]);
+    }, [selectorDataTaste.data, tasteDropdownData]);
 
     return (
         <nav className="header">
@@ -91,15 +91,15 @@ const Header = () => {
                         sx={{ width: '500px' }}
 
                         onChange={(event, newValue) => {
-                            if(newValue?.length){
-                                 initialPayload.filter.taste = newValue.map(dt=>{return dt?.title?.toLowerCase()});
-                            }else{
+                            if (newValue?.length) {
+                                initialPayload.filter.taste = newValue.map(dt => { return dt?.title?.toLowerCase() });
+                            } else {
                                 initialPayload.filter = {}
                             }
                             dispatch(getmenueDataAction(initialPayload));
                             setSelectedData(newValue);
                             dispatch(selectTasteAction(newValue));
-                            
+
                         }}
                     />
                 </div>

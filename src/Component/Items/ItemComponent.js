@@ -7,7 +7,7 @@ import DailogComponent from '../../Common/DailogComponent';
 import { showCustomLoader } from '../../Common/showCustomLoader';
 
 let initialPayload = {
-  "fields": ["name", "price", "image_url","taste","description"],
+  "fields": ["name", "price", "image_url", "taste", "description"],
   "filter": {
   }
 }
@@ -18,20 +18,20 @@ const ItemComponent = () => {
   const [editOpen, setEditOpen] = useState(false);
 
   const selectorData = useSelector((state) => state.user.data);
-      const selectorDataTaste = useSelector((state) => state.taste.data);
+  const selectorDataTaste = useSelector((state) => state.taste.data);
   const dataItem = selectorData.data || [];
 
-  const getmenueData = async()=>{
+  const getmenueData = async () => {
     showCustomLoader(true);
-    if(selectorDataTaste?.length) initialPayload.filter.taste = selectorDataTaste.map(dt=>{return dt?.title?.toLowerCase()});
+    if (selectorDataTaste?.length) initialPayload.filter.taste = selectorDataTaste.map(dt => { return dt?.title?.toLowerCase() });
     await dispatch(getmenueDataAction(initialPayload));
     showCustomLoader(false);
   }
   useEffect(() => {
-   getmenueData();
+    getmenueData();
     // eslint-disable-next-line
   }, []);
-  
+
   // {
   //   "fields": ["name", "price", "taste"],
   //   "filter": {

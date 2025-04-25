@@ -3,11 +3,11 @@ import React, { Fragment, useRef, useState } from 'react'
 import { addMenuDataAction, getmenueDataAction, updateMenuDataAction } from '../Redux/Action';
 import { useDispatch, useSelector } from 'react-redux';
 import Image from "../Image/image.png";
-import { Button, MenuItem, Select,Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField  } from '@mui/material';
+import { Button, MenuItem, Select, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@mui/material';
 import { showCustomLoader } from './showCustomLoader';
 
 let initialPayload = {
-  "fields": ["name", "price", "image_url","taste","description"],
+  "fields": ["name", "price", "image_url", "taste", "description"],
   "filter": {
   }
 }
@@ -51,8 +51,8 @@ function DailogComponent({ onClick, onClose, open, title, selectedItem, ...props
         await dispatch(addMenuDataAction(stateValue));
       }
       onClick();
-          if(selectorDataTaste?.length) initialPayload.filter.taste = selectorDataTaste.map(dt=>{return dt?.title?.toLowerCase()});
-          await dispatch(getmenueDataAction(initialPayload));
+      if (selectorDataTaste?.length) initialPayload.filter.taste = selectorDataTaste.map(dt => { return dt?.title?.toLowerCase() });
+      await dispatch(getmenueDataAction(initialPayload));
     }
     showCustomLoader(false);
   }
@@ -158,26 +158,26 @@ function DailogComponent({ onClick, onClose, open, title, selectedItem, ...props
             <br />
 
             <Select
-  labelId="demo-simple-select-label"
-  id="demo-simple-select"
-  value={stateValue.taste}
-  error={error.taste}
-  fullWidth
-  variant="outlined"
-  displayEmpty
-  onChange={(e) => {
-    handleOnChange(e.target.value, "taste");
-    error.taste = false;
-    setError({ ...error });
-  }}
->
-  <MenuItem value="" disabled>
-    Select Taste
-  </MenuItem>
-  <MenuItem value="sweet">Sweet</MenuItem>
-  <MenuItem value="spicy">Spicy</MenuItem>
-  <MenuItem value="sour">Sour</MenuItem>
-</Select>
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={stateValue.taste}
+              error={error.taste}
+              fullWidth
+              variant="outlined"
+              displayEmpty
+              onChange={(e) => {
+                handleOnChange(e.target.value, "taste");
+                error.taste = false;
+                setError({ ...error });
+              }}
+            >
+              <MenuItem value="" disabled>
+                Select Taste
+              </MenuItem>
+              <MenuItem value="sweet">Sweet</MenuItem>
+              <MenuItem value="spicy">Spicy</MenuItem>
+              <MenuItem value="sour">Sour</MenuItem>
+            </Select>
             {/* <TextField
               placeholder="Taste"
               variant="outlined"
