@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import './Header.scss'; // Import the CSS for styling
+import './Header.scss';
 // import { Button } from '@material-ui/core';
 import DailogComponent from '../../Common/DailogComponent';
 import { Autocomplete, TextField, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { selectTasteAction } from '../../Redux/Action';
+import { getmenueDataAction, selectTasteAction } from '../../Redux/Action';
 import { useDispatch, useSelector } from 'react-redux';
+
+let initialPayload = {
+    "fields": ["name", "price", "image_url","taste","description"],
+    "filter": {
+    }
+  }
 
 const tasteDropdownData = [
     {id:"1", label: 'Sweet',title: 'Sweet' },
@@ -14,9 +20,7 @@ const tasteDropdownData = [
 ];
 const Header = () => {
     const [open, setOpen] = React.useState(false);
-    const selectorDataTaste = useSelector((state) => state.taste.data);  
-    console.log(selectorDataTaste,'222222');
-      
+    const selectorDataTaste = useSelector((state) => state.taste.data);
     const [selectedData, setSelectedData] = useState(selectorDataTaste);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -27,10 +31,15 @@ const Header = () => {
     const handleToClose = () => {
         setOpen(false);
     };
-useEffect(()=>{
-    // setSelectedData(selectorDataTaste)
-},[]);
-    // dispatch(selectTasteAction("this the taste reducer"))
+
+    useEffect(() => {
+        const matched = tasteDropdownData?.filter(option =>
+          selectorDataTaste.some(selected => selected.id === option.id)
+        );
+        setSelectedData(matched);
+        // eslint-disable-next-line
+      }, [selectorDataTaste.data, tasteDropdownData]);
+
     return (
         <nav className="header">
             <div style={{
@@ -82,7 +91,12 @@ useEffect(()=>{
                         sx={{ width: '500px' }}
 
                         onChange={(event, newValue) => {
-                            console.log(newValue,'----------newValue11111');
+                            if(newValue?.length){
+                                 initialPayload.filter.taste = newValue.map(dt=>{return dt?.title?.toLowerCase()});
+                            }else{
+                                initialPayload.filter = {}
+                            }
+                            dispatch(getmenueDataAction(initialPayload));
                             setSelectedData(newValue);
                             dispatch(selectTasteAction(newValue));
                             

@@ -1,12 +1,12 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteMenuDataAction, getmenueDataAction, selectTasteAction } from '../../Redux/Action';
+import { deleteMenuDataAction, getmenueDataAction } from '../../Redux/Action';
 import Config from '../../Config';
 import PopupComponent from '../../Common/PopupComponent';
 import DailogComponent from '../../Common/DailogComponent';
 import { showCustomLoader } from '../../Common/showCustomLoader';
 
-const payloadData = {
+let initialPayload = {
   "fields": ["name", "price", "image_url","taste","description"],
   "filter": {
   }
@@ -18,12 +18,13 @@ const ItemComponent = () => {
   const [editOpen, setEditOpen] = useState(false);
 
   const selectorData = useSelector((state) => state.user.data);
-  
+      const selectorDataTaste = useSelector((state) => state.taste.data);
   const dataItem = selectorData.data || [];
 
   const getmenueData = async()=>{
     showCustomLoader(true);
-    await dispatch(getmenueDataAction(payloadData));
+    if(selectorDataTaste?.length) initialPayload.filter.taste = selectorDataTaste.map(dt=>{return dt?.title?.toLowerCase()});
+    await dispatch(getmenueDataAction(initialPayload));
     showCustomLoader(false);
   }
   useEffect(() => {
@@ -41,9 +42,7 @@ const ItemComponent = () => {
   const handleSingleRemove = async (item) => {
     showCustomLoader(true)
     await dispatch(deleteMenuDataAction(item._id));
-    await dispatch(getmenueDataAction({
-      "fields": ["name", "price", "image_url","taste","description"]
-    }));
+    await dispatch(getmenueDataAction(initialPayload));
     showCustomLoader(false)
   }
   const handleClose = (action) => {

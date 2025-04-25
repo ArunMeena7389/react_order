@@ -1,10 +1,16 @@
 import React, { Fragment, useRef, useState } from 'react'
 // import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@material-ui/core';
 import { addMenuDataAction, getmenueDataAction, updateMenuDataAction } from '../Redux/Action';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Image from "../Image/image.png";
 import { Button, MenuItem, Select,Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField  } from '@mui/material';
 import { showCustomLoader } from './showCustomLoader';
+
+let initialPayload = {
+  "fields": ["name", "price", "image_url","taste","description"],
+  "filter": {
+  }
+}
 
 function DailogComponent({ onClick, onClose, open, title, selectedItem, ...props }) {
   const [preview, setPreview] = useState(selectedItem?.image || null); // for preview URL
@@ -25,6 +31,7 @@ function DailogComponent({ onClick, onClose, open, title, selectedItem, ...props
 
   const dispatch = useDispatch();
   const fileInputRef = useRef(null);
+  const selectorDataTaste = useSelector((state) => state.taste.data);
 
   const onClickSave = async () => {
     showCustomLoader(true);
@@ -44,9 +51,8 @@ function DailogComponent({ onClick, onClose, open, title, selectedItem, ...props
         await dispatch(addMenuDataAction(stateValue));
       }
       onClick();
-      await dispatch(getmenueDataAction({
-        "fields": ["name", "price", "image_url", "taste", "description"]
-      }));
+          if(selectorDataTaste?.length) initialPayload.filter.taste = selectorDataTaste.map(dt=>{return dt?.title?.toLowerCase()});
+          await dispatch(getmenueDataAction(initialPayload));
     }
     showCustomLoader(false);
   }
