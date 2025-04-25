@@ -1,15 +1,32 @@
-import { createStore, combineReducers,applyMiddleware } from "redux";
-import { cartReducer, loaderReducer, menueDataReducer } from "./Reduser";
+import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from 'redux-thunk';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage'; // localStorage
 
-const rootReducer = combineReducers({
-    cart: cartReducer,
+import { menueDataReducer,tasteSelectDataReducer } from "./Reduser";
+
+
+// persist config
+const persistConfig = {
+    key: 'root',
+    storage,
+  };
+  
+  const rootReducer = combineReducers({
     user: menueDataReducer,
-    loader: loaderReducer,
-});
-const store = createStore(
-    rootReducer,
-    applyMiddleware(thunk) // Apply the thunk middleware
-);
+    taste:tasteSelectDataReducer,
+  });
 
-export default store;
+  // wrap with persistReducer
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+// create store
+const store = createStore(
+    persistedReducer,
+    applyMiddleware(thunk)
+  );
+
+// create persistor
+const persistor = persistStore(store);
+
+export { store, persistor };

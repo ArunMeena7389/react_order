@@ -1,46 +1,24 @@
-import { ADD_ITEM, DELETE_ITEM, typeData } from "./type";
-
-const initialState = {
-  numOfItems: 0,
-};
+import { typeData } from "./type";
 
 const initialStateMenue = {
   data: []
 }
-
-const initialLoaderState = {
-  loading:false
+const initialtasteState = {
+  data:[]
 }
-export const loaderReducer = (state = initialLoaderState, action) => {
+
+export const tasteSelectDataReducer = (state = initialtasteState,action) =>{
   switch (action.type) {
-    case 'SHOW_LOADER':
-      return { ...state, loading: true };
-    case 'HIDE_LOADER':
-      return { ...state, loading: false };
+    case typeData.SET_TASTE_DATA_SUCSESS:
+      return {
+        ...state,
+        data: action.payload
+      }
     default:
       return state;
   }
-};
 
-
-export const cartReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case ADD_ITEM:
-      return {
-        ...state,
-        numOfItems: state.numOfItems + 1,
-      };
-
-    case DELETE_ITEM:
-      return {
-        ...state,
-        numOfItems: state.numOfItems - 1,
-      };
-    default:
-      return state;
-  }
-};
-
+}
 export const menueDataReducer = (state = initialStateMenue, action) => {  
   switch (action.type) {
     case typeData.GET_MENUE_DATA_SUCSESS:

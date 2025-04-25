@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteMenuDataAction, getmenueDataAction } from '../../Redux/Action';
+import { deleteMenuDataAction, getmenueDataAction, selectTasteAction } from '../../Redux/Action';
 import Config from '../../Config';
 import PopupComponent from '../../Common/PopupComponent';
 import DailogComponent from '../../Common/DailogComponent';
@@ -12,12 +12,13 @@ const payloadData = {
   }
 }
 const ItemComponent = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [show, setShow] = useState(false);
   const [selectedItem, setSelectedItem] = useState({});
   const [editOpen, setEditOpen] = useState(false);
 
   const selectorData = useSelector((state) => state.user.data);
+  
   const dataItem = selectorData.data || [];
 
   const getmenueData = async()=>{
@@ -26,7 +27,7 @@ const ItemComponent = () => {
     showCustomLoader(false);
   }
   useEffect(() => {
-   getmenueData()
+   getmenueData();
     // eslint-disable-next-line
   }, []);
   

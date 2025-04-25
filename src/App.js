@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import './Styles/Common.scss';
 import { Provider } from "react-redux";
-import store from "./Redux/store";
+import { store, persistor } from "./Redux/store";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import ItemComponent from './Component/Items/ItemComponent';
@@ -12,6 +12,7 @@ import Header from './Component/Navbar/Header';
 import Signup from './Component/SignupLogin/Signup';
 import Login from './Component/SignupLogin/Login';
 import PrivateRoute from './Component/PrivateRoute';
+import { PersistGate } from 'redux-persist/integration/react';
 
 const AppContent = () => {
   const location = useLocation();
@@ -59,7 +60,9 @@ const AppContent = () => {
 const App = () => {
   return (
     <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
       <AppContent />
+      </PersistGate>
     </Provider>
   );
 };

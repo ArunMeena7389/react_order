@@ -3,7 +3,13 @@ import { typeData } from "./type";
 import axios from 'axios';
 
 const token = localStorage.getItem('token');
-const getmenueDataAction = (datas) => {    
+const selectTasteAction = (data)=>{
+  return async (dispatch) => {
+  dispatch({ type: typeData.SET_TASTE_DATA_SUCSESS, payload: {data:data} });
+  }
+}
+const getmenueDataAction = (datas) => {  
+  
   return async (dispatch) => {
     const token_st = localStorage.getItem('token');
     try {
@@ -16,6 +22,10 @@ const getmenueDataAction = (datas) => {
       const data = response;
       dispatch({ type: typeData.GET_MENUE_DATA_SUCSESS, payload: data });
     } catch (error) {
+      if(error.response.data.error && error.response.data.error==="Invalid token") {
+        localStorage.removeItem('token');
+        window.location.reload();
+      }      
       dispatch({ type: 'FETCH_DATA_ERROR', payload: error });
     }
   };
@@ -110,4 +120,4 @@ const updateMenuDataAction = (id, payload) => {
   };
 };
 
-export { getmenueDataAction, addMenuDataAction, deleteMenuDataAction, updateMenuDataAction };
+export { selectTasteAction,getmenueDataAction, addMenuDataAction, deleteMenuDataAction, updateMenuDataAction };
