@@ -7,7 +7,7 @@ import DailogComponent from '../../Common/DailogComponent';
 import { showCustomLoader } from '../../Common/showCustomLoader';
 
 let initialPayload = {
-  "fields": ["name", "price", "image_url", "taste", "description"],
+  "fields": ["name", "price", "image_url", "taste", "description","business_id"],
   "filter": {
   }
 }

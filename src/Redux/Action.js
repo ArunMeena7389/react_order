@@ -22,7 +22,7 @@ const getmenueDataAction = (datas) => {
       const data = response;
       dispatch({ type: typeData.GET_MENUE_DATA_SUCSESS, payload: data });
     } catch (error) {
-      if(error.response.data.error && error.response.data.error==="Invalid token") {
+      if(error?.response?.data?.error && error?.response?.data?.error==="Invalid token") {
         localStorage.removeItem('token');
         window.location.reload();
       }      
