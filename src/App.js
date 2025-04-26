@@ -13,6 +13,7 @@ import Signup from './Component/SignupLogin/Signup';
 import Login from './Component/SignupLogin/Login';
 import PrivateRoute from './Component/PrivateRoute';
 import { PersistGate } from 'redux-persist/integration/react';
+import CustomerMain from './Component/Customer/CustomerMain';
 
 const isMobileDevice = () => {
   return window.innerWidth <= 768;
@@ -36,10 +37,10 @@ const AppContent = () => {
         <Routes>
           <Route path="/sign-up" element={<Signup />} />
           <Route path="/sign-in" element={<Login />} />
-          <Route path="/customer" element={<div>Customer Landing Page</div>} /> 
+          <Route path="/customer" element={<CustomerMain/>} /> 
 
           {!isAuthPage && (
-            <Route element={!isMobileDevice()?<Sidebar />:<div></div>}>
+            <Route element={(!isMobileDevice() || location.pathname === '/customer')?<Sidebar />:<div></div>}>
               <Route
                 path="/"
                 element={
