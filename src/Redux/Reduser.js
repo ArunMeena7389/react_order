@@ -31,3 +31,16 @@ export const menueDataReducer = (state = initialStateMenue, action) => {
   }
 
 }
+
+export const customerMenuDataReducer = (state = initialStateMenue, action) => {  
+  switch (action.type) {
+    case typeData.GET_CUSTOMER_DATA_SUCSESS:
+      return {
+        ...state,
+        data: action.payload
+      }
+    default:
+      return state;
+  }
+
+}

@@ -49,6 +49,7 @@ const LoginAction = (datas,onSucces,onError) => {
         });
         const data = response;             
         localStorage.setItem('token', data?.data?.token);
+        localStorage.setItem('businessID', data?.data?.response?._id);
         onSucces(data);  
         dispatch({ type: typeData.SUBMIT_LOGIN_ACCOUNT, payload: data });
       } catch (error) {

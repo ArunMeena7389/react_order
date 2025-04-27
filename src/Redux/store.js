@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // localStorage
 
-import { menueDataReducer,tasteSelectDataReducer } from "./Reduser";
+import { customerMenuDataReducer, menueDataReducer,tasteSelectDataReducer } from "./Reduser";
 
 
 // persist config
@@ -15,6 +15,7 @@ const persistConfig = {
   const rootReducer = combineReducers({
     user: menueDataReducer,
     taste:tasteSelectDataReducer,
+    customerMenu:customerMenuDataReducer,
   });
 
   // wrap with persistReducer

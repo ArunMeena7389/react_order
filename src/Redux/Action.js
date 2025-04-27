@@ -3,17 +3,17 @@ import { typeData } from "./type";
 import axios from 'axios';
 
 const token = localStorage.getItem('token');
-const selectTasteAction = (data)=>{
+const selectTasteAction = (data) => {
   return async (dispatch) => {
-  dispatch({ type: typeData.SET_TASTE_DATA_SUCSESS, payload: data });
+    dispatch({ type: typeData.SET_TASTE_DATA_SUCSESS, payload: data });
   }
 }
-const getmenueDataAction = (datas) => {  
-  
+const getmenueDataAction = (datas) => {
+
   return async (dispatch) => {
     const token_st = localStorage.getItem('token');
     try {
-      const response = await axios.post(Config.url + '/menu',datas, {
+      const response = await axios.post(Config.url + '/menu', datas, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token_st}`,
@@ -22,10 +22,10 @@ const getmenueDataAction = (datas) => {
       const data = response;
       dispatch({ type: typeData.GET_MENUE_DATA_SUCSESS, payload: data });
     } catch (error) {
-      if(error?.response?.data?.error && error?.response?.data?.error==="Invalid token") {
+      if (error?.response?.data?.error && error?.response?.data?.error === "Invalid token") {
         localStorage.removeItem('token');
         window.location.reload();
-      }      
+      }
       dispatch({ type: 'FETCH_DATA_ERROR', payload: error });
     }
   };
@@ -68,11 +68,12 @@ const addMenuDataAction = (payload) => {
 const deleteMenuDataAction = (id) => {
   return async (dispatch) => {
     try {
-      await axios.delete(`${Config.url}/menu/${id}`,{
+      await axios.delete(`${Config.url}/menu/${id}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
-        }});
+        }
+      });
 
       dispatch({
         type: typeData.DELETE_MENU_DATA_SUCCESS,
@@ -120,4 +121,27 @@ const updateMenuDataAction = (id, payload) => {
   };
 };
 
-export { selectTasteAction,getmenueDataAction, addMenuDataAction, deleteMenuDataAction, updateMenuDataAction };
+const getCustomerDataAction = () => {
+
+  return async (dispatch) => {
+    const businessID = localStorage.getItem('businessID');    
+    try {
+      const response = await axios.get(Config.url + '/menu/data', {
+        headers: {
+          "Content-Type": "application/json",
+          business_id: businessID
+        },
+      });
+      const data = response;
+      dispatch({ type: typeData.GET_CUSTOMER_DATA_SUCSESS, payload: data });
+    } catch (error) {
+      dispatch({
+        type: typeData.GET_CUSTOMER_DATA_ERROR,
+        payload: error.response?.data || error.message,
+      });
+    }
+  };
+
+}
+
+export { selectTasteAction, getmenueDataAction, addMenuDataAction, deleteMenuDataAction, updateMenuDataAction, getCustomerDataAction };
