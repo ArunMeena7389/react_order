@@ -27,7 +27,7 @@ const AppContent = () => {
 
   useEffect(() => {
     if (isMobileDevice()) {
-      navigate('/customer', { replace: true });
+      // navigate('/customer/:id', { replace: true });
     }
   }, [location]);
   return (
@@ -36,13 +36,17 @@ const AppContent = () => {
 
       <div className={!isAuthPage ? `main-content-scrollable` : ""}>
         <Routes>
-          <Route path="/sign-up" element={<Signup />} />
-          <Route path="/sign-in" element={<Login />} />
-          <Route path="/customer/:id" element={<CustomerRedirectPage/>} /> 
-          <Route path="/customer" element={<CustomerMain/>} /> 
+          {!isMobileDevice() &&
+            <>
+              <Route path="/sign-up" element={<Signup />} />
+              <Route path="/sign-in" element={<Login />} />
+            </>
+          }
+          <Route path="/customer/:id" element={<CustomerRedirectPage />} />
+          <Route path="/customer" element={<CustomerMain />} />
 
           {!isAuthPage && (
-            <Route element={(!isMobileDevice() || location.pathname === '/customer')?<Sidebar />:<div></div>}>
+            <Route element={(!isMobileDevice() || location.pathname === '/customer') ? <Sidebar /> : <div></div>}>
               <Route
                 path="/"
                 element={
@@ -63,7 +67,7 @@ const AppContent = () => {
           )}
 
           {/* Redirect unknown paths */}
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="*" element={<Navigate to={!isMobileDevice() ? "/" : "/customer"} replace />} />
         </Routes>
       </div>
     </div>
@@ -75,7 +79,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-      <AppContent />
+        <AppContent />
       </PersistGate>
     </Provider>
   );

@@ -121,10 +121,9 @@ const updateMenuDataAction = (id, payload) => {
   };
 };
 
-const getCustomerDataAction = () => {
+const getCustomerDataAction = (businessID) => {
 
   return async (dispatch) => {
-    const businessID = localStorage.getItem('businessID');    
     try {
       const response = await axios.get(Config.url + '/menu/data', {
         headers: {

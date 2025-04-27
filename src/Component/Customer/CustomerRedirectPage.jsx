@@ -1,20 +1,21 @@
 import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { getCustomerDataAction } from '../../Redux/Action';
+import { useDispatch } from 'react-redux';
 
 const CustomerRedirectPage = () => {
-    const { id } = useParams(); // get id from url
-    console.log(id,"22222222222222222222");
-    
+    const dispatch = useDispatch();
+    const { id } = useParams(); // get id from url    
     const navigate = useNavigate();
-    useEffect(()=>{
-        // dispatch(getCustomerDataAction());
+    useEffect(() => {
+        dispatch(getCustomerDataAction(id));
         navigate('/customer', { replace: true });
-    },[])
-  return (
-    <div>
-      
-    </div>
-  )
+    }, [])
+    return (
+        <div>
+
+        </div>
+    )
 }
 
 export default CustomerRedirectPage;
