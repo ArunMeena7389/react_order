@@ -14,6 +14,7 @@ const CustomerMain = () => {
   },[])
   return (
     <div  className='text-white'>
+      <h2>Customer Page</h2>
       {dataItem?.map((item, index) => (
      <div className="card" style={{width: "18rem"}}>
   <img className="card-img-top" src={Config.url + "/img/" + item.image_url} alt="Card"/>
