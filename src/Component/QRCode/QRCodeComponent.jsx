@@ -2,7 +2,8 @@ import React from 'react';
 import { QRCodeCanvas } from 'qrcode.react';
 
 const QRCodeComponent = () => {
-  const websiteUrl = "https://react-order-nine.vercel.app";
+  const businessID = localStorage.getItem('businessID');  
+  const websiteUrl = `https://react-order-nine.vercel.app/customer/${businessID}`;
 
   return (
     <div style={{ textAlign: 'center', marginTop: '50px' }}>
