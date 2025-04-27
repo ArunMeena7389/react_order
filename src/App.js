@@ -25,7 +25,7 @@ const AppContent = () => {
   const isAuthPage = location.pathname === "/sign-up" || location.pathname === "/sign-in";
 
   useEffect(() => {
-    if (isMobileDevice() && (location.pathname === '/sign-up' || location.pathname === '/sign-in')) {
+    if (isMobileDevice()) {
       navigate('/customer', { replace: true });
     }
   }, [location]);
