@@ -5,9 +5,11 @@ import Config from '../../Config';
 import PopupComponent from '../../Common/PopupComponent';
 import DailogComponent from '../../Common/DailogComponent';
 import { showCustomLoader } from '../../Common/showCustomLoader';
+import '../Customer/customer.scss';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 let initialPayload = {
-  "fields": ["name", "price", "image_url", "taste", "description","business_id"],
+  "fields": ["name", "price", "image_url", "taste", "description", "business_id"],
   "filter": {
   }
 }
@@ -63,55 +65,46 @@ const ItemComponent = () => {
   return (
     <Fragment>
       <div className="m-2">
-        {dataItem?.map((item, index) => (
-          <div className="card m-2 bg-dark position-relative" key={index}>
-            <div className="card-img-container position-relative overflow-hidden">
+        <div className="customer-card-wrapper">
+          {dataItem?.map((item, index) => (
+            <div className="card customer-card" key={index}>
               <img
+                className="customer-image"
                 src={Config.url + "/img/" + item.image_url}
-                className="card-img-top image-hover"
-                alt="..."
-                style={{
-                  width: "100%",
-                  height: "350px",
-                  objectFit: "cover",
-                  transition: "transform 0.4s ease",
-                }}
+                alt="Customer"
               />
-              <div className="position-absolute bottom-0 start-0 w-100 bg-dark bg-opacity-50 text-white p-2">
-                <div className="d-flex justify-content-between align-items-start">
-                  <div>
-                    <h2 className="card-title text-light mb-1">{item.name}</h2>
-                    <p className="card-text text-light mb-0">{item.taste}</p>
-                  </div>
-                  <button
-                    className="btn btn-primary btn-sm"
-                    onClick={() => {
-                      handleAction()
-                      const fullImageUrl = `${Config.url}/img/${item.image_url}`;
-                      setSelectedItem({
-                        ...item,
-                        image: fullImageUrl,
-                      });
-                    }}
-                  >
-                    Edit
-                  </button>
-                </div>
+              <div className="card-body text-center text-white">
+                <h5 className="card-title">{item.name}</h5>
+                <p className="card-text">{item.taste}</p>
+                <button
+                  className="btn btn-primary btn-sm position-absolute"
+                  style={{ top: "5px", left: "5px" }}
+                  onClick={() => {
+                    handleAction()
+                    const fullImageUrl = `${Config.url}/img/${item.image_url}`;
+                    setSelectedItem({
+                      ...item,
+                      image: fullImageUrl,
+                    });
+                  }}
+                >
+                  Edit
+                </button>
+                <button
+                  className="btn btn-danger btn-sm position-absolute"
+                  style={{ top: "5px", right: "5px" }}
+                  onClick={() => {
+                    setSelectedItem(item);
+                    setShow(true);
+                  }}
+                >
+                  <DeleteIcon />
+                </button>
               </div>
             </div>
+          ))}
+        </div>
 
-            <button
-              className="btn btn-danger btn-sm position-absolute"
-              style={{ top: "10px", right: "10px" }}
-              onClick={() => {
-                setSelectedItem(item);
-                setShow(true);
-              }}
-            >
-              Delete
-            </button>
-          </div>
-        ))}
       </div>
       {show && <PopupComponent onClose={handleClose} onClick={handleClose} />}
       {editOpen && <DailogComponent open={editOpen} onClick={handleToClose} selectedItem={selectedItem} onClose={handleToClose} title={"Edit"} text={" I am Good, Hope the same for you!"} />}
