@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useSelector } from 'react-redux';
 import Config from '../../Config';
 
@@ -6,22 +6,27 @@ const CustomerMain = () => {
   const customerMenuData = useSelector((state) => state?.customerMenu?.data);
   const dataItem = customerMenuData?.data || [];
 
-  useEffect(() => {
-    // eslint-disable-next-line
-  }, [])
   return (
-    <div className='text-white'>
-      <h2>Customer Page</h2>
+    <div className="customer-container text-white">
+    <h2 className="text-center mb-4">Customer Page</h2>
+  
+    <div className="customer-card-wrapper">
       {dataItem?.map((item, index) => (
-        <div className="card" style={{ width: "18rem" }}>
-          <img className="card-img-top" src={Config.url + "/img/" + item.image_url} alt="Card" />
-          <div className="card-body">
+        <div className="card customer-card" key={index}>
+          <img
+            className="card-img-top customer-image"
+            src={Config.url + "/img/" + item.image_url}
+            alt="Customer"
+          />
+          <div className="card-body text-center">
             <h5 className="card-title">{item.name}</h5>
             <p className="card-text">{item.taste}</p>
-            <a href="#" className="btn btn-primary">Go somewhere</a>
+            <a href="#" className="btn btn-primary">View More</a>
           </div>
-        </div>))}
+        </div>
+      ))}
     </div>
+  </div>
   )
 }
 
