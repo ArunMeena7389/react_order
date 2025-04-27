@@ -10,7 +10,7 @@ const CustomerMain = () => {
     <div className="customer-container text-white">
     <h2 className="text-center mb-4">Customer Page</h2>
   
-    <div className="customer-card-wrapper">
+    <div className="customer-card-wrapper m-2">
       {dataItem?.map((item, index) => (
         <div className="card customer-card" key={index}>
           <img
