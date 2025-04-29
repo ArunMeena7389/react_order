@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './App.css';
 import './Styles/Common.scss';
 import { Provider } from "react-redux";
 import { store, persistor } from "./Redux/store";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Routes, Route, useLocation, Navigate, useNavigate } from "react-router-dom";
+import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import ItemComponent from './Component/Items/ItemComponent';
 import Setting from './Component/Setting';
 import Sidebar from './Component/Sidebar/Sidebar';
@@ -22,14 +22,8 @@ const isMobileDevice = () => {
 
 const AppContent = () => {
   const location = useLocation();
-  const navigate = useNavigate();
   const isAuthPage = location.pathname === "/sign-up" || location.pathname === "/sign-in" || isMobileDevice();
 
-  useEffect(() => {
-    if (isMobileDevice()) {
-      // navigate('/customer/:id', { replace: true });
-    }
-  }, [location]);
   return (
     <div className="main-app">
       {!isAuthPage && <Header />}

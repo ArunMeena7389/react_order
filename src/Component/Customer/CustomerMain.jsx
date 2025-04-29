@@ -1,15 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Config from '../../Config';
 import './customer.scss';
+import BottomPopup from './BottomPopup';
+
 
 const CustomerMain = () => {
   const customerMenuData = useSelector((state) => state?.customerMenu?.data);
   const dataItem = customerMenuData?.data || [];
+  const [open, setOpen] = useState(false);
 
   return (
     <div className="customer-container text-white">
-    <h2 className="text-center mb-4">Customer Page</h2>
+      <div className='d-flex'>
+        <div className='ml-1'>
+        <FilterAltIcon onClick={() => setOpen(true)}/>
+        </div>
+        <div style={{right:"20px",position:"absolute"}}>
+        <ShoppingCartIcon onClick={() => setOpen(true)}/>
+        </div>
+    </div>
   
     <div className="customer-card-wrapper">
       {dataItem?.map((item, index) => (
@@ -27,6 +39,7 @@ const CustomerMain = () => {
         </div>
       ))}
     </div>
+    <BottomPopup open={open} onClose={() => setOpen(false)} onOpen={() => {}} />
   </div>
   )
 }
