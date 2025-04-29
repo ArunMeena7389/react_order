@@ -1,37 +1,35 @@
 .customer-container {
-    padding: 10px;
-  }
-  
-  .customer-card-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    // justify-content: center;
-    gap: 15px;
-  }
-  
-  .customer-card {
-    width: 300px; 
-    background-color: #1c1c1c;
-    border: 1px solid #333;
-    border-radius: 15px;
-    overflow: hidden;
-  }
-  
-  .customer-image {
-    width: 100%;
-    height: 200px;
-    object-fit: cover; 
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
-  }
-  
-  @media (max-width: 768px) {
-    .customer-card {
-      width: 100%;
-      max-width: 760px;
-    }
-  
-    .customer-image {
-      height: 250px; 
-    }
-  }
+  padding: 10px;
+}
+
+.customer-card-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 15px;
+}
+
+.customer-card {
+  background-color: #1c1c1c;
+  border: 1px solid #333;
+  border-radius: 15px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.customer-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 16px auto 0;
+}
+
+.customer-image-main {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}

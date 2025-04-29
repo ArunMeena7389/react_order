@@ -69,7 +69,7 @@ const ItemComponent = () => {
           {dataItem?.map((item, index) => (
             <div className="card customer-card" key={index}>
               <img
-                className="customer-image"
+                className="customer-image-main"
                 src={Config.url + "/img/" + item.image_url}
                 alt="Customer"
               />

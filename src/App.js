@@ -23,7 +23,7 @@ const isMobileDevice = () => {
 const AppContent = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const isAuthPage = location.pathname === "/sign-up" || location.pathname === "/sign-in";
+  const isAuthPage = location.pathname === "/sign-up" || location.pathname === "/sign-in" || isMobileDevice();
 
   useEffect(() => {
     if (isMobileDevice()) {
