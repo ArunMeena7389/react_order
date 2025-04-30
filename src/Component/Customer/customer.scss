@@ -34,3 +34,22 @@
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
 }
+.customer-header {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.search-input {
+  flex-grow: 1;
+}
+
+@media (max-width: 768px) {
+  .customer-header {
+    align-items: stretch;
+  }
+
+  .search-input {
+    width: 100%;
+  }
+}
