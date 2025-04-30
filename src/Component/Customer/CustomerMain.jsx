@@ -1,17 +1,23 @@
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import Config from '../../Config';
 import './customer.scss';
 import BottomPopup from './BottomPopup';
+import { useLocation } from 'react-router-dom';
+import { getCustomerDataAction } from '../../Redux/Action';
 
 
 const CustomerMain = () => {
+      const dispatch = useDispatch();
   const customerMenuData = useSelector((state) => state?.customerMenu?.data);
   const dataItem = customerMenuData?.data || [];
   const [open, setOpen] = useState(false);
-
+  const location = useLocation();
+  const businessID = location.state?.businessID;
+useEffect(()=>{
+  dispatch(getCustomerDataAction(businessID));
+},[]);
   return (
     <div className="customer-container text-white">
       <div className='d-flex'>
@@ -28,7 +34,7 @@ const CustomerMain = () => {
         <div className="card customer-card" key={index}>
           <img
             className="card-img-top customer-image"
-            src={Config.url + "/img/" + item.image_url}
+            src={item.image_url}
             alt="Customer"
           />
           <div className="card-body text-center text-white">

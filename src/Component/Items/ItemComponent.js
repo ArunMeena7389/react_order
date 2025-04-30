@@ -70,7 +70,7 @@ const ItemComponent = () => {
             <div className="card customer-card" key={index}>
               <img
                 className="customer-image-main"
-                src={Config.url + "/img/" + item.image_url}
+                src={item.image_url}
                 alt="Customer"
               />
               <div className="card-body text-center text-white">
@@ -81,7 +81,7 @@ const ItemComponent = () => {
                   style={{ top: "5px", left: "5px" }}
                   onClick={() => {
                     handleAction()
-                    const fullImageUrl = `${Config.url}/img/${item.image_url}`;
+                    const fullImageUrl = `${item.image_url}`;
                     setSelectedItem({
                       ...item,
                       image: fullImageUrl,
