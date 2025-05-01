@@ -5,7 +5,8 @@ const CustomerRedirectPage = () => {
     const { id } = useParams(); // get id from url    
     const navigate = useNavigate();
     useEffect(() => {
-        navigate('/customer', { replace: true,state: { businessID: id } });
+        navigate('/customer', { replace: true, state: { businessID: id } });
+        // eslint-disable-next-line
     }, [])
     return (
         <div>

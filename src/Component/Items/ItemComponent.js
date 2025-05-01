@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteMenuDataAction, getmenueDataAction } from '../../Redux/Action';
-import Config from '../../Config';
 import PopupComponent from '../../Common/PopupComponent';
 import DailogComponent from '../../Common/DailogComponent';
 import { showCustomLoader } from '../../Common/showCustomLoader';
