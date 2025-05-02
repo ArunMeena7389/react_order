@@ -36,64 +36,59 @@ const CustomerMain = () => {
     return () => clearTimeout(delayDebounce);
   };
   return (
-    <div className="customer-container text-white">
+    <div className="customer-container">
       <div
-  className="customer-header d-flex align-items-center justify-content-between mb-3 px-2"
-  style={{
-    backgroundColor: '#f8f9fa', // Light gray background
-    padding: '8px',
-    borderRadius: '8px',
-    flexWrap: 'wrap', // Stack items on small screens
-    gap: '8px',
-  }}
->
-  <Button
-    variant="outlined"
-    onClick={() => setOpen(true)}
-    endIcon={<FilterAltIcon />}
-    sx={{
-      color: '#333',
-      borderColor: '#ccc',
-      textTransform: 'none',
-      fontSize: '0.85rem',
-      padding: '4px 12px',
-      backgroundColor: '#fff',
-      '&:hover': {
-        backgroundColor: '#f0f0f0',
-      },
-    }}
-  >
-    Filter
-  </Button>
+        className="customer-header d-flex align-items-center justify-content-between mb-3 p-1"
+        style={{
+          backgroundColor: '#f8f9fa',
+        }}
+      >
+        <Button
+          variant="outlined"
+          onClick={() => setOpen(true)}
+          endIcon={<FilterAltIcon />}
+          sx={{
+            color: '#333',
+            borderColor: '#ccc',
+            textTransform: 'none',
+            padding: '4px 12px',
+            backgroundColor: '#fff',
+            '&:hover': {
+              backgroundColor: '#f0f0f0',
+            },
+          }}
+        >
+          Filter
+        </Button>
 
-  <ShoppingCartIcon
-    style={{
-      color: '#333',
-      fontSize: '28px',
-    }}
-  />
+        <ShoppingCartIcon
+          style={{
+            color: '#333',
+            fontSize: '28px',
+          }}
+        />
 
-  <TextField
-    placeholder="Search"
-    variant="outlined"
-    size="small"
-    value={searchValue}
-    onChange={handleSearch}
-    sx={{
-      flex: 1,
-      minWidth: '140px',
-      backgroundColor: 'white',
-      borderRadius: '8px',
-    }}
-    InputProps={{
-      startAdornment: (
-        <InputAdornment position="start">
-          <SearchIcon fontSize="small" />
-        </InputAdornment>
-      ),
-    }}
-  />
-</div>
+        <TextField
+          placeholder="Search"
+          variant="outlined"
+          size="small"
+          value={searchValue}
+          onChange={handleSearch}
+          sx={{
+            flex: 1,
+            minWidth: '140px',
+            backgroundColor: 'white',
+            borderRadius: '8px',
+          }}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon fontSize="small" />
+              </InputAdornment>
+            ),
+          }}
+        />
+      </div>
 
 
       <div className="customer-card-wrapper">
