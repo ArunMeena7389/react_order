@@ -37,44 +37,64 @@ const CustomerMain = () => {
   };
   return (
     <div className="customer-container text-white">
-      <div className='customer-header d-flex align-items-center justify-content-between mb-3 px-2'>
-        {/* <span>Filter</span>
-      <FilterAltIcon onClick={() => setOpen(true)} style={{ color: 'white',fontSize:"35px" }} className='m-1'/> */}
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={() => setOpen(true)}
-          endIcon={<FilterAltIcon />}
-          style={{
-            backgroundColor: 'white',
-            color: '#000000',
-            borderRadius: '5px',
-            textTransform: 'none',
-          }}
-        >
-          Filter
-        </Button>
-        <ShoppingCartIcon style={{ color: 'white', fontSize: "35px" }} className='m-1' />
-        <TextField
-          placeholder="Search"
-          variant="outlined"
-          className="search-input"
-          value={searchValue}
-          onChange={handleSearch}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon />
-              </InputAdornment>
-            ),
-            style: {
-              backgroundColor: "white",
-              borderRadius: "8px"
-            }
-          }}
-        />
+      <div
+  className="customer-header d-flex align-items-center justify-content-between mb-3 px-2"
+  style={{
+    backgroundColor: '#f8f9fa', // Light gray background
+    padding: '8px',
+    borderRadius: '8px',
+    flexWrap: 'wrap', // Stack items on small screens
+    gap: '8px',
+  }}
+>
+  <Button
+    variant="outlined"
+    onClick={() => setOpen(true)}
+    endIcon={<FilterAltIcon />}
+    sx={{
+      color: '#333',
+      borderColor: '#ccc',
+      textTransform: 'none',
+      fontSize: '0.85rem',
+      padding: '4px 12px',
+      backgroundColor: '#fff',
+      '&:hover': {
+        backgroundColor: '#f0f0f0',
+      },
+    }}
+  >
+    Filter
+  </Button>
 
-      </div>
+  <ShoppingCartIcon
+    style={{
+      color: '#333',
+      fontSize: '28px',
+    }}
+  />
+
+  <TextField
+    placeholder="Search"
+    variant="outlined"
+    size="small"
+    value={searchValue}
+    onChange={handleSearch}
+    sx={{
+      flex: 1,
+      minWidth: '140px',
+      backgroundColor: 'white',
+      borderRadius: '8px',
+    }}
+    InputProps={{
+      startAdornment: (
+        <InputAdornment position="start">
+          <SearchIcon fontSize="small" />
+        </InputAdornment>
+      ),
+    }}
+  />
+</div>
+
 
       <div className="customer-card-wrapper">
         {dataItemMenu?.map((item, index) => (

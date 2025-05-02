@@ -61,7 +61,7 @@ const BottomPopup = ({ open, onClose, onOpen }) => {
                     borderTopRightRadius: 16,
                     padding: 2,
                     maxHeight: '80vh',
-                    height: '80vh',
+                    height: '60vh',
                 },
             }}
         >
