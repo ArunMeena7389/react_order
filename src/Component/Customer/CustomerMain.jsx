@@ -102,10 +102,14 @@ const CustomerMain = () => {
 
         <ShoppingCartIcon
           style={{
-            color: '#333',
+            color: addedCartData.length > 0 ? '#f28f0e' : '#333',
             fontSize: '28px',
+            backgroundColor: addedCartData.length > 0 ? '#e0f7fa' : 'transparent',
+            borderRadius: '50%',
+            padding: addedCartData.length > 0 ? '4px' : '0',
+            transition: 'all 0.3s ease',
           }}
-          onClick={() => { setOpenAddCartPopup(true) }}
+          onClick={() => setOpenAddCartPopup(true)}
         />
 
         <TextField
