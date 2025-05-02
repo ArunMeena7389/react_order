@@ -28,7 +28,7 @@ const staticCategoryData = [
 
 ];
 
-const BottomPopup = ({ open, onClose, onOpen }) => {
+const BottomPopupFilter = ({ open, onClose, onOpen }) => {
     const [filterName, setFilterName] = useState([
         { id: 1, name: 'Sort', isActive: false },
         { id: 2, name: 'Price', isActive: false },
@@ -119,4 +119,4 @@ const BottomPopup = ({ open, onClose, onOpen }) => {
     );
 };
 
-export default BottomPopup;
+export default BottomPopupFilter;

@@ -4,25 +4,34 @@ import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import SearchIcon from '@mui/icons-material/Search';
 import './customer.scss';
-import BottomPopup from './BottomPopup';
+import BottomPopupFilter from './BottomPopupFilter';
 import { useLocation } from 'react-router-dom';
 import { getCustomerDataAction } from '../../Redux/Action';
 import { TextField, InputAdornment, Button } from '@mui/material';
+import BottomPopupAddCart from './BottomPopupAddCart';
 
 
 const CustomerMain = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
   const customerMenuData = useSelector((state) => state?.customerMenu?.data);
   const dataItem = customerMenuData?.data || [];
   const [dataItemMenu, setDataItemMenu] = useState(dataItem.map(item => ({ ...item, count: 0 })));
   const [searchValue, setSearchValue] = useState("");
-  const [open, setOpen] = useState(false);
-  const location = useLocation();
+  const [openFilterPopup, setOpenFilterPopup] = useState(false);
+  const [openAddCartPopup, setOpenAddCartPopup] = useState(false);
+  const [addedCartData, setAddedCartData] = useState([]);
   const businessID = location.state?.businessID;
   useEffect(() => {
     dispatch(getCustomerDataAction(businessID));
     // eslint-disable-next-line
   }, [businessID]);
+
+  useEffect(() => {
+    const filterCartData = dataItemMenu.filter(item => item.count);
+    setAddedCartData(filterCartData);
+  }, [dataItemMenu]);
+
   const handleSearch = (event) => {
     event.preventDefault();
     setSearchValue(event.target.value);
@@ -64,7 +73,6 @@ const CustomerMain = () => {
       );
     }
 
-
   }
   return (
     <div className="customer-container">
@@ -76,7 +84,7 @@ const CustomerMain = () => {
       >
         <Button
           variant="outlined"
-          onClick={() => setOpen(true)}
+          onClick={() => setOpenFilterPopup(true)}
           endIcon={<FilterAltIcon />}
           sx={{
             color: '#333',
@@ -97,6 +105,7 @@ const CustomerMain = () => {
             color: '#333',
             fontSize: '28px',
           }}
+          onClick={() => { setOpenAddCartPopup(true) }}
         />
 
         <TextField
@@ -148,7 +157,8 @@ const CustomerMain = () => {
           </div>
         ))}
       </div>
-      <BottomPopup open={open} onClose={() => setOpen(false)} onOpen={() => { }} />
+      <BottomPopupFilter open={openFilterPopup} onClose={() => setOpenFilterPopup(false)} onOpen={() => { }} />
+      <BottomPopupAddCart open={openAddCartPopup} onClose={() => setOpenAddCartPopup(false)} onOpen={() => { }} addedCartData={addedCartData} />
     </div>
 
   )

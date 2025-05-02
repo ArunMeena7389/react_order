@@ -1,0 +1,89 @@
+import React from 'react';
+import { SwipeableDrawer, Box, Typography, IconButton } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
+
+
+const BottomPopupAddCart = ({ open, onClose, onOpen, addedCartData }) => {
+
+    const handleAdd = (id) => {
+
+    };
+
+    const handleRemove = (id) => {
+
+    };
+    return (
+        <SwipeableDrawer
+            anchor="bottom"
+            open={open}
+            onClose={onClose}
+            onOpen={onOpen}
+            PaperProps={{
+                sx: {
+                    borderTopLeftRadius: 16,
+                    borderTopRightRadius: 16,
+                    padding: 2,
+                    maxHeight: '80vh',
+                    height: '60vh',
+                },
+            }}
+        >
+            <Box
+                sx={{
+                    width: '100%',
+                    bgcolor: '#fff',
+                    borderRadius: '12px 12px 0 0',
+                    overflow: 'hidden',
+                }}
+            >
+                <Box sx={{ position: 'absolute', top: 8, right: 8 }}>
+                    <CloseIcon onClick={onClose} style={{ cursor: 'pointer' }} />
+                </Box>
+                {addedCartData.map((item, index) => (<Box
+                    display="flex"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    p={1}
+                    borderBottom="1px solid #e0e0e0"
+                    sx={{ width: '100%', maxWidth: 500, mx: 'auto' }}
+                    key={index}
+                >
+                    {/* Food Name */}
+                    <Typography variant="subtitle1" sx={{ fontSize: 14, flex: 1 }}>
+                        {`${index + 1}. ${item.name}`}
+                    </Typography>
+
+                    {/* Counter */}
+                    <Box
+                        display="flex"
+                        alignItems="center"
+                        border="1px solid #ccc"
+                        borderRadius="6px"
+                        px={1}
+                        mx={1}
+                    >
+                        <IconButton size="small" onClick={handleRemove}>
+                            <RemoveIcon fontSize="small" />
+                        </IconButton>
+                        <Typography variant="body2" mx={1}>
+                            {item.count}
+                        </Typography>
+                        <IconButton size="small" onClick={handleAdd}>
+                            <AddIcon fontSize="small" />
+                        </IconButton>
+                    </Box>
+                    <Typography variant="subtitle2" sx={{ fontWeight: 600, minWidth: 50 }}>
+                        ₹{Number(item.price) * item.count}
+                    </Typography>
+                </Box>))}
+                <Typography variant="subtitle2" sx={{ fontWeight: 600, minWidth: 50 }} style={{ position: "absolute", right: "30px" }}>
+                    Total :₹{0.00}
+                </Typography>
+            </Box>
+        </SwipeableDrawer>
+    );
+};
+
+export default BottomPopupAddCart;
