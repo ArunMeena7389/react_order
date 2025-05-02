@@ -1,9 +1,54 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SwipeableDrawer, Box, Typography, List, ListItemButton, FormControl, RadioGroup, FormControlLabel, Radio } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
+const staticPriceData = [
+    { id: 1, label: '0 - 100 Rs.', value: "price100" },
+    { id: 2, label: '100 - 200 Rs.', value: "price200" },
+    { id: 3, label: '200 - 300 Rs.', value: "price300" },
+    { id: 5, label: 'above 300 Rs.', value: "pricePlush" },
+
+];
+
+const staticSortData = [
+    { id: 1, label: 'Relevance', value: "relevance" },
+    { id: 2, label: 'By Price', value: "price" },
+    { id: 3, label: 'By Rating', value: "rating" },
+    { id: 5, label: 'Cost for two: Low to High', value: "costLow" },
+    { id: 6, label: 'Cost for two: High to Low', value: "costHigh" },
+
+];
+
+const staticCategoryData = [
+    { id: 1, label: 'Sweet', value: "sweet" },
+    { id: 2, label: 'Spicy', value: "spicy" },
+    { id: 3, label: 'Normal', value: "normal" },
+    { id: 5, label: 'Veg', value: "veg" },
+    { id: 6, label: 'Non-Veg', value: "nonVeg" },
+
+];
 
 const BottomPopup = ({ open, onClose, onOpen }) => {
+    const [filterName, setFilterName] = useState([
+        { id: 1, name: 'Sort', isActive: false },
+        { id: 2, name: 'Price', isActive: false },
+        { id: 3, name: 'Taste', isActive: false },
+    ]);
+
+    const [filterList, setFilterList] = useState(staticSortData);
+
+    const onHandleClickFilter = (text) => {
+        setFilterName(prev =>
+            prev.map(item =>
+                item.id === text.id
+                    ? { ...item, isActive: true }
+                    : { ...item, isActive: false }
+            )
+        );
+        if (text.id === 1) setFilterList(staticSortData);
+        if (text.id === 2) setFilterList(staticPriceData);
+        if (text.id === 3) setFilterList(staticCategoryData);
+    }
     return (
         <SwipeableDrawer
             anchor="bottom"
@@ -16,6 +61,7 @@ const BottomPopup = ({ open, onClose, onOpen }) => {
                     borderTopRightRadius: 16,
                     padding: 2,
                     maxHeight: '80vh',
+                    height: '80vh',
                 },
             }}
         >
@@ -37,13 +83,10 @@ const BottomPopup = ({ open, onClose, onOpen }) => {
                         </Typography>
                     </Box>
                     <List>
-                        {[
-                            'Sort',
-                            'Price',
-                            'Taste',
-                            'Ratings',
-                        ].map((text, index) => (
-                            <ListItemButton key={index}>{text}</ListItemButton>
+                        {filterName.map((text, index) => (
+                            <ListItemButton key={index} onClick={() => {
+                                onHandleClickFilter(text)
+                            }} style={{ background: `${text.isActive ? "#E8E8E8" : ""}` }}>{text.name}</ListItemButton>
                         ))}
                     </List>
                 </Box>
@@ -60,31 +103,14 @@ const BottomPopup = ({ open, onClose, onOpen }) => {
 
                     <FormControl component="fieldset">
                         <RadioGroup defaultValue="relevance" name="sort-options">
-                            <FormControlLabel
-                                value="relevance"
-                                control={<Radio color="warning" />}
-                                label="Relevance"
-                            />
-                            <FormControlLabel
-                                value="distance"
-                                control={<Radio />}
-                                label="By Price"
-                            />
-                            <FormControlLabel
-                                value="popularity"
-                                control={<Radio />}
-                                label="By Rating"
-                            />
-                            <FormControlLabel
-                                value="costLow"
-                                control={<Radio />}
-                                label="Cost for two: Low to High"
-                            />
-                            <FormControlLabel
-                                value="costHigh"
-                                control={<Radio />}
-                                label="Cost for two: High to Low"
-                            />
+                            {filterList.map((dt, index) => (
+                                <FormControlLabel
+                                    key={index}
+                                    value={dt.value}
+                                    control={<Radio color={dt.id === 1 ? "warning" : "primary"} />}
+                                    label={dt.label}
+                                />
+                            ))}
                         </RadioGroup>
                     </FormControl>
                 </Box>
