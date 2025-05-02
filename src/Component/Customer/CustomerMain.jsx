@@ -14,7 +14,7 @@ const CustomerMain = () => {
   const dispatch = useDispatch();
   const customerMenuData = useSelector((state) => state?.customerMenu?.data);
   const dataItem = customerMenuData?.data || [];
-  const [dataItemMenu, setDataItemMenu] = useState(dataItem);
+  const [dataItemMenu, setDataItemMenu] = useState(dataItem.map(item => ({ ...item, count: 0 })));
   const [searchValue, setSearchValue] = useState("");
   const [open, setOpen] = useState(false);
   const location = useLocation();
@@ -35,6 +35,37 @@ const CustomerMain = () => {
     }, 3000);
     return () => clearTimeout(delayDebounce);
   };
+
+  const handleAddClick = (data, type) => {
+    if (type === "Add") {
+      setDataItemMenu(prev =>
+        prev.map(item =>
+          item._id === data._id
+            ? { ...item, count: 1 }
+            : { ...item }
+        )
+      );
+    } else if (type === "plush") {
+      setDataItemMenu(prev =>
+        prev.map(item =>
+          item._id === data._id
+            ? { ...item, count: item.count + 1 }
+            : { ...item }
+        )
+      );
+
+    } else if (type === "minus") {
+      setDataItemMenu(prev =>
+        prev.map(item =>
+          item._id === data._id
+            ? { ...item, count: item.count - 1 }
+            : { ...item }
+        )
+      );
+    }
+
+
+  }
   return (
     <div className="customer-container">
       <div
@@ -89,8 +120,6 @@ const CustomerMain = () => {
           }}
         />
       </div>
-
-
       <div className="customer-card-wrapper">
         {dataItemMenu?.map((item, index) => (
           <div className="card customer-card" key={index}>
@@ -102,12 +131,23 @@ const CustomerMain = () => {
             <div className="card-body text-center text-white">
               <h5 className="card-title">{item.name}</h5>
               <p className="card-text">{item.taste}</p>
-              <p className="btn btn-primary">+ ADD</p>
+              {!item.count ? <button className="add-btn" onClick={() => { handleAddClick(item, 'Add') }}>+ ADD</button> :
+                <div className="counter-wrapper">
+                  <button
+                    className="count-btn-min"
+                    onClick={() => handleAddClick(item, 'minus')}
+                  >-</button>
+                  <span className="count-display">{item.count}</span>
+                  <button
+                    className="count-btn-plush"
+                    onClick={() => handleAddClick(item, 'plush')}
+                  >+</button>
+                </div>}
+
             </div>
           </div>
         ))}
       </div>
-
       <BottomPopup open={open} onClose={() => setOpen(false)} onOpen={() => { }} />
     </div>
 
