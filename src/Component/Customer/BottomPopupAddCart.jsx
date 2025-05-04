@@ -1,5 +1,5 @@
 import React from 'react';
-import { SwipeableDrawer, Box, Typography, IconButton } from '@mui/material';
+import { SwipeableDrawer, Box, Typography, IconButton, Button } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
@@ -14,6 +14,14 @@ const BottomPopupAddCart = ({ open, onClose, onOpen, addedCartData }) => {
     const handleRemove = (id) => {
 
     };
+
+    const handleTotalPrice = () => {
+        let total = addedCartData.reduce((sum, item) => sum + Number(item.price || 0) * item.count, 0);
+        if (total > 1000) {
+            total = total - (total * 0.05);
+        }
+        return total || "0.00";
+    }
     return (
         <SwipeableDrawer
             anchor="bottom"
@@ -78,9 +86,15 @@ const BottomPopupAddCart = ({ open, onClose, onOpen, addedCartData }) => {
                         ₹{Number(item.price) * item.count}
                     </Typography>
                 </Box>))}
-                <Typography variant="subtitle2" sx={{ fontWeight: 600, minWidth: 50 }} style={{ position: "absolute", right: "30px" }}>
-                    Total :₹{0.00}
-                </Typography>
+                {addedCartData.length ?
+                    <div>
+                        <p className='text-success'>5% extra discount if order above ₹1000.</p>
+                        <Typography variant="subtitle2" sx={{ fontWeight: 600, minWidth: 50 }} style={{ position: "absolute", right: "30px" }}>
+                            Total :₹{handleTotalPrice()}
+                        </Typography>
+                        <Button variant="contained" style={{ position: "absolute", right: "20px", marginTop: "30px" }}>Order</Button>
+                    </div>
+                    : <div>No Data Added to Cart</div>}
             </Box>
         </SwipeableDrawer>
     );
