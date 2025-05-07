@@ -35,10 +35,8 @@ const getmenueDataAction = (datas) => {
 const addMenuDataAction = (payload) => {
   return async (dispatch) => {
     try {
-      // Create FormData object
       const formData = new FormData();
 
-      // Append fields dynamically
       Object.keys(payload).forEach((key) => {
         formData.append(key, payload[key]);
       });
@@ -143,4 +141,51 @@ const getCustomerDataAction = (businessID) => {
 
 }
 
-export { selectTasteAction, getmenueDataAction, addMenuDataAction, deleteMenuDataAction, updateMenuDataAction, getCustomerDataAction };
+const addOrderAction = (payloadData) => {
+  return async (dispatch) => {
+    try {
+
+      const response = await axios.post(`${Config.url}/order/create`, payloadData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      dispatch({
+        type: typeData.ADD_ORDER_DATA_SUCCESS,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.error("Error adding menu data:", error);
+
+      dispatch({
+        type: typeData.ADD_ORDER_DATA_ERROR,
+        payload: error.response?.data || error.message,
+      });
+    }
+  };
+};
+
+const getorderDataAction = (datas) => {
+
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(Config.url + '/order', {
+        headers: {
+          "Content-Type": "application/json",
+          business_id: "businessID"
+        },
+      });
+      const data = response;
+      dispatch({ type: typeData.GET_ORDER_DATA_SUCSESS, payload: data });
+    } catch (error) {
+      dispatch({
+        type: typeData.GET_CUSTOMER_DATA_ERROR,
+        payload: error.response?.data || error.message,
+      });
+    }
+  };
+}
+
+export { selectTasteAction, getmenueDataAction, addMenuDataAction, deleteMenuDataAction, updateMenuDataAction, getCustomerDataAction, addOrderAction, getorderDataAction };

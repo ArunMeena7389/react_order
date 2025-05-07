@@ -8,8 +8,11 @@ const QRCodeComponent = () => {
   const businessID = localStorage.getItem('businessID');
   console.log(businessID, 'businessIDbusinessID');
   const websiteUrl = `https://react-order-nine.vercel.app/customer/${businessID}`;
+  console.log(businessID, "--------businessID");
+
   useEffect(() => {
     dispatch(getCustomerDataAction(businessID));
+    // eslint-disable-next-line
   }, [])
   return (
     <div style={{ textAlign: 'center', marginTop: '50px' }}>
