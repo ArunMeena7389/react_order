@@ -1,12 +1,11 @@
-import React from 'react';
-import './Sidebar.scss';
-import { NavLink, Outlet } from 'react-router-dom';
-import { Grid, Paper } from '@mui/material';
+import React from "react";
+import "./Sidebar.scss";
+import { NavLink, Outlet } from "react-router-dom";
+import { Grid, Paper } from "@mui/material";
 
 const Sidebar = () => {
   return (
     <Grid container spacing={2}>
-
       {/* Sidebar */}
       <Grid item xs={12} sm={3} md={2}>
         <Paper elevation={3}>
@@ -14,20 +13,33 @@ const Sidebar = () => {
             <div>
               <NavLink
                 to="/"
-                className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link deactive'}
+                className={({ isActive }) =>
+                  isActive ? "nav-link active" : "nav-link deactive"
+                }
               >
                 <p>Home</p>
               </NavLink>
-
+              <NavLink
+                to="/orderlist"
+                className={({ isActive }) =>
+                  isActive ? "nav-link active" : "nav-link deactive"
+                }
+              >
+                <p>Order List</p>
+              </NavLink>
               <NavLink
                 to="/setting"
-                className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link deactive'}
+                className={({ isActive }) =>
+                  isActive ? "nav-link active" : "nav-link deactive"
+                }
               >
                 <p>Setting</p>
               </NavLink>
               <NavLink
                 to="/customer"
-                className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link deactive'}
+                className={({ isActive }) =>
+                  isActive ? "nav-link active" : "nav-link deactive"
+                }
               >
                 <p>Customer View</p>
               </NavLink>

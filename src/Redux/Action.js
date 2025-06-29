@@ -147,7 +147,7 @@ const addOrderAction = (payloadData) => {
 
       const response = await axios.post(`${Config.url}/order/create`, payloadData, {
         headers: {
-          "Content-Type": "multipart/form-data",
+          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
       });
@@ -168,13 +168,15 @@ const addOrderAction = (payloadData) => {
 };
 
 const getorderDataAction = (datas) => {
-
+ const businessID = localStorage.getItem('businessID');
+ console.log(businessID,'businessID');
+ 
   return async (dispatch) => {
     try {
       const response = await axios.get(Config.url + '/order', {
         headers: {
           "Content-Type": "application/json",
-          business_id: "businessID"
+          business_id: businessID
         },
       });
       const data = response;
@@ -188,4 +190,31 @@ const getorderDataAction = (datas) => {
   };
 }
 
-export { selectTasteAction, getmenueDataAction, addMenuDataAction, deleteMenuDataAction, updateMenuDataAction, getCustomerDataAction, addOrderAction, getorderDataAction };
+const addFindCustomerAction = (payloadData,onSuccess) => {
+  return async (dispatch) => {
+    try {
+
+      const response = await axios.post(`${Config.url}/customer/add-find`, payloadData, {
+        headers: {
+          "Content-Type":  "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      dispatch({
+        type: typeData.ADD_FIND_CUSTOMER_DATA_SUCSESS,
+        payload: response.data,
+      });
+      onSuccess(response.data);
+    } catch (error) {
+      console.error("Error adding menu data:", error);
+
+      dispatch({
+        type: typeData.ADD_ORDER_DATA_ERROR,
+        payload: error.response?.data || error.message,
+      });
+    }
+  };
+};
+
+export { selectTasteAction, getmenueDataAction, addMenuDataAction, deleteMenuDataAction, updateMenuDataAction, getCustomerDataAction, addOrderAction, getorderDataAction,addFindCustomerAction };
