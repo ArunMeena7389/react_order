@@ -1,0 +1,38 @@
+.custom-input-wrapper {
+  width: 100%;
+}
+
+.custom-input-label {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.custom-input-group {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: white;
+  padding: 0 0.75rem;
+  height: 40px;
+}
+
+.custom-input-prefix {
+  //   display: flex;
+  //   align-items: center;
+  //   justify-content: center;
+  //   margin-right: 0.5rem;
+  //   width: 20px;
+  //   height: 20px;
+}
+
+.custom-input-field {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  background-color: transparent;
+  height: 100%;
+  padding: 0;
+}

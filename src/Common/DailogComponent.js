@@ -1,24 +1,45 @@
-import React, { Fragment, useRef, useState } from 'react'
+import React, { Fragment, useRef, useState } from "react";
 // import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@material-ui/core';
-import { addMenuDataAction, getmenueDataAction, updateMenuDataAction } from '../Redux/Action';
-import { useDispatch, useSelector } from 'react-redux';
+import {
+  addMenuDataAction,
+  getmenueDataAction,
+  updateMenuDataAction,
+} from "../Redux/Action";
+import { useDispatch, useSelector } from "react-redux";
 import Image from "../Image/image.png";
-import { Button, MenuItem, Select, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@mui/material';
-import { showCustomLoader } from './showCustomLoader';
+import {
+  Button,
+  MenuItem,
+  Select,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@mui/material";
+import { showCustomLoader } from "./showCustomLoader";
+import InputComponent from "../Ui-Elements/Input/InputComponent";
+import TextAreaComponent from "../Ui-Elements/TextArea/TextAreaComponent";
 
 let initialPayload = {
-  "fields": ["name", "price", "image_url", "taste", "description"],
-  "filter": {
-  }
-}
+  fields: ["name", "price", "image_url", "taste", "description"],
+  filter: {},
+};
 
-function DailogComponent({ onClick, onClose, open, title, selectedItem, ...props }) {
+function DailogComponent({
+  onClick,
+  onClose,
+  open,
+  title,
+  selectedItem,
+  ...props
+}) {
   const [preview, setPreview] = useState(selectedItem?.image || null); // for preview URL
   const [stateValue, setStateValue] = useState({
     name: selectedItem?.name || "",
     price: selectedItem?.price || "",
     taste: selectedItem?.taste || "",
-    description: selectedItem?.description || ""
+    description: selectedItem?.description || "",
   });
 
   const [error, setError] = useState({
@@ -26,8 +47,8 @@ function DailogComponent({ onClick, onClose, open, title, selectedItem, ...props
     name: false,
     price: false,
     taste: false,
-    description: false
-  })
+    description: false,
+  });
 
   const dispatch = useDispatch();
   const fileInputRef = useRef(null);
@@ -46,16 +67,19 @@ function DailogComponent({ onClick, onClose, open, title, selectedItem, ...props
     const isValid = !Object.values(newError).some(Boolean);
     if (isValid && preview) {
       if (selectedItem?.image) {
-        await dispatch(updateMenuDataAction(selectedItem._id, stateValue))
+        await dispatch(updateMenuDataAction(selectedItem._id, stateValue));
       } else {
         await dispatch(addMenuDataAction(stateValue));
       }
       onClick();
-      if (selectorDataTaste?.length) initialPayload.filter.taste = selectorDataTaste.map(dt => { return dt?.title?.toLowerCase() });
+      if (selectorDataTaste?.length)
+        initialPayload.filter.taste = selectorDataTaste.map((dt) => {
+          return dt?.title?.toLowerCase();
+        });
       await dispatch(getmenueDataAction(initialPayload));
     }
     showCustomLoader(false);
-  }
+  };
 
   const handleImageClick = () => {
     fileInputRef.current.click();
@@ -68,20 +92,25 @@ function DailogComponent({ onClick, onClose, open, title, selectedItem, ...props
     }
     setStateValue((prev) => ({
       ...prev,
-      [type]: val
+      [type]: val,
     }));
-  }
+  };
 
   return (
     <Fragment>
       <Dialog open={open} onClose={onClose} fullWidth="xl">
-        <DialogTitle>{title}
-          <Button onClick={onClick}
-            color="primary" autoFocus style={{
+        <DialogTitle>
+          {title}
+          <Button
+            onClick={onClick}
+            color="primary"
+            autoFocus
+            style={{
               float: "right",
               marginRight: "-20px",
-              fontSize: "20px"
-            }}>
+              fontSize: "20px",
+            }}
+          >
             X
           </Button>
         </DialogTitle>
@@ -93,69 +122,65 @@ function DailogComponent({ onClick, onClose, open, title, selectedItem, ...props
                 accept="image/*"
                 ref={fileInputRef}
                 onChange={(e) => {
-                  handleOnChange(e.target.files[0], "image")
+                  handleOnChange(e.target.files[0], "image");
                   error.image = false;
-                  setError({ ...error })
+                  setError({ ...error });
                 }}
                 className="hidden"
                 style={{
-                  display: "none"
+                  display: "none",
                 }}
               />
-              <div
-                className="w-48 h-48 cursor-pointer border-2 border-dashed border-gray-300 rounded-lg overflow-hidden hover:shadow-md transition"
-              >
+              <div className="w-48 h-48 cursor-pointer border-2 border-dashed border-gray-300 rounded-lg overflow-hidden hover:shadow-md transition">
                 <img
-                  src={
-                    preview ||
-                    Image
-                  }
+                  src={preview || Image}
                   alt="Preview"
-                  className={`w-full h-full object-cover cursor-pointer ${error.image && "image-error-border"}`}
+                  className={`w-full h-full object-cover cursor-pointer ${
+                    error.image && "image-error-border"
+                  }`}
                   width={"170px"}
                   height={"120px"}
                   style={{
                     cursor: "pointer",
-                    borderRadius: "10px"
+                    borderRadius: "10px",
                   }}
                   onClick={handleImageClick}
                 />
               </div>
             </div>
-            {error.image && <p className='error-color mt-2'>Image is required</p>}
+            {error.image && (
+              <p className="error-color mt-2">Image is required</p>
+            )}
             <br />
-            <TextField
-              style={{
-                borderRadius: "5px",
-              }}
-              placeholder="Name Of Item"
-              variant="outlined"
-              fullWidth
-              error={error.name}
+            <InputComponent
+              label="Name Of Item"
+              name="Item"
+              type="text"
+              placeholder="Enter"
               value={stateValue.name}
               onChange={(e) => {
-                handleOnChange(e.target.value, "name")
+                handleOnChange(e.target.value, "name");
                 error.name = false;
-                setError({ ...error })
+                setError({ ...error });
               }}
+              required
+              error={error.name ? "required" : ""}
             />
-            <br />
-            <br />
-            <TextField
-              placeholder="Price"
+            <InputComponent
+              label="Price"
+              name="Price"
               type="number"
-              variant="outlined"
-              fullWidth
-              error={error.price}
+              placeholder="Price"
               value={stateValue.price}
               onChange={(e) => {
-                handleOnChange(e.target.value, "price")
+                handleOnChange(e.target.value, "price");
                 error.price = false;
-                setError({ ...error })
+                setError({ ...error });
               }}
+              required
+              error={error.price ? "required" : ""}
+              prefix={"₹"}
             />
-            <br />
-            <br />
 
             <Select
               labelId="demo-simple-select-label"
@@ -178,43 +203,44 @@ function DailogComponent({ onClick, onClose, open, title, selectedItem, ...props
               <MenuItem value="spicy">Spicy</MenuItem>
               <MenuItem value="sour">Sour</MenuItem>
             </Select>
-            {/* <TextField
-              placeholder="Taste"
-              variant="outlined"
-              fullWidth
-              error={error.taste}
-              value={stateValue.taste}
-              onChange={(e) => {
-                handleOnChange(e.target.value, "taste")
-                error.taste = false;
-                setError({ ...error })
-              }}
-            /> */}
             <br />
             <br />
-            <TextField
-              placeholder="Description"
-              variant="outlined"
-              fullWidth
-              error={error.description}
+            {/* <InputComponent
+              label="Description"
+              name="Description"
+              type="text"
+              placeholder="Enter"
               value={stateValue.description}
               onChange={(e) => {
-                handleOnChange(e.target.value, "description")
+                handleOnChange(e.target.value, "description");
                 error.description = false;
-                setError({ ...error })
+                setError({ ...error });
               }}
+              required
+              error={error.description ? "required" : ""}
+            /> */}
+            <TextAreaComponent
+              label="Description"
+              name="description"
+              placeholder="Write something..."
+              value={stateValue.description}
+              onChange={(e) => {
+                handleOnChange(e.target.value, "description");
+                error.description = false;
+                setError({ ...error });
+              }}
+              error={error.description ? "required" : ""}
             />
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={onClickSave}
-            color="success" variant='contained'>
+          <Button onClick={onClickSave} color="success" variant="contained">
             Save
           </Button>
         </DialogActions>
       </Dialog>
     </Fragment>
-  )
+  );
 }
 
 export default DailogComponent;

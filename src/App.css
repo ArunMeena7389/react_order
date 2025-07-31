@@ -1,7 +1,9 @@
-html, body, #root {
+html,
+body,
+#root {
   height: 100%;
   margin: 0;
-  background-color: #1A2413;
+  background-color: #1a2413;
 }
 
 /* Main app layout */
@@ -9,32 +11,28 @@ html, body, #root {
   display: flex;
   flex-direction: column;
   height: 100%;
-  background-color: #1A2413;
+  background-color: #1a2413;
   /* overflow: hidden;  */
 }
 
-/* This is where the routed components will scroll */
 .main-content-scrollable {
   flex: 1;
   overflow-y: auto;
-  margin-top: 80px;
-}
-.app-container {
-  display: flex;
-  flex-direction: column;
+  margin-top: 60px;
+  width: 99%;
 }
 
 .main-content {
-  overflow-y: auto; 
+  overflow-y: auto;
 }
 .logout-button {
   display: flex;
   align-items: center;
-  background-color: #fff; 
+  background-color: #fff;
   color: rgb(11, 10, 10);
   border: none;
   border-radius: 5px;
-  padding: 5px 15px;
+  padding: 3px 15px;
   cursor: pointer;
   font-size: 16px;
 }
@@ -68,6 +66,6 @@ html, body, #root {
   z-index: 1040; /* one below modal (1050) */
 }
 .image-hover:hover {
-  transform: scale(1.20);
+  transform: scale(1.2);
   cursor: pointer;
 }
