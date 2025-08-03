@@ -1,0 +1,223 @@
+import React, { Fragment, useMemo, useRef, useState } from "react";
+import InputComponent from "../../Ui-Elements/Input/InputComponent";
+import { useDispatch, useSelector } from "react-redux";
+import { showCustomLoader } from "../../Common/showCustomLoader";
+import "./ItemCreateEdit.scss";
+import {
+  addMenuDataAction,
+  getmenueDataAction,
+  updateMenuDataAction,
+} from "../../Redux/Action";
+import TextAreaComponent from "../../Ui-Elements/TextArea/TextAreaComponent";
+import Image from "../../Image/image.png";
+import DropdownComponent from "../../Ui-Elements/Dropdown/DropdownComponent";
+import ButtonComponent from "../../Ui-Elements/Button/ButtonComponent";
+import SvgIcon from "../../SvgIcon/SvgIcon";
+import { useLocation, useNavigate } from "react-router-dom";
+import AiPopup from "../../Common/AiPopup";
+let initialPayload = {
+  fields: ["name", "price", "image_url", "taste", "description"],
+  filter: {},
+};
+const ItemCreateEdit = ({
+  //   selectedItem,
+  ...props
+}) => {
+  const location = useLocation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const fileInputRef = useRef(null);
+
+  const selectedItem = useMemo(() => location.state || {}, [location.state]);
+  const selectorDataTaste = useSelector((state) => state.taste.data);
+
+  const [preview, setPreview] = useState(selectedItem?.image || null);
+  const [stateValue, setStateValue] = useState({
+    name: selectedItem?.name || "",
+    price: selectedItem?.price || "",
+    taste: selectedItem?.taste || "",
+    description: selectedItem?.description || "",
+  });
+  const [error, setError] = useState({
+    image: false,
+    name: false,
+    price: false,
+    taste: false,
+    description: false,
+  });
+  const [isOpenAiPopup, setIsOpenAiPopup] = useState(false);
+  const onClickSave = async () => {
+    showCustomLoader(true);
+    let newError = Object.keys(stateValue).reduce((acc, key) => {
+      acc[key] = !stateValue[key];
+      return acc;
+    }, {});
+    if (!preview) {
+      newError.image = true;
+    }
+    setError({ ...newError });
+    const isValid = !Object.values(newError).some(Boolean);
+    if (isValid && preview) {
+      if (selectedItem?.image) {
+        await dispatch(updateMenuDataAction(selectedItem._id, stateValue));
+      } else {
+        await dispatch(addMenuDataAction(stateValue));
+      }
+      navigate("/merchant");
+      if (selectorDataTaste?.length)
+        initialPayload.filter.taste = selectorDataTaste.map((dt) => {
+          return dt?.title?.toLowerCase();
+        });
+      await dispatch(getmenueDataAction(initialPayload));
+    }
+    showCustomLoader(false);
+  };
+
+  const handleImageClick = () => {
+    fileInputRef.current.click();
+  };
+
+  const handleOnChange = (val, type) => {
+    if (type === "image" && val) {
+      const objectUrl = URL.createObjectURL(val);
+      setPreview(objectUrl);
+    }
+    setStateValue((prev) => ({
+      ...prev,
+      [type]: val,
+    }));
+  };
+  return (
+    <Fragment>
+      <div className="item-form-wrapper">
+        {/* Scrollable content area */}
+        <div className="form-scroll-content">
+          <div className="flex flex-col items-center gap-4 ">
+            <input
+              type="file"
+              accept="image/*"
+              ref={fileInputRef}
+              onChange={(e) => {
+                handleOnChange(e.target.files[0], "image");
+                error.image = false;
+                setError({ ...error });
+              }}
+              className="hidden"
+              style={{
+                display: "none",
+              }}
+            />
+            <div className="w-48 h-48 cursor-pointer border-2 border-dashed border-gray-300 rounded-lg overflow-hidden hover:shadow-md transition">
+              <img
+                src={preview || Image}
+                alt="Preview"
+                className={`w-full h-full object-cover cursor-pointer ${
+                  error.image && "image-error-border"
+                }`}
+                width={"170px"}
+                height={"120px"}
+                style={{
+                  cursor: "pointer",
+                  borderRadius: "10px",
+                }}
+                onClick={handleImageClick}
+              />
+            </div>
+          </div>
+          {error.image && <p className="error-color mt-2">Image is required</p>}
+          <br />
+          <InputComponent
+            label="Name Of Item"
+            name="Item"
+            type="text"
+            placeholder="Enter"
+            value={stateValue.name}
+            onChange={(e) => {
+              handleOnChange(e.target.value, "name");
+              error.name = false;
+              setError({ ...error });
+            }}
+            required
+            error={error.name ? "required" : ""}
+          />
+          <br />
+          <InputComponent
+            label="Price"
+            name="Price"
+            type="number"
+            placeholder="Price"
+            value={stateValue.price}
+            onChange={(e) => {
+              handleOnChange(e.target.value, "price");
+              error.price = false;
+              setError({ ...error });
+            }}
+            required
+            error={error.price ? "required" : ""}
+            prefix={"₹"}
+          />
+          <br />
+          <DropdownComponent
+            label="Taste"
+            name="taste"
+            value={stateValue.taste}
+            onChange={(e) => {
+              handleOnChange(e.target.value, "taste");
+              error.taste = false;
+              setError({ ...error });
+            }}
+            required
+            error={error.taste ? "Taste is required" : ""}
+            options={[
+              { label: "Sweet", value: "sweet" },
+              { label: "Spicy", value: "spicy" },
+              { label: "Sour", value: "sour" },
+            ]}
+          />
+          <br />
+          <TextAreaComponent
+            label="Description"
+            name="description"
+            placeholder="Write something..."
+            value={stateValue.description}
+            onChange={(e) => {
+              handleOnChange(e.target.value, "description");
+              error.description = false;
+              setError({ ...error });
+            }}
+            error={error.description ? "required" : ""}
+            className="mb-3"
+            showAiButton={true}
+            handleAiPopup={() => setIsOpenAiPopup(true)}
+          />
+        </div>
+        <div className="form-footer">
+          <ButtonComponent
+            name="Cancel"
+            onClick={() => navigate("/merchant")}
+            variant="secondary"
+            className="ml-3"
+          />
+          <ButtonComponent
+            name="Submit"
+            onClick={onClickSave}
+            type="submit"
+            variant="primary"
+            iconRight={<SvgIcon name="arrow-right" width={16} height={16} />}
+          />
+        </div>
+      </div>
+      <AiPopup
+        textValue={stateValue.description}
+        isOpen={isOpenAiPopup}
+        onClose={() => setIsOpenAiPopup(false)}
+        onPrimaryClick={(data) => {
+          handleOnChange(data.aitextValue, "description");
+          setIsOpenAiPopup(false);
+        }}
+      />
+    </Fragment>
+  );
+};
+
+export default ItemCreateEdit;

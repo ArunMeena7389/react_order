@@ -50,6 +50,7 @@ const InputComponent = ({
           disabled={disabled}
           required={required}
           className={`custom-input-field ${inputClass}`}
+          autoComplete="off"
         />
         {suffixIcon && value && (
           <span

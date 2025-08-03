@@ -1,43 +1,50 @@
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
+/* Sidebar.scss */
+@import "../../Styles/_variables";
+.layout {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
 }
 
 .sidebar {
-    width: 300px;
-    height: 100%;
-    background: #ffffff;
-    padding-top: 30px;
-    position: fixed;
-    left: 0;
-    top: 0;
+  width: 300px;
+  background-color: $mg-bg-grey-sidebar;
+  padding-top: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  position: relative;
 }
 
-.sidebar div p {
-    padding: 10px;
-    margin-left: 10px;
-    border-bottom: 1px solid #0000;
-}
-.sidebar div a{
-    color: #000000;
-    text-decoration: none;
-    font-size: 25px;
-
+.nav-link {
+  text-decoration: none;
+  color: #333;
+  display: block;
+  padding: 10px 15px;
+  margin-bottom: 8px;
+  font-size: 16px;
+  border-radius: 8px;
 }
 
-.sidebar div .deactive p:hover{
-    cursor: pointer;
-    background: rgb(107, 184, 107);
-    border-radius: 20px 0px 0px 0px;
-    color: #ffffff;
+.nav-link:hover {
+  background-color: #ddd;
 }
 
-.nav-link.active p {
-    cursor: pointer;
-    background: green;
-    border-radius: 20px 0px 0px 0px;
-    color: #ffffff;
-  }
+.nav-link.active {
+  background-color: #888; // grey
+  color: #fff;
+  font-weight: bold;
+}
+
+.main-content {
+  flex: 1;
+  height: calc(100vh - 46px);
+  overflow: hidden;
+}
+
+.content-scroll-area {
+  height: 100%;
+  overflow-y: auto;
+  padding: 16px; /* optional spacing */
+  box-sizing: border-box;
+}

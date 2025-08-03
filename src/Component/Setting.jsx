@@ -1,15 +1,13 @@
-import React from 'react'
-import QRCodeComponent from './QRCode/QRCodeComponent';
+import React from "react";
+import QRCodeComponent from "./QRCode/QRCodeComponent";
 
 const Setting = () => {
-
-    
   return (
-    <div  className='text-white'>
+    <div>
       <h2>Setting</h2>
-      <QRCodeComponent/>
+      <QRCodeComponent />
     </div>
-  )
-}
+  );
+};
 
 export default Setting;

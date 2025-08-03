@@ -229,6 +229,33 @@ const addFindCustomerAction = (payloadData, onSuccess) => {
   };
 };
 
+const genrateAiText = (datas, onSuccess) => {
+  return async (dispatch) => {
+    try {
+      const response = await instance.post(
+        Config.url + "/ai/generate-description",
+        datas,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const data = response;
+      onSuccess(data.data);
+      dispatch({ type: typeData.GET_GENRATE_AI_DATA_SUCSESS, payload: data });
+    } catch (error) {
+      if (
+        error?.response?.data?.error &&
+        error?.response?.data?.error === "Invalid token"
+      ) {
+        // localStorage.removeItem('token');
+        // window.location.reload();
+      }
+      dispatch({ type: "FETCH_DATA_ERROR", payload: error });
+    }
+  };
+};
 export {
   selectTasteAction,
   getmenueDataAction,
@@ -239,4 +266,5 @@ export {
   addOrderAction,
   getorderDataAction,
   addFindCustomerAction,
+  genrateAiText,
 };

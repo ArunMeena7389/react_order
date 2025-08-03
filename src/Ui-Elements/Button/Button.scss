@@ -1,0 +1,91 @@
+@import "../../Styles/_variables";
+.custom-button {
+  padding: 10px 16px;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  &.full-width {
+    width: 100%;
+  }
+
+  &.primary {
+    background-color: $confirm-button-bg;
+    color: $confirm-button-text;
+
+    &:hover {
+      background-color: $confirm-button-bg-hover;
+    }
+  }
+
+  &.secondary {
+    background-color: $cancel-button-bg;
+    color: $confirm-button-text;
+
+    &:hover {
+      background-color: $cancel-button-bg-hover;
+    }
+  }
+
+  &.danger {
+    background-color: #dc3545;
+    color: $confirm-button-text;
+
+    &:hover {
+      background-color: #c82333;
+    }
+  }
+
+  // ✅ New AI Variant
+  &.ai {
+    background: linear-gradient(135deg, #4a90e2, #7b61ff);
+    color: white;
+    font-weight: 500;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 2px 5px rgba(123, 97, 255, 0.3);
+
+    &:hover {
+      background: linear-gradient(135deg, #3c7edc, #684ce6);
+      box-shadow: 0 3px 8px rgba(123, 97, 255, 0.5);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+
+  &.full-width {
+    width: 100%;
+  }
+
+  .button-icon-left,
+  .button-icon-right {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .button-icon-left {
+    margin-right: 6px;
+  }
+
+  .button-icon-right {
+    margin-left: 6px;
+  }
+
+  .button-icon-left,
+  .button-icon-right {
+    display: inline-flex;
+    align-items: center;
+  }
+}

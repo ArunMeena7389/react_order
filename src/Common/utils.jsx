@@ -1,7 +1,7 @@
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 
-export function formatPrice(amount, locale = "en-IN", currency = null) {
+export function formatPrice(amount = 0, locale = "en-IN", currency = null) {
   const options = {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,

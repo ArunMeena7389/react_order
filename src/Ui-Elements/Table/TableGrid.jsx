@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./TableGrid.scss";
 
 const TableGrid = ({ columns = [], data = [] }) => {
   const [tableData, setTableData] = useState(data);
@@ -41,8 +42,8 @@ const TableGrid = ({ columns = [], data = [] }) => {
   };
 
   return (
-    <div className="table-responsive mr-3">
-      <table className="table table-bordered table-striped align-middle">
+    <div className="mg-table-grid mr-3">
+      <table className="table table-striped align-middle">
         <thead>
           <tr>
             {columns.map((col) => (

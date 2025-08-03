@@ -1,7 +1,6 @@
 import React from "react";
 import "./Header.scss";
 // import { Button } from '@material-ui/core';
-import DailogComponent from "../../Common/DailogComponent";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 // import { useDispatch, useSelector } from 'react-redux';
@@ -18,14 +17,10 @@ import { useNavigate } from "react-router-dom";
 //     { id: "3", label: 'Sour', title: 'Sour' },
 // ];
 const Header = () => {
-  const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
 
-  const handleClickToOpen = () => {
-    setOpen(true);
-  };
-  const handleToClose = () => {
-    setOpen(false);
+  const handleAddClick = () => {
+    navigate("/merchant/item");
   };
 
   // useEffect(() => {
@@ -56,19 +51,10 @@ const Header = () => {
           }}
           color="inherit"
           variant="outlined"
-          onClick={handleClickToOpen}
+          onClick={handleAddClick}
         >
           +Add
         </Button>
-        {open && (
-          <DailogComponent
-            open={open}
-            onClick={handleToClose}
-            onClose={handleToClose}
-            title={"Add a item"}
-            text={" I am Good, Hope the same for you!"}
-          />
-        )}
       </div>
       <div className="d-flex m-2" style={{ gap: 10 }}>
         <button

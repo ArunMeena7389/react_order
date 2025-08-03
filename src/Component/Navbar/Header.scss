@@ -1,3 +1,4 @@
+@import "../../Styles/_variables";
 .header {
   position: fixed;
   top: 0;
@@ -9,7 +10,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: green;
+  background-color: #28a745;
   color: white;
 }
 

@@ -1,4 +1,6 @@
-/* inputOverride.css */
+@import "../../Styles/_variables";
+
+/* Remove spin buttons for number input */
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
@@ -10,39 +12,38 @@ input[type="number"] {
 }
 
 .custom-input-wrapper {
-  // margin-bottom: 1.5rem;
   width: 100%;
 }
 
 .custom-input-label {
-  display: block;
   font-weight: 500;
-  margin-bottom: 6px;
-  color: #333;
+  margin-bottom: 8px;
+  color: $text-primary-color;
   font-size: 1rem;
 }
 
 .required-star {
-  color: red;
+  color: $error-color;
   margin-left: 2px;
 }
 
 .custom-input-group {
   display: flex;
   align-items: center;
-  border: 1.5px solid #ccc;
+  border: 1.5px solid $border-color;
   border-radius: 6px;
   padding: 0;
   transition: border-color 0.3s;
   background-color: #fff;
+  min-height: 46px; // ✅ Ensures decent height
 
   &.error {
-    border-color: red;
+    border-color: $error-color;
   }
 
   &:focus-within {
-    border-color: #007bff;
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+    border-color: $primary-color;
+    box-shadow: 0 0 0 3px rgba($primary-color, 0.2);
   }
 }
 
@@ -59,14 +60,20 @@ input[type="number"] {
 
 .custom-input-suffix {
   cursor: pointer;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  height: 100%;
 }
 
 .custom-input-field {
   flex: 1;
   border: none;
   outline: none;
-  padding: 12px 14px;
+  padding: 14px 5px;
   font-size: 1rem;
+  height: 100%;
+  background: transparent;
   border-radius: 6px;
 
   &::placeholder {
@@ -80,19 +87,19 @@ input[type="number"] {
 }
 
 .custom-helper-text {
-  font-size: 0.9rem;
+  font-size: 0.875rem;
   margin-top: 4px;
-  color: #6c757d;
+  color: $text-secondary-color;
 
   &.error {
-    color: red;
+    color: $error-color;
   }
 }
 
 @media (max-width: 576px) {
   .custom-input-field {
     font-size: 0.95rem;
-    padding: 10px 12px;
+    padding: 12px;
   }
 
   .custom-input-label {
@@ -100,7 +107,6 @@ input[type="number"] {
   }
 
   .custom-input-prefix {
-    padding: 0 10px;
     font-size: 0.95rem;
   }
 }

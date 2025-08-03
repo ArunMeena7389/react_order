@@ -15,7 +15,8 @@ import PrivateRoute from "./Component/PrivateRoute";
 import { PersistGate } from "redux-persist/integration/react";
 import CustomerMain from "./Component/Customer/CustomerMain";
 import CustomerRedirectPage from "./Component/Customer/CustomerRedirectPage";
-import OrderList from "./Routes/OrderList";
+import OrderList from "./Routes/OrderList/OrderList";
+import ItemCreateEdit from "./Component/Items/ItemCreateEdit";
 
 const isMobileDevice = () => {
   return window.innerWidth <= 768;
@@ -54,7 +55,7 @@ const AppContent = () => {
               }
             >
               <Route
-                path="/"
+                path="/merchant"
                 element={
                   <PrivateRoute>
                     <ItemTable />
@@ -62,7 +63,7 @@ const AppContent = () => {
                 }
               />
               <Route
-                path="/orderlist"
+                path="/merchant/orderlist"
                 element={
                   <PrivateRoute>
                     <OrderList />
@@ -70,10 +71,18 @@ const AppContent = () => {
                 }
               />
               <Route
-                path="/setting"
+                path="/merchant/setting"
                 element={
                   <PrivateRoute>
                     <Setting />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/merchant/item"
+                element={
+                  <PrivateRoute>
+                    <ItemCreateEdit />
                   </PrivateRoute>
                 }
               />
@@ -84,7 +93,10 @@ const AppContent = () => {
           <Route
             path="*"
             element={
-              <Navigate to={!isMobileDevice() ? "/" : "/customer"} replace />
+              <Navigate
+                to={!isMobileDevice() ? "/merchant" : "/customer"}
+                replace
+              />
             }
           />
         </Routes>

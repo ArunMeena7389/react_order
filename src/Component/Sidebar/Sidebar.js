@@ -1,58 +1,59 @@
+// Sidebar.jsx
 import React from "react";
 import "./Sidebar.scss";
 import { NavLink, Outlet } from "react-router-dom";
-import { Grid, Paper } from "@mui/material";
 
 const Sidebar = () => {
   return (
-    <Grid container spacing={2}>
+    <div className="layout">
       {/* Sidebar */}
-      <Grid item xs={12} sm={3} md={2}>
-        <Paper elevation={3}>
-          <div className="sidebar mt-5">
-            <div>
-              <NavLink
-                to="/"
-                className={({ isActive }) =>
-                  isActive ? "nav-link active" : "nav-link deactive"
-                }
-              >
-                <p>Home</p>
-              </NavLink>
-              <NavLink
-                to="/orderlist"
-                className={({ isActive }) =>
-                  isActive ? "nav-link active" : "nav-link deactive"
-                }
-              >
-                <p>Order List</p>
-              </NavLink>
-              <NavLink
-                to="/setting"
-                className={({ isActive }) =>
-                  isActive ? "nav-link active" : "nav-link deactive"
-                }
-              >
-                <p>Setting</p>
-              </NavLink>
-              <NavLink
-                to="/customer"
-                className={({ isActive }) =>
-                  isActive ? "nav-link active" : "nav-link deactive"
-                }
-              >
-                <p>Customer View</p>
-              </NavLink>
-            </div>
-          </div>
-        </Paper>
-      </Grid>
+      <div className="sidebar">
+        <NavLink
+          to="/merchant"
+          end
+          className={({ isActive }) =>
+            isActive ? "nav-link active" : "nav-link"
+          }
+        >
+          Home
+        </NavLink>
+
+        <NavLink
+          to="/merchant/orderlist"
+          className={({ isActive }) =>
+            isActive ? "nav-link active" : "nav-link"
+          }
+        >
+          Order List
+        </NavLink>
+
+        <NavLink
+          to="/merchant/setting"
+          className={({ isActive }) =>
+            isActive ? "nav-link active" : "nav-link"
+          }
+        >
+          Setting
+        </NavLink>
+
+        <NavLink
+          to="/customer"
+          end
+          className={({ isActive }) =>
+            isActive ? "nav-link active" : "nav-link"
+          }
+        >
+          Customer View
+        </NavLink>
+      </div>
 
       {/* Main Content */}
-      <Grid item xs={12} sm={9} md={10}>
-        <Outlet />
-      </Grid>
-    </Grid>
+      <div className="main-content">
+        <div className="content-scroll-area">
+          <Outlet />
+        </div>
+      </div>
+    </div>
   );
 };
 

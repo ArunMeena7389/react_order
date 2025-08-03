@@ -1,0 +1,39 @@
+@import "../../Styles/_variables";
+
+.text-area-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.mg-text-area {
+  width: 100%;
+  border: 2px solid $border-color;
+  border-radius: 8px;
+  padding: 10px;
+  resize: vertical;
+  font-size: 1rem;
+  min-height: 100px;
+  position: relative;
+
+  &.is-invalid {
+    border-color: $error-color;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $primary-color;
+    box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+  }
+}
+
+.mg-ai-button {
+  position: absolute;
+  bottom: 8px;
+  right: 6px;
+  background: transparent;
+  border: none;
+  font-size: 14px;
+  color: #999;
+  cursor: pointer;
+  margin: 3px;
+}

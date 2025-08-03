@@ -1,18 +1,19 @@
-$primary-color: #b13c3c;
-.MuiButton-containedSuccess {
-    background-color: #2e7d32 !important;
-  }
-  
-  .MuiButton-containedSuccess:hover {
-    background-color: #1b5e20 !important;
-  }
-.error-color{
-    color: $primary-color;
-}
-.image-error-border{
-    border: 2px solid $primary-color;
+/* Slim and smooth scrollbar for WebKit browsers */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
 }
 
-.btn-save{
-    color: #b13c3c;
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.4);
 }

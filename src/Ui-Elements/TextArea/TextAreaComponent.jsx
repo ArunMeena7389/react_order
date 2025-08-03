@@ -1,5 +1,6 @@
-import React from "react";
-// import '../Input/Input.scss'; // Keep same style file for consistency
+import React, { Fragment } from "react";
+import "./Textarea.scss";
+import ButtonComponent from "../Button/ButtonComponent";
 import SvgIcon from "../../SvgIcon/SvgIcon";
 
 const TextAreaComponent = ({
@@ -10,6 +11,7 @@ const TextAreaComponent = ({
   onChange,
   onBlur,
   onFocus,
+  handleAiPopup,
   rows = 4,
   disabled = false,
   required = false,
@@ -17,66 +19,61 @@ const TextAreaComponent = ({
   helperText = "",
   className = "",
   inputClass = "",
-  prefix = null,
-  suffixIcon = null,
+  showAiButton = false,
+  height = "170px",
 }) => {
-  const onClearClick = () => {
-    const syntheticEvent = {
-      target: {
-        value: "",
-        name,
-      },
-    };
-    onChange(syntheticEvent);
-  };
-
   return (
-    <div className={`custom-input-wrapper ${className}`}>
-      {label && (
-        <label htmlFor={name} className="custom-input-label form-label">
-          {label} {required && <span className="required-star">*</span>}
-        </label>
-      )}
+    <Fragment>
+      <div className={`${className}`}>
+        {label && (
+          <label htmlFor={name}>
+            {label} {required && <span className="required-star">*</span>}
+          </label>
+        )}
 
-      <div className={`${error ? "error" : ""} d-flex align-items-start`}>
-        {prefix && <span className="custom-input-prefix">{prefix}</span>}
+        <div className={`${error ? "error" : ""} position-relative`}>
+          <textarea
+            id={name}
+            name={name}
+            placeholder={placeholder}
+            value={value}
+            onChange={onChange}
+            onBlur={onBlur}
+            onFocus={onFocus}
+            disabled={disabled}
+            required={required}
+            rows={rows}
+            className={`mg-text-area ${inputClass} ${
+              error ? "is-invalid" : ""
+            }`}
+            style={{ height: height }}
+          ></textarea>
 
-        <textarea
-          id={name}
-          name={name}
-          placeholder={placeholder}
-          value={value}
-          onChange={onChange}
-          onBlur={onBlur}
-          onFocus={onFocus}
-          disabled={disabled}
-          required={required}
-          rows={rows}
-          className={`form-control ${inputClass} ${error ? "is-invalid" : ""}`}
-        ></textarea>
+          {showAiButton && (
+            <div>
+              <ButtonComponent
+                name="Thinking..."
+                onClick={handleAiPopup}
+                type="submit"
+                variant="ai"
+                className="mg-ai-button"
+                iconRight={<SvgIcon name="Ai" width={20} height={20} />}
+              />
+            </div>
+          )}
+        </div>
 
-        {suffixIcon && value && (
-          <span className="custom-input-suffix mt-1" onClick={onClearClick}>
-            <SvgIcon
-              name="clear"
-              width={16}
-              height={16}
-              className="text-secondary"
-            />
-          </span>
+        {(error || helperText) && (
+          <div
+            className={`custom-helper-text ${
+              error ? "text-danger" : "text-muted"
+            }`}
+          >
+            {error || helperText}
+          </div>
         )}
       </div>
-
-      {(error || helperText) && (
-        <div
-          className={`custom-helper-text ${
-            error ? "text-danger" : "text-muted"
-          }`}
-        >
-          {error || helperText}
-        </div>
-      )}
-    </div>
+    </Fragment>
   );
 };
 
