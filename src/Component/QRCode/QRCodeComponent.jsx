@@ -6,7 +6,6 @@ import { useDispatch } from 'react-redux';
 const QRCodeComponent = () => {
   const dispatch = useDispatch();
   const businessID = localStorage.getItem('businessID');
-  localStorage.setItem("business_ID",businessID);
   const websiteUrl = `https://react-order-nine.vercel.app/customer/${businessID}`;
 
   useEffect(() => {
