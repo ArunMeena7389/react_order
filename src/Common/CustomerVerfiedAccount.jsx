@@ -40,7 +40,6 @@ const CustomerVerfiedAccount = ({
   });
 
   const [isOtpField, setIsOtpField] = useState(false);
-  const businessID = localStorage.getItem("businessID");
   const handleOnChange = (val, type) => {
     setStateValue((prev) => ({
       ...prev,
@@ -93,6 +92,7 @@ const CustomerVerfiedAccount = ({
         console.log("Verified & Submitted:", stateValue);
         onClick?.(stateValue);
         onClose();
+          const businessID = localStorage.getItem("business_ID");
         await dispatch(
           addFindCustomerAction(
             { name: stateValue.name, mobile: `91${stateValue.mobile}` },
@@ -111,7 +111,6 @@ const CustomerVerfiedAccount = ({
                 order_accept: false,
               };
               dispatch(addOrderAction(orderPayload));
-              console.log(data,"orderPayload",orderPayload, "res---------data--11111111");
             }
           )
         );

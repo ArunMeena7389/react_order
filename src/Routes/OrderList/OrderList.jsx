@@ -149,10 +149,10 @@ const OrderList = () => {
                 }}
               />
               <ButtonComponent
-                name="Delete"
+                name="Save"
                 variant="primary"
                 onClick={() => {
-                  handleClose("Delete");
+                  handleClose("save");
                 }}
               />
             </>

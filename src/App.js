@@ -1,22 +1,22 @@
-import React from "react";
-import "./App.css";
-import "./Styles/Common.scss";
+import React from 'react';
+import './App.css';
+import './Styles/Common.scss';
 import { Provider } from "react-redux";
 import { store, persistor } from "./Redux/store";
-import "bootstrap/dist/css/bootstrap.min.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
-import ItemTable from "./Component/Items/ItemTable";
-import Setting from "./Component/Setting";
-import Sidebar from "./Component/Sidebar/Sidebar";
-import Header from "./Component/Navbar/Header";
-import Signup from "./Component/SignupLogin/Signup";
-import Login from "./Component/SignupLogin/Login";
-import PrivateRoute from "./Component/PrivateRoute";
-import { PersistGate } from "redux-persist/integration/react";
-import CustomerMain from "./Component/Customer/CustomerMain";
-import CustomerRedirectPage from "./Component/Customer/CustomerRedirectPage";
-import OrderList from "./Routes/OrderList/OrderList";
-import ItemCreateEdit from "./Component/Items/ItemCreateEdit";
+import ItemTable from './Component/Items/ItemTable';
+import Setting from './Component/Setting';
+import Sidebar from './Component/Sidebar/Sidebar';
+import Header from './Component/Navbar/Header';
+import Signup from './Component/SignupLogin/Signup';
+import Login from './Component/SignupLogin/Login';
+import PrivateRoute from './Component/PrivateRoute';
+import { PersistGate } from 'redux-persist/integration/react';
+import CustomerMain from './Component/Customer/CustomerMain';
+import CustomerRedirectPage from './Component/Customer/CustomerRedirectPage';
+import OrderList from './Routes/OrderList/OrderList';
+import ItemCreateEdit from './Component/Items/ItemCreateEdit';
 
 const isMobileDevice = () => {
   return window.innerWidth <= 768;
@@ -24,10 +24,7 @@ const isMobileDevice = () => {
 
 const AppContent = () => {
   const location = useLocation();
-  const isAuthPage =
-    location.pathname === "/sign-up" ||
-    location.pathname === "/sign-in" ||
-    isMobileDevice();
+  const isAuthPage = location.pathname === "/sign-up" || location.pathname === "/sign-in" || isMobileDevice();
 
   return (
     <div className="main-app">
@@ -35,25 +32,17 @@ const AppContent = () => {
 
       <div className={!isAuthPage ? `main-content-scrollable` : ""}>
         <Routes>
-          {!isMobileDevice() && (
+          {!isMobileDevice() &&
             <>
               <Route path="/sign-up" element={<Signup />} />
               <Route path="/sign-in" element={<Login />} />
             </>
-          )}
+          }
           <Route path="/customer/:id" element={<CustomerRedirectPage />} />
           <Route path="/customer" element={<CustomerMain />} />
 
           {!isAuthPage && (
-            <Route
-              element={
-                !isMobileDevice() || location.pathname === "/customer" ? (
-                  <Sidebar />
-                ) : (
-                  <div></div>
-                )
-              }
-            >
+            <Route element={(!isMobileDevice() || location.pathname === '/customer') ? <Sidebar /> : <div></div>}>
               <Route
                 path="/merchant"
                 element={
@@ -62,7 +51,7 @@ const AppContent = () => {
                   </PrivateRoute>
                 }
               />
-              <Route
+               <Route
                 path="/merchant/orderlist"
                 element={
                   <PrivateRoute>
@@ -90,20 +79,13 @@ const AppContent = () => {
           )}
 
           {/* Redirect unknown paths */}
-          <Route
-            path="*"
-            element={
-              <Navigate
-                to={!isMobileDevice() ? "/merchant" : "/customer"}
-                replace
-              />
-            }
-          />
+          <Route path="*" element={<Navigate to={!isMobileDevice() ? "/merchant" : "/customer"} replace />} />
         </Routes>
       </div>
     </div>
   );
 };
+
 
 const App = () => {
   return (

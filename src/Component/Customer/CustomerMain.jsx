@@ -22,6 +22,8 @@ const CustomerMain = () => {
   const [openAddCartPopup, setOpenAddCartPopup] = useState(false);
   const [addedCartData, setAddedCartData] = useState([]);
   const businessID = location.state?.businessID;
+  console.log(businessID,'businessIDbusinessID111');
+  
   useEffect(() => {
     dispatch(getCustomerDataAction(businessID));
     // eslint-disable-next-line
