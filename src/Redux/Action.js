@@ -127,7 +127,7 @@ const updateMenuDataAction = (id, payload) => {
   };
 };
 
-const getCustomerDataAction = (businessID) => {
+const getCustomerDataAction = (businessID, onSuccess) => {
   return async (dispatch) => {
     try {
       const response = await axios.get(Config.url + "/menu/data", {
@@ -137,6 +137,7 @@ const getCustomerDataAction = (businessID) => {
         },
       });
       const data = response;
+      onSuccess(data);
       dispatch({ type: typeData.GET_CUSTOMER_DATA_SUCSESS, payload: data });
     } catch (error) {
       dispatch({

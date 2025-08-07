@@ -1,53 +1,41 @@
-// Sidebar.jsx
 import React from "react";
 import "./Sidebar.scss";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
+
+const RouteList = [
+  { id: "1", name: "Home", redirect_url: "/merchant" },
+  { id: "2", name: "Order List", redirect_url: "/merchant/orderlist" },
+  { id: "3", name: "Setting", redirect_url: "/merchant/setting" },
+  { id: "4", name: "Customer View", redirect_url: "/customer" },
+];
 
 const Sidebar = () => {
+  const { pathname } = useLocation();
+
+  const isHomeActive =
+    pathname === "/merchant" || pathname.startsWith("/merchant/item");
+
+  const getLinkClass = (item) => {
+    if (item.redirect_url === "/merchant") {
+      return isHomeActive ? "nav-link active" : "nav-link";
+    }
+    return pathname === item.redirect_url ? "nav-link active" : "nav-link";
+  };
+
   return (
     <div className="layout">
-      {/* Sidebar */}
       <div className="sidebar">
-        <NavLink
-          to="/merchant"
-          end
-          className={({ isActive }) =>
-            isActive ? "nav-link active" : "nav-link"
-          }
-        >
-          Home
-        </NavLink>
-
-        <NavLink
-          to="/merchant/orderlist"
-          className={({ isActive }) =>
-            isActive ? "nav-link active" : "nav-link"
-          }
-        >
-          Order List
-        </NavLink>
-
-        <NavLink
-          to="/merchant/setting"
-          className={({ isActive }) =>
-            isActive ? "nav-link active" : "nav-link"
-          }
-        >
-          Setting
-        </NavLink>
-
-        <NavLink
-          to="/customer"
-          end
-          className={({ isActive }) =>
-            isActive ? "nav-link active" : "nav-link"
-          }
-        >
-          Customer View
-        </NavLink>
+        {RouteList.map((item) => (
+          <NavLink
+            key={item.id}
+            to={item.redirect_url}
+            className={() => getLinkClass(item)}
+          >
+            {item.name}
+          </NavLink>
+        ))}
       </div>
 
-      {/* Main Content */}
       <div className="main-content">
         <div className="content-scroll-area">
           <Outlet />
