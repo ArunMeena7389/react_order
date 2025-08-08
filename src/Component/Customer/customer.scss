@@ -1,12 +1,15 @@
 .customer-container {
-  padding: 10px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
-// card css customer --------
 .customer-card-wrapper {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 15px;
+  overflow-y: auto;
+  gap: 10px;
   padding: 2px;
 }
 
@@ -133,4 +136,7 @@
   .search-input {
     width: 100%;
   }
+}
+.customer-card-wrapper::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }

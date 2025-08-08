@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./TableGrid.scss";
 
-const TableGrid = ({ columns = [], data = [] }) => {
+const TableGrid = ({ columns = [], footerData = [], data = [] }) => {
   const [tableData, setTableData] = useState(data);
   const [sortConfig, setSortConfig] = useState({ key: "", direction: "asc" });
 
@@ -43,64 +43,97 @@ const TableGrid = ({ columns = [], data = [] }) => {
 
   return (
     <div className="mg-table-grid mr-3">
-      <table className="table table-striped align-middle">
-        <thead>
-          <tr>
-            {columns.map((col) => (
-              <th
-                key={col.key}
-                onClick={() => col.sort && handleSort(col.key)}
-                style={{
-                  cursor: col.sort ? "pointer" : "default",
-                  width: col.width || "auto",
-                  minWidth: col.minWidth || "auto",
-                }}
-              >
-                {col.label}
-                {getArrow(col.key)}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {tableData.length === 0 ? (
+      <div className="fixed-height-table">
+        <table className="table table-striped align-middle table-head">
+          <thead>
             <tr>
-              <td colSpan={columns.length} className="text-center">
-                No data found
-              </td>
+              {columns.map((col) => (
+                <th
+                  key={col.key}
+                  onClick={() => col.sort && handleSort(col.key)}
+                  style={{
+                    cursor: col.sort ? "pointer" : "default",
+                    width: col.width || "auto",
+                    minWidth: col.minWidth || "auto",
+                  }}
+                >
+                  {col.label}
+                  {getArrow(col.key)}
+                </th>
+              ))}
             </tr>
-          ) : (
-            tableData.map((row, idx) => (
-              <tr key={idx}>
-                {columns.map((col) => (
-                  <td
-                    key={col.key}
-                    style={{
-                      width: col.width || "auto",
-                      minWidth: col.minWidth || "auto",
-                    }}
-                  >
-                    {col.type === "image" ? (
-                      <img
-                        src={row[col.key]}
-                        alt={col.label}
-                        style={{
-                          width: col.imageWidth || "50px",
-                          height: col.imageHeight || "50px",
-                          objectFit: "cover",
-                          borderRadius: "4px",
-                        }}
-                      />
-                    ) : (
-                      row[col.key]
-                    )}
+          </thead>
+        </table>
+
+        <div className="scrollable-body">
+          <table className="table table-striped align-middle">
+            <tbody>
+              {tableData.length === 0 ? (
+                <tr>
+                  <td colSpan={columns.length} className="text-center">
+                    No data found
                   </td>
-                ))}
-              </tr>
-            ))
+                </tr>
+              ) : (
+                tableData.map((row, idx) => (
+                  <tr key={idx}>
+                    {columns.map((col) => (
+                      <td
+                        key={col.key}
+                        style={{
+                          width: col.width || "auto",
+                          minWidth: col.minWidth || "auto",
+                        }}
+                      >
+                        {col.type === "image" ? (
+                          <img
+                            src={row[col.key]}
+                            alt={col.label}
+                            style={{
+                              width: col.imageWidth || "50px",
+                              height: col.imageHeight || "50px",
+                              objectFit: "cover",
+                              borderRadius: "4px",
+                            }}
+                          />
+                        ) : (
+                          row[col.key]
+                        )}
+                      </td>
+                    ))}
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+
+        <div className="table-footer">
+          {footerData.length ? (
+            <table className="table mg-table-footer-header">
+              <thead>
+                <tr>
+                  {footerData.map((col) => (
+                    <th
+                      key={col.key}
+                      onClick={() => col.sort && handleSort(col.key)}
+                      style={{
+                        width: col.width || "auto",
+                        minWidth: col.minWidth || "auto",
+                      }}
+                    >
+                      {col.label}
+                      {getArrow(col.key)}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+            </table>
+          ) : (
+            ""
           )}
-        </tbody>
-      </table>
+        </div>
+      </div>
     </div>
   );
 };

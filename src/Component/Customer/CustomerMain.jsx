@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import SearchIcon from "@mui/icons-material/Search";
 import "./customer.scss";
 import BottomPopupFilter from "./BottomPopupFilter";
 import { useLocation } from "react-router-dom";
-// import { getCustomerDataAction } from '../../Redux/Action';
-import { TextField, InputAdornment, Button } from "@mui/material";
 import BottomPopupAddCart from "./BottomPopupAddCart";
+import InputComponent from "../../Ui-Elements/Input/InputComponent";
+import SvgIcon from "../../SvgIcon/SvgIcon";
 
 const CustomerMain = () => {
   // const dispatch = useDispatch();
@@ -80,56 +77,43 @@ const CustomerMain = () => {
           backgroundColor: "#f8f9fa",
         }}
       >
-        <Button
-          variant="outlined"
+        <div
+          style={{ fontSize: "30px" }}
           onClick={() => setOpenFilterPopup(true)}
-          endIcon={<FilterAltIcon />}
-          sx={{
-            color: "#333",
-            borderColor: "#ccc",
-            textTransform: "none",
-            padding: "4px 12px",
-            backgroundColor: "#fff",
-            "&:hover": {
-              backgroundColor: "#f0f0f0",
-            },
-          }}
         >
-          Filter
-        </Button>
-
-        <ShoppingCartIcon
-          style={{
-            color: addedCartData.length > 0 ? "#f28f0e" : "#333",
-            fontSize: "28px",
-            backgroundColor:
-              addedCartData.length > 0 ? "#e0f7fa" : "transparent",
-            borderRadius: "50%",
-            padding: addedCartData.length > 0 ? "4px" : "0",
-            transition: "all 0.3s ease",
-          }}
+          <SvgIcon
+            name="Filter"
+            width={30}
+            height={30}
+            className="text-primary"
+          />
+        </div>
+        <div
+          style={{ fontSize: "30px" }}
           onClick={() => setOpenAddCartPopup(true)}
-        />
-
-        <TextField
+        >
+          <SvgIcon
+            name="Shopping"
+            width={30}
+            height={30}
+            className="text-primary"
+          />
+        </div>
+        <InputComponent
+          name="Search"
+          type="text"
           placeholder="Search"
-          variant="outlined"
-          size="small"
           value={searchValue}
           onChange={handleSearch}
-          sx={{
-            flex: 1,
-            minWidth: "140px",
-            backgroundColor: "white",
-            borderRadius: "8px",
-          }}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon fontSize="small" />
-              </InputAdornment>
-            ),
-          }}
+          required
+          prefix={
+            <SvgIcon
+              name="search"
+              width={16}
+              height={16}
+              className="text-secondary"
+            />
+          }
         />
       </div>
       <div className="customer-card-wrapper">

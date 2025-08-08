@@ -1,1 +1,40 @@
 @import "../../Styles/_variables";
+.fixed-height-table {
+  border: 1px solid $mg-bg-grey-sidebar;
+  border-radius: 6px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.table-head {
+  flex: 0 0 auto;
+}
+
+.scrollable-body {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  background-color: $background-color !important;
+}
+.table {
+  margin-bottom: unset;
+  border: 1px solid $mg-bg-grey-sidebar;
+}
+.scrollable-body table {
+  margin: 0;
+}
+
+.table-footer {
+  flex: 0 0 auto;
+  padding: 16px;
+  background-color: #f9f9f9;
+  border-top: 1.7px solid $mg-bg-grey-sidebar;
+}
+.mg-table-footer-header {
+  border: 0px;
+  border-bottom-width: unset;
+  .table > :not(caption) > * > * {
+    border-bottom-width: 0px;
+  }
+}

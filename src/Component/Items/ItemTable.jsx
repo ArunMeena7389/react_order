@@ -225,7 +225,9 @@ const ItemTable = () => {
         </div>
 
         {/* Table */}
-        <TableGrid columns={columns} data={rowData()} />
+        <div className="mg-item-table">
+          <TableGrid columns={columns} data={rowData()} />
+        </div>
       </div>
 
       <PopupComponent

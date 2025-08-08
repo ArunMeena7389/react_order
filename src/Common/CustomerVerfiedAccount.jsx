@@ -92,7 +92,7 @@ const CustomerVerfiedAccount = ({
         console.log("Verified & Submitted:", stateValue);
         onClick?.(stateValue);
         onClose();
-          const businessID = localStorage.getItem("business_ID");
+        const businessID = localStorage.getItem("business_ID");
         await dispatch(
           addFindCustomerAction(
             { name: stateValue.name, mobile: `91${stateValue.mobile}` },
@@ -106,7 +106,7 @@ const CustomerVerfiedAccount = ({
                 order_item: orderItems.items,
                 total_price: orderItems.totalPrice,
                 order_status: "Ordered",
-                payment_status: false,
+                payment_status: "Pending",
                 order_time: nowTime.toLocaleString(),
                 order_accept: false,
               };
