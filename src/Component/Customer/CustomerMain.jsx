@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import SearchIcon from "@mui/icons-material/Search";
@@ -23,7 +23,6 @@ const CustomerMain = () => {
   const [openAddCartPopup, setOpenAddCartPopup] = useState(false);
   const [addedCartData, setAddedCartData] = useState([]);
   const businessID = location.state?.businessID;
-  console.log(businessID, "businessIDbusinessID111");
 
   useEffect(() => {
     // dispatch(getCustomerDataAction(businessID));

@@ -7,6 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import PrivateRoute from "./Component/PrivateRoute";
 import { PersistGate } from "redux-persist/integration/react";
+import CustomFallbackUi from "./Common/CustomFallbackUI";
 const ItemTable = lazy(() => import("./Component/Items/ItemTable"));
 const Setting = lazy(() => import("./Component/Setting"));
 const Sidebar = lazy(() => import("./Component/Sidebar/Sidebar"));
@@ -33,7 +34,7 @@ const AppContent = () => {
 
   return (
     <div className="main-app">
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<CustomFallbackUi />}>
         {!isAuthPage && <Header />}
 
         <div className={!isAuthPage ? `main-content-scrollable` : ""}>

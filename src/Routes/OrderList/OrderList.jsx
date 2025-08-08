@@ -14,6 +14,12 @@ import PopupComponent from "../../Ui-Elements/Popup/PopupComponent";
 import SvgIcon from "../../SvgIcon/SvgIcon";
 import "./OrderList.scss";
 import BadgesComponent from "../../Ui-Elements/Badges/BadgesComponent";
+import {
+  added_new,
+  connectSocket,
+  disconnectSocket,
+  off_new,
+} from "../../Common/SocketService";
 
 const OrderList = () => {
   const dispatch = useDispatch();
@@ -43,6 +49,20 @@ const OrderList = () => {
     { label: "Price", key: "price", width: "100px" },
     { label: "Quantity", key: "count", width: "100px" },
   ];
+
+  useEffect(() => {
+    connectSocket();
+
+    added_new((newOrder) => {
+      console.log(newOrder, "1111111");
+      setOrderList((prev) => [...prev, newOrder]);
+    });
+
+    return () => {
+      off_new();
+      disconnectSocket(); // optional
+    };
+  }, []);
 
   useEffect(() => {
     setOrderList(dataItem);
