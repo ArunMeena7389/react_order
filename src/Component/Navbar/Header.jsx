@@ -58,7 +58,7 @@ const Header = () => {
                   }
                 />
 
-                <span className="mx-2">{profileData.name || "Arun Meena"}</span>
+                <span className="mx-2">{profileData?.name || "Arun Meena"}</span>
               </button>
             </>
           }
