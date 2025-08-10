@@ -32,13 +32,9 @@ body,
   color: rgb(11, 10, 10);
   border: none;
   border-radius: 5px;
-  padding: 3px 15px;
+  padding: 3px 8px;
   cursor: pointer;
-  font-size: 16px;
-}
-
-.logout-button:hover {
-  background-color: #b4a7a7;
+  /* font-size: 16px;  */
 }
 
 .profile-logo {

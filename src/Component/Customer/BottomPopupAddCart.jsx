@@ -11,37 +11,47 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import CustomerVerfiedAccount from "../../Common/CustomerVerfiedAccount";
 
-const BottomPopupAddCart = ({ open, onClose, onOpen, addedCartData }) => {
+const BottomPopupAddCart = ({
+  open,
+  onClose,
+  onOpen,
+  addedCartData,
+  handleAddClick,
+}) => {
   const [isOpenAccount, setIsOpenAccount] = useState(false);
-  const [orderItems,setOrderItems] = useState({
-    totalPrice:"",
-    items:addedCartData
+  const [orderItems, setOrderItems] = useState({
+    totalPrice: "",
+    items: addedCartData,
   });
 
-  const handleAdd = (id) => {};
+  const handleAdd = (dt) => {
+    handleAddClick(dt, "plush");
+  };
 
-  const handleRemove = (id) => {};
+  const handleRemove = (dt) => {
+    handleAddClick(dt, "minus");
+  };
 
   const handleOrderClick = () => {
     setIsOpenAccount(true);
   };
 
   useEffect(() => {
-  let total = addedCartData.reduce(
-    (sum, item) => sum + Number(item.price || 0) * item.count,
-    0
-  );
+    let total = addedCartData.reduce(
+      (sum, item) => sum + Number(item.price || 0) * item.count,
+      0
+    );
 
-  if (total > 1000) {
-    total = total - total * 0.05;
-  }
+    if (total > 1000) {
+      total = total - total * 0.05;
+    }
 
-  setOrderItems(prev => ({
-    ...prev,
-    totalPrice: total.toFixed(2),
-    items:addedCartData
-  }));
-}, [addedCartData]);
+    setOrderItems((prev) => ({
+      ...prev,
+      totalPrice: total.toFixed(2),
+      items: addedCartData,
+    }));
+  }, [addedCartData]);
 
   return (
     <Fragment>
@@ -95,13 +105,23 @@ const BottomPopupAddCart = ({ open, onClose, onOpen, addedCartData }) => {
                 px={1}
                 mx={1}
               >
-                <IconButton size="small" onClick={handleRemove}>
+                <IconButton
+                  size="small"
+                  onClick={() => {
+                    handleRemove(item);
+                  }}
+                >
                   <RemoveIcon fontSize="small" />
                 </IconButton>
                 <Typography variant="body2" mx={1}>
                   {item.count}
                 </Typography>
-                <IconButton size="small" onClick={handleAdd}>
+                <IconButton
+                  size="small"
+                  onClick={() => {
+                    handleAdd(item);
+                  }}
+                >
                   <AddIcon fontSize="small" />
                 </IconButton>
               </Box>

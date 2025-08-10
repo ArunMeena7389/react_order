@@ -55,7 +55,7 @@ const LoginAction = (datas, onSucces, onError) => {
       });
       const data = response;
       localStorage.setItem("token", data?.data?.token);
-      localStorage.setItem("refreshtoken", data?.data?.refreshToken);
+      localStorage.setItem("profile", JSON.stringify(data?.data?.response));
       localStorage.setItem("businessID", data?.data?.response?._id);
       onSucces(data);
       dispatch({ type: typeData.SUBMIT_LOGIN_ACCOUNT, payload: data });

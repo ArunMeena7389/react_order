@@ -6,6 +6,7 @@ import { useLocation } from "react-router-dom";
 import BottomPopupAddCart from "./BottomPopupAddCart";
 import InputComponent from "../../Ui-Elements/Input/InputComponent";
 import SvgIcon from "../../SvgIcon/SvgIcon";
+import BadgesComponent from "../../Ui-Elements/Badges/BadgesComponent";
 
 const CustomerMain = () => {
   // const dispatch = useDispatch();
@@ -92,12 +93,24 @@ const CustomerMain = () => {
           style={{ fontSize: "30px" }}
           onClick={() => setOpenAddCartPopup(true)}
         >
-          <SvgIcon
-            name="Shopping"
-            width={30}
-            height={30}
-            className="text-primary"
-          />
+          <div className="position-relative d-inline-block">
+            <SvgIcon
+              name="Shopping"
+              width={30}
+              height={30}
+              className="text-primary"
+            />
+
+            {addedCartData.length ? (
+              <BadgesComponent
+                text={addedCartData.length}
+                variant="danger"
+                NotificationCount
+              />
+            ) : (
+              ""
+            )}
+          </div>
         </div>
         <InputComponent
           name="Search"
@@ -167,6 +180,7 @@ const CustomerMain = () => {
         onClose={() => setOpenAddCartPopup(false)}
         onOpen={() => {}}
         addedCartData={addedCartData}
+        handleAddClick={handleAddClick}
       />
     </div>
   );

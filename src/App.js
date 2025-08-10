@@ -8,6 +8,7 @@ import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import PrivateRoute from "./Component/PrivateRoute";
 import { PersistGate } from "redux-persist/integration/react";
 import CustomFallbackUi from "./Common/CustomFallbackUI";
+import Profile from "./Component/Profile/Profile";
 const ItemTable = lazy(() => import("./Component/Items/ItemTable"));
 const Setting = lazy(() => import("./Component/Setting"));
 const Sidebar = lazy(() => import("./Component/Sidebar/Sidebar"));
@@ -79,6 +80,14 @@ const AppContent = () => {
                   element={
                     <PrivateRoute>
                       <Setting />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/merchant/profile"
+                  element={
+                    <PrivateRoute>
+                      <Profile />
                     </PrivateRoute>
                   }
                 />
