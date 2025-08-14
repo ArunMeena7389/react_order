@@ -60,6 +60,7 @@ const BottomPopupAddCart = ({
         open={open}
         onClose={onClose}
         onOpen={onOpen}
+        disableEnforceFocus={true}
         PaperProps={{
           sx: {
             borderTopLeftRadius: 16,
