@@ -1,15 +1,9 @@
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  TextField,
-} from "@mui/material";
 import React, { Fragment, useState } from "react";
 import { addFindCustomerAction, addOrderAction } from "../Redux/Action";
 import { useDispatch } from "react-redux";
+import ButtonComponent from "../Ui-Elements/Button/ButtonComponent";
+import InputComponent from "../Ui-Elements/Input/InputComponent";
+import PopupComponent from "../Ui-Elements/Popup/PopupComponent";
 
 const CustomerVerfiedAccount = ({
   onClick,
@@ -120,36 +114,39 @@ const CustomerVerfiedAccount = ({
 
   return (
     <Fragment>
-      <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
-        <DialogTitle>{title}</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
+      <PopupComponent
+        isOpen={open}
+        onClose={() => {
+          onClose();
+        }}
+        title={title}
+        width="100%"
+        height="auto"
+        content={
+          <>
             {!isOtpField ? (
               <>
-                <TextField
+                <InputComponent
+                  name="name"
+                  type="text"
                   placeholder="Full Name"
-                  variant="outlined"
-                  fullWidth
-                  error={error.name}
-                  helperText={helperText.name}
                   value={stateValue.name}
                   onChange={(e) => handleOnChange(e.target.value, "name")}
-                  style={{ borderRadius: "5px" }}
+                  required
+                  error={error.name ? helperText.name : ""}
                 />
                 <br />
-                <br />
-                <TextField
+                <InputComponent
+                  name="phone"
+                  type="number"
                   placeholder="Mobile Number"
-                  variant="outlined"
-                  fullWidth
-                  error={error.mobile}
-                  helperText={helperText.mobile}
                   value={stateValue.mobile}
                   onChange={(e) => {
                     const onlyNums = e.target.value.replace(/\D/g, "");
                     handleOnChange(onlyNums, "mobile");
                   }}
-                  inputProps={{ maxLength: 10 }}
+                  required
+                  error={error.mobile ? helperText.mobile : ""}
                 />
               </>
             ) : (
@@ -157,29 +154,34 @@ const CustomerVerfiedAccount = ({
                 <p>
                   OTP hasbeen sent to your mobile number {stateValue.mobile}
                 </p>
-                <TextField
+                <InputComponent
+                  name="otp"
+                  type="number"
                   placeholder="Enter OTP"
-                  variant="outlined"
-                  fullWidth
-                  error={error.otp}
-                  helperText={helperText.otp}
                   value={stateValue.otp}
                   onChange={(e) => {
                     const onlyNums = e.target.value.replace(/\D/g, "");
                     handleOnChange(onlyNums, "otp");
                   }}
-                  inputProps={{ maxLength: 6 }}
+                  required
+                  error={error.otp ? helperText.otp : ""}
                 />
               </>
             )}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleSubmit} color="success" variant="contained">
-            {isOtpField ? "Verify OTP" : "Send OTP"}
-          </Button>
-        </DialogActions>
-      </Dialog>
+          </>
+        }
+        footer={
+          <>
+            <ButtonComponent
+              name={isOtpField ? "Verify OTP" : "Send OTP"}
+              variant="primary"
+              onClick={() => {
+                handleSubmit("save");
+              }}
+            />
+          </>
+        }
+      />
     </Fragment>
   );
 };
