@@ -9,6 +9,8 @@ import PrivateRoute from "./Component/PrivateRoute";
 import { PersistGate } from "redux-persist/integration/react";
 import CustomFallbackUi from "./Common/CustomFallbackUI";
 import Profile from "./Component/Profile/Profile";
+const ViewStream = lazy(() => import("./Stream/ViewStream"));
+const AddStream = lazy(() => import("./Stream/AddStream"));
 const ItemTable = lazy(() => import("./Component/Items/ItemTable"));
 const Setting = lazy(() => import("./Component/Setting"));
 const Sidebar = lazy(() => import("./Component/Sidebar/Sidebar"));
@@ -48,6 +50,8 @@ const AppContent = () => {
             )}
             <Route path="/customer/:id" element={<CustomerRedirectPage />} />
             <Route path="/customer" element={<CustomerMain />} />
+             <Route path="/add" element={<AddStream/>} />
+        <Route path="/view" element={<ViewStream />} />
 
             {!isAuthPage && (
               <Route
