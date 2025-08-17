@@ -19,9 +19,14 @@ export default function ViewStream() {
 
   return (
     <div>
-      <h2>💻 Laptop Viewer</h2>
+      <h2>Live View</h2>
       {frame ? (
-        <img ref={imgRef} src={frame} alt="Live stream" style={{ width: "100%" }} />
+        <img
+          ref={imgRef}
+          src={frame}
+          alt="Live stream"
+          style={{ width: "100%" }}
+        />
       ) : (
         <p>Waiting for stream...</p>
       )}

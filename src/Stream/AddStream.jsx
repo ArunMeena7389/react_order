@@ -1,4 +1,4 @@
-  // Receive video chunks from sender (mobile)
+// Receive video chunks from sender (mobile)
 import React, { useEffect, useRef } from "react";
 import io from "socket.io-client";
 
@@ -37,8 +37,14 @@ export default function AddStream() {
 
   return (
     <div>
-      <h2>📱 Mobile Camera Streaming</h2>
-      <video ref={videoRef} autoPlay muted playsInline style={{ width: "100%" }} />
+      <h2>📱 Camera Streaming</h2>
+      <video
+        ref={videoRef}
+        autoPlay
+        muted
+        playsInline
+        style={{ width: "100%", height: "80vh" }}
+      />
     </div>
   );
 }
