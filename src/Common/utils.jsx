@@ -1,7 +1,15 @@
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 
-export function formatPrice(amount = 0, locale = "en-IN", currency = null) {
+export function formatPrice(amount = 0, locale = "en-IN", currency = "INR") {
+  if (typeof amount === "string") {
+    amount = amount.replace(/,/g, "");
+  }
+  let num = Number(amount);
+  if (isNaN(num)) {
+    num = 0;
+  }
+
   const options = {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
@@ -12,7 +20,7 @@ export function formatPrice(amount = 0, locale = "en-IN", currency = null) {
     options.currency = currency;
   }
 
-  return Number(amount).toLocaleString(locale, options);
+  return num.toLocaleString(locale, options);
 }
 
 // Load image from URL and return Base64
