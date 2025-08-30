@@ -7,6 +7,7 @@ import BottomPopupAddCart from "./BottomPopupAddCart";
 import InputComponent from "../../Ui-Elements/Input/InputComponent";
 import SvgIcon from "../../SvgIcon/SvgIcon";
 import BadgesComponent from "../../Ui-Elements/Badges/BadgesComponent";
+import { formatPrice } from "../../Common/utils";
 
 const CustomerMain = () => {
   // const dispatch = useDispatch();
@@ -73,7 +74,7 @@ const CustomerMain = () => {
   return (
     <div className="customer-container">
       <div
-        className="customer-header d-flex align-items-center justify-content-between mb-3 p-1"
+        className="customer-header d-flex align-items-center justify-content-between mb-1 p-1"
         style={{
           backgroundColor: "#f8f9fa",
         }}
@@ -129,6 +130,13 @@ const CustomerMain = () => {
           }
         />
       </div>
+      <div style={{ width: "20%" }}>
+        <BadgesComponent
+          text="COMBO"
+          variant={"secondary"}
+          customClass={"p-2 m-1"}
+        />
+      </div>
       <div className="customer-card-wrapper">
         {dataItemMenu?.map((item, index) => (
           <div className="card customer-card" key={index}>
@@ -138,8 +146,12 @@ const CustomerMain = () => {
               alt="Customer"
             />
             <div className="card-body text-center text-white">
-              <h5 className="card-title">{item.name}</h5>
-              <p className="card-text">{item.taste}</p>
+              <h5 className="card-title">
+                {item.name.split(" ").slice(0, 2).join(" ")}
+                {item.name.split(" ").length > 2 && "..."}
+              </h5>
+              <p className="card-text">{formatPrice(item.price)}</p>
+
               {!item.count ? (
                 <button
                   className="add-btn"
