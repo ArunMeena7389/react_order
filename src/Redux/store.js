@@ -8,6 +8,7 @@ import {
   menueDataReducer,
   tasteSelectDataReducer,
   orderDataReducer,
+  customerPackageDataReducer,
 } from "./Reduser";
 
 // persist config
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   taste: tasteSelectDataReducer,
   customerMenu: customerMenuDataReducer,
   orderList: orderDataReducer,
+  packageCustomer: customerPackageDataReducer,
 });
 
 // wrap with persistReducer

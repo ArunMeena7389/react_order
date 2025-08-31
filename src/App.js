@@ -9,6 +9,8 @@ import PrivateRoute from "./Component/PrivateRoute";
 import { PersistGate } from "redux-persist/integration/react";
 import CustomFallbackUi from "./Common/CustomFallbackUI";
 import Profile from "./Component/Profile/Profile";
+import Package from "./Routes/Package/Package";
+import AddEditPacka from "./Routes/Package/AddEditPacka";
 const ViewStream = lazy(() => import("./Stream/ViewStream"));
 const AddStream = lazy(() => import("./Stream/AddStream"));
 const ItemTable = lazy(() => import("./Component/Items/ItemTable"));
@@ -50,8 +52,8 @@ const AppContent = () => {
             )}
             <Route path="/customer/:id" element={<CustomerRedirectPage />} />
             <Route path="/customer" element={<CustomerMain />} />
-             <Route path="/add" element={<AddStream/>} />
-        <Route path="/view" element={<ViewStream />} />
+            <Route path="/add" element={<AddStream />} />
+            <Route path="/view" element={<ViewStream />} />
 
             {!isAuthPage && (
               <Route
@@ -100,6 +102,22 @@ const AppContent = () => {
                   element={
                     <PrivateRoute>
                       <ItemCreateEdit />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/merchant/package"
+                  element={
+                    <PrivateRoute>
+                      <Package />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/merchant/package/add"
+                  element={
+                    <PrivateRoute>
+                      <AddEditPacka />
                     </PrivateRoute>
                   }
                 />

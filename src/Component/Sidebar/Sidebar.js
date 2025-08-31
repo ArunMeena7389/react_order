@@ -4,10 +4,11 @@ import { NavLink, Outlet, useLocation } from "react-router-dom";
 
 const RouteList = [
   { id: "1", name: "Home", redirect_url: "/merchant" },
-  { id: "2", name: "Order List", redirect_url: "/merchant/orderlist" },
-  { id: "3", name: "Setting", redirect_url: "/merchant/setting" },
-  { id: "4", name: "Customer View", redirect_url: "/customer" },
-  { id: "4", name: "Camera", redirect_url: "/add" },
+  { id: "2", name: "Packages", redirect_url: "/merchant/package" },
+  { id: "3", name: "Order List", redirect_url: "/merchant/orderlist" },
+  { id: "4", name: "Setting", redirect_url: "/merchant/setting" },
+  { id: "5", name: "Customer View", redirect_url: "/customer" },
+  { id: "6", name: "Camera", redirect_url: "/add" },
 ];
 
 const Sidebar = () => {

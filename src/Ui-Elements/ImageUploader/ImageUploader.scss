@@ -1,0 +1,47 @@
+.image-uploader {
+  position: relative;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: border-color 0.3s ease;
+
+  .upload-placeholder {
+    text-align: center;
+    font-size: 14px;
+    color: #6c757d;
+  }
+
+  .uploaded-image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    transition: filter 0.3s ease;
+    display: block;
+  }
+
+  &::after {
+    content: "Upload";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-weight: 600;
+    font-size: 16px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  &:hover {
+    .uploaded-image {
+      filter: blur(1.5px) brightness(0.7);
+    }
+
+    &::after {
+      opacity: 1;
+    }
+  }
+}

@@ -5,8 +5,10 @@
   overflow: hidden;
   padding-bottom: 60px;
 }
-
 .form-scroll-content {
   flex: 1;
   overflow-y: auto;
+}
+.mg-item-contain {
+  cursor: pointer;
 }

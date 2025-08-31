@@ -13,6 +13,9 @@ const CustomerMain = () => {
   // const dispatch = useDispatch();
   const location = useLocation();
   const customerMenuData = useSelector((state) => state?.customerMenu?.data);
+  const customerPackageData = useSelector(
+    (state) => state?.packageCustomer?.data
+  );
   const dataItem = customerMenuData?.data || [];
   const [dataItemMenu, setDataItemMenu] = useState(
     dataItem.map((item) => ({ ...item, count: 0 }))
@@ -21,6 +24,7 @@ const CustomerMain = () => {
   const [openFilterPopup, setOpenFilterPopup] = useState(false);
   const [openAddCartPopup, setOpenAddCartPopup] = useState(false);
   const [addedCartData, setAddedCartData] = useState([]);
+  const [isShowPackage, setIsShowPacka] = useState(true);
   const businessID = location.state?.businessID;
 
   useEffect(() => {
@@ -71,6 +75,7 @@ const CustomerMain = () => {
       );
     }
   };
+
   return (
     <div className="customer-container">
       <div
@@ -132,56 +137,108 @@ const CustomerMain = () => {
       </div>
       <div style={{ width: "20%" }}>
         <BadgesComponent
-          text="COMBO"
+          text={!isShowPackage ? "COMBO" : "ITEMS"}
           variant={"secondary"}
           customClass={"p-2 m-1"}
+          onClick={() => {
+            setIsShowPacka(!isShowPackage);
+          }}
         />
       </div>
-      <div className="customer-card-wrapper">
-        {dataItemMenu?.map((item, index) => (
-          <div className="card customer-card" key={index}>
-            <img
-              className="card-img-top customer-image"
-              src={item.image_url}
-              alt="Customer"
-            />
-            <div className="card-body text-center text-white">
-              <h5 className="card-title">
-                {item.name.split(" ").slice(0, 2).join(" ")}
-                {item.name.split(" ").length > 2 && "..."}
-              </h5>
-              <p className="card-text">{formatPrice(item.price)}</p>
+      {!isShowPackage ? (
+        <div className="customer-card-wrapper">
+          {dataItemMenu?.map((item, index) => (
+            <div className="card customer-card" key={index}>
+              <img
+                className="card-img-top customer-image"
+                src={item.image_url}
+                alt="Customer"
+              />
+              <div className="card-body text-center text-white">
+                <h5 className="card-title">
+                  {item.name.split(" ").slice(0, 2).join(" ")}
+                  {item.name.split(" ").length > 2 && "..."}
+                </h5>
+                <p className="card-text">{formatPrice(item.price)}</p>
 
-              {!item.count ? (
-                <button
-                  className="add-btn"
-                  onClick={() => {
-                    handleAddClick(item, "Add");
-                  }}
-                >
-                  + ADD
-                </button>
-              ) : (
-                <div className="counter-wrapper">
+                {!item.count ? (
                   <button
-                    className="count-btn-min"
-                    onClick={() => handleAddClick(item, "minus")}
+                    className="add-btn"
+                    onClick={() => {
+                      handleAddClick(item, "Add");
+                    }}
                   >
-                    -
+                    + ADD
                   </button>
-                  <span className="count-display">{item.count}</span>
-                  <button
-                    className="count-btn-plush"
-                    onClick={() => handleAddClick(item, "plush")}
-                  >
-                    +
-                  </button>
-                </div>
-              )}
+                ) : (
+                  <div className="counter-wrapper">
+                    <button
+                      className="count-btn-min"
+                      onClick={() => handleAddClick(item, "minus")}
+                    >
+                      -
+                    </button>
+                    <span className="count-display">{item.count}</span>
+                    <button
+                      className="count-btn-plush"
+                      onClick={() => handleAddClick(item, "plush")}
+                    >
+                      +
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      ) : (
+        <div className="customer-card-wrapper">
+          {customerPackageData?.map((item, index) => (
+            <div className="card customer-card" key={index}>
+              <img
+                className="card-img-top customer-image"
+                src={item.image_url}
+                alt="Customer"
+              />
+              <div className="card-body text-center text-white">
+                <h5 className="card-title">
+                  {item.packageName.split(" ").slice(0, 2).join(" ")}
+                  {item.packageName.split(" ").length > 2 && "..."}
+                </h5>
+                <p className="card-text">{formatPrice(item.price)}</p>
+
+                {!item.count ? (
+                  <button
+                    className="add-btn"
+                    onClick={() => {
+                      handleAddClick(item, "Add");
+                    }}
+                  >
+                    + ADD
+                  </button>
+                ) : (
+                  <div className="counter-wrapper">
+                    <button
+                      className="count-btn-min"
+                      onClick={() => handleAddClick(item, "minus")}
+                    >
+                      -
+                    </button>
+                    <span className="count-display">{item.count}</span>
+                    <button
+                      className="count-btn-plush"
+                      onClick={() => handleAddClick(item, "plush")}
+                    >
+                      +
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
       <BottomPopupFilter
         open={openFilterPopup}
         onClose={() => setOpenFilterPopup(false)}

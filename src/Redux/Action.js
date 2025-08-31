@@ -10,7 +10,7 @@ const selectTasteAction = (data) => {
   };
 };
 
-const getmenueDataAction = (datas) => {
+const getmenueDataAction = (datas, onSuccess) => {
   return async (dispatch) => {
     try {
       const response = await instance.post(Config.url + "/menu", datas, {
@@ -19,15 +19,9 @@ const getmenueDataAction = (datas) => {
         },
       });
       const data = response;
+      onSuccess(data);
       dispatch({ type: typeData.GET_MENUE_DATA_SUCSESS, payload: data });
     } catch (error) {
-      if (
-        error?.response?.data?.error &&
-        error?.response?.data?.error === "Invalid token"
-      ) {
-        // localStorage.removeItem('token');
-        // window.location.reload();
-      }
       dispatch({ type: "FETCH_DATA_ERROR", payload: error });
     }
   };
@@ -257,6 +251,143 @@ const genrateAiText = (datas, onSuccess) => {
     }
   };
 };
+
+const addPackageAction = (payload) => {
+  return async (dispatch) => {
+    try {
+      const formData = new FormData();
+
+      Object.keys(payload).forEach((key) => {
+        formData.append(key, payload[key]);
+      });
+
+      const response = await instance.post(
+        `${Config.url}/package/create`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            // Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      dispatch({
+        type: "ADD_PACKAGE_DATA_SUCCESS",
+        payload: response.data,
+      });
+    } catch (error) {
+      console.error("Error adding menu data:", error);
+
+      dispatch({
+        type: "ADD_PACKAGE_DATA_ERROR",
+        payload: error.response?.data || error.message,
+      });
+    }
+  };
+};
+
+const getpackageDataAction = (onSuccess) => {
+  return async (dispatch) => {
+    try {
+      const response = await instance.get(Config.url + "/package/get", {
+        headers: {
+          "Content-Type": "application/json",
+          business_id: "check is it pass",
+        },
+      });
+      const data = response;
+      onSuccess(data);
+      dispatch({ type: "GET_PACKAGE_DATA_SUCSESS", payload: data });
+    } catch (error) {
+      dispatch({ type: "FETCH_DATA_ERROR", payload: error });
+    }
+  };
+};
+
+const getpackageCustomerDataAction = (ID, onSuccess) => {
+  return async (dispatch) => {
+    try {
+      const response = await instance.get(
+        Config.url + "/package/get-customer",
+        {
+          headers: {
+            "Content-Type": "application/json",
+            business_id: ID,
+          },
+        }
+      );
+      const data = response;
+      onSuccess(data);
+      dispatch({
+        type: "GET_PACKAGE_CUSTOMER_DATA_SUCSESS",
+        payload: data.data,
+      });
+    } catch (error) {
+      dispatch({ type: "FETCH_DATA_ERROR", payload: error });
+    }
+  };
+};
+
+const updatePackageDataAction = (id, payload) => {
+  return async (dispatch) => {
+    try {
+      const formData = new FormData();
+
+      // Append fields dynamically to formData
+      Object.keys(payload).forEach((key) => {
+        formData.append(key, payload[key]);
+      });
+
+      const response = await instance.put(
+        `${Config.url}/package/update/${id}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            // Authorization: `Bearer ${token}`
+          },
+        }
+      );
+
+      dispatch({
+        type: "UPDATE_PACKAGE_DATA_SUCCESS",
+        payload: response.data,
+      });
+    } catch (error) {
+      console.error("Error updating menu data:", error);
+
+      dispatch({
+        type: "UPDATE_PACKAGE_DATA_ERROR",
+        payload: error.response?.data || error.message,
+      });
+    }
+  };
+};
+
+const deletePackageDataAction = (id) => {
+  return async (dispatch) => {
+    try {
+      await instance.delete(`${Config.url}/package/delete/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          // Authorization: `Bearer ${token}`,
+        },
+      });
+
+      dispatch({
+        type: "DELETE_MENU_DATA_SUCCESS",
+        payload: id,
+      });
+    } catch (error) {
+      dispatch({
+        type: "DELETE_PACKAGE_DATA_ERROR",
+        payload: error.response?.data || error.message,
+      });
+    }
+  };
+};
+
 export {
   selectTasteAction,
   getmenueDataAction,
@@ -268,4 +399,9 @@ export {
   getorderDataAction,
   addFindCustomerAction,
   genrateAiText,
+  addPackageAction,
+  getpackageDataAction,
+  updatePackageDataAction,
+  deletePackageDataAction,
+  getpackageCustomerDataAction,
 };

@@ -1,6 +1,9 @@
 import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getCustomerDataAction } from "../../Redux/Action";
+import {
+  getCustomerDataAction,
+  getpackageCustomerDataAction,
+} from "../../Redux/Action";
 import { useDispatch } from "react-redux";
 
 const CustomerRedirectPage = () => {
@@ -9,15 +12,17 @@ const CustomerRedirectPage = () => {
   const navigate = useNavigate();
   console.log(id, "ididid-------1111");
 
-  useEffect(() => {
+  const getData = async () => {
     localStorage.setItem("business_ID", id);
-    dispatch(
+    await dispatch(getpackageCustomerDataAction(id, (data) => {}));
+    await dispatch(
       getCustomerDataAction(id, (data) => {
         navigate("/customer", { replace: true, state: { businessID: id } });
       })
     );
-    // navigate('/customer', { replace: true, state: { businessID: id } });
-    // eslint-disable-next-line
+  };
+  useEffect(() => {
+    getData();
   }, []);
   return <div></div>;
 };

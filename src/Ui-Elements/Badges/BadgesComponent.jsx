@@ -6,6 +6,8 @@ const BadgesComponent = ({
   text = "",
   positionClass = "",
   NotificationCount = false,
+  customClass = "",
+  onClick,
 }) => {
   const [textValue, setTextValue] = useState(text);
   useEffect(() => {
@@ -15,7 +17,8 @@ const BadgesComponent = ({
 
   return (
     <span
-      className={`badge bg-${variant} ${positionClass} ${
+      onClick={onClick}
+      className={`badge bg-${variant} ${customClass} ${positionClass} ${
         NotificationCount ? "mg-badge-count" : ""
       }`}
     >

@@ -1,13 +1,9 @@
-import React, { Fragment, useMemo, useRef, useState } from "react";
+import React, { Fragment, useMemo, useState } from "react";
 import InputComponent from "../../Ui-Elements/Input/InputComponent";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { showCustomLoader } from "../../Common/showCustomLoader";
 import "./ItemCreateEdit.scss";
-import {
-  addMenuDataAction,
-  getmenueDataAction,
-  updateMenuDataAction,
-} from "../../Redux/Action";
+import { addMenuDataAction, updateMenuDataAction } from "../../Redux/Action";
 import TextAreaComponent from "../../Ui-Elements/TextArea/TextAreaComponent";
 import Image from "../../Image/image.png";
 import DropdownComponent from "../../Ui-Elements/Dropdown/DropdownComponent";
@@ -15,10 +11,8 @@ import ButtonComponent from "../../Ui-Elements/Button/ButtonComponent";
 import SvgIcon from "../../SvgIcon/SvgIcon";
 import { useLocation, useNavigate } from "react-router-dom";
 import AiPopup from "../../Common/AiPopup";
-let initialPayload = {
-  fields: ["name", "price", "image_url", "taste", "description"],
-  filter: {},
-};
+import ImageUploader from "../../Ui-Elements/ImageUploader/ImageUploader";
+
 const ItemCreateEdit = ({
   //   selectedItem,
   ...props
@@ -26,10 +20,8 @@ const ItemCreateEdit = ({
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const fileInputRef = useRef(null);
 
   const selectedItem = useMemo(() => location.state || {}, [location.state]);
-  const selectorDataTaste = useSelector((state) => state.taste.data);
 
   const [preview, setPreview] = useState(selectedItem?.image || null);
   const [stateValue, setStateValue] = useState({
@@ -64,17 +56,8 @@ const ItemCreateEdit = ({
         await dispatch(addMenuDataAction(stateValue));
       }
       navigate("/merchant");
-      if (selectorDataTaste?.length)
-        initialPayload.filter.taste = selectorDataTaste.map((dt) => {
-          return dt?.title?.toLowerCase();
-        });
-      await dispatch(getmenueDataAction(initialPayload));
     }
     showCustomLoader(false);
-  };
-
-  const handleImageClick = () => {
-    fileInputRef.current.click();
   };
 
   const handleOnChange = (val, type) => {
@@ -90,41 +73,17 @@ const ItemCreateEdit = ({
   return (
     <Fragment>
       <div className="item-form-wrapper">
-        {/* Scrollable content area */}
         <div className="form-scroll-content">
-          <div className="flex flex-col items-center gap-4 ">
-            <input
-              type="file"
-              accept="image/*"
-              ref={fileInputRef}
-              onChange={(e) => {
-                handleOnChange(e.target.files[0], "image");
-                error.image = false;
-                setError({ ...error });
-              }}
-              className="hidden"
-              style={{
-                display: "none",
-              }}
-            />
-            <div className="w-48 h-48 cursor-pointer border-2 border-dashed border-gray-300 rounded-lg overflow-hidden hover:shadow-md transition">
-              <img
-                src={preview || Image}
-                alt="Preview"
-                className={`w-full h-full object-cover cursor-pointer ${
-                  error.image && "image-error-border"
-                }`}
-                width={"170px"}
-                height={"120px"}
-                style={{
-                  cursor: "pointer",
-                  borderRadius: "10px",
-                }}
-                onClick={handleImageClick}
-              />
-            </div>
-          </div>
-          {error.image && <p className="error-color mt-2">Image is required</p>}
+          <ImageUploader
+            image={preview || Image}
+            required={error.image}
+            onChange={(e, file) => {
+              handleOnChange(file, "image");
+              error.image = false;
+              setError({ ...error });
+            }}
+            size={200}
+          />
           <br />
           <InputComponent
             label="Name Of Item"
@@ -191,21 +150,21 @@ const ItemCreateEdit = ({
             handleAiPopup={() => setIsOpenAiPopup(true)}
           />
         </div>
-        <div className="form-footer">
-          <ButtonComponent
-            name="Cancel"
-            onClick={() => navigate("/merchant")}
-            variant="secondary"
-            className="ml-3"
-          />
-          <ButtonComponent
-            name="Submit"
-            onClick={onClickSave}
-            type="submit"
-            variant="primary"
-            iconRight={<SvgIcon name="arrow-right" width={16} height={16} />}
-          />
-        </div>
+      </div>
+      <div className="form-footer">
+        <ButtonComponent
+          name="Cancel"
+          onClick={() => navigate("/merchant")}
+          variant="secondary"
+          className="ml-3"
+        />
+        <ButtonComponent
+          name="Submit"
+          onClick={onClickSave}
+          type="submit"
+          variant="primary"
+          iconRight={<SvgIcon name="arrow-right" width={16} height={16} />}
+        />
       </div>
       <AiPopup
         textValue={stateValue.description}

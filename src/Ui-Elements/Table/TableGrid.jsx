@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./TableGrid.scss";
+import SvgIcon from "../../SvgIcon/SvgIcon";
 
 const TableGrid = ({ columns = [], footerData = [], data = [] }) => {
   const [tableData, setTableData] = useState(data);
   const [sortConfig, setSortConfig] = useState({ key: "", direction: "asc" });
+  const [activeRowId, setActiveRowId] = useState(null);
+  const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 });
+  const popupRef = useRef(null);
 
-  // 🔁 Sync prop data when it changes
   useEffect(() => {
     setTableData(data);
   }, [data]);
@@ -20,7 +23,6 @@ const TableGrid = ({ columns = [], footerData = [], data = [] }) => {
     const sorted = [...tableData].sort((a, b) => {
       const valA = a[key];
       const valB = b[key];
-
       if (typeof valA === "number") {
         return direction === "asc" ? valA - valB : valB - valA;
       } else {
@@ -40,6 +42,17 @@ const TableGrid = ({ columns = [], footerData = [], data = [] }) => {
     }
     return "";
   };
+
+  // 🔴 Close popup on outside click
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (popupRef.current && !popupRef.current.contains(e.target)) {
+        setActiveRowId(null);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <div className="mg-table-grid mr-3">
@@ -96,6 +109,60 @@ const TableGrid = ({ columns = [], footerData = [], data = [] }) => {
                               borderRadius: "4px",
                             }}
                           />
+                        ) : col.type === "action" ? (
+                          <div
+                            className="position-relative d-inline-block"
+                            style={{ width: col.width }}
+                          >
+                            <div
+                              onClick={(e) => {
+                                setActiveRowId(row._id);
+                                const rect =
+                                  e.currentTarget.getBoundingClientRect();
+                                setPopupPosition({
+                                  top: rect.bottom + window.scrollY,
+                                  left: rect.right - 120 + window.scrollX,
+                                });
+                              }}
+                              style={{ cursor: "pointer" }}
+                            >
+                              <SvgIcon
+                                name="threedot"
+                                width={20}
+                                height={20}
+                                style={{ cursor: "pointer" }}
+                              />
+                            </div>
+
+                            {activeRowId === row._id && (
+                              <div
+                                ref={popupRef}
+                                className="position-fixed bg-white border shadow rounded p-2"
+                                style={{
+                                  top: popupPosition.top,
+                                  left: popupPosition.left,
+                                  zIndex: 1000,
+                                  width: "120px",
+                                }}
+                              >
+                                {col.actions?.map((action, i) => (
+                                  <div
+                                    key={i}
+                                    className={`dropdown-item my-1 ${
+                                      action.className || ""
+                                    }`}
+                                    style={{ cursor: "pointer" }}
+                                    onClick={() => {
+                                      action.onClick(row);
+                                      setActiveRowId(null);
+                                    }}
+                                  >
+                                    {action.label}
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+                          </div>
                         ) : (
                           row[col.key]
                         )}
