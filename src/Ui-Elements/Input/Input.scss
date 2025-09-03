@@ -17,14 +17,14 @@ input[type="number"] {
 
 .custom-input-label {
   font-weight: 500;
-  margin-bottom: 8px;
+  margin-left: 2px;
   color: $text-primary-color;
   font-size: 1rem;
 }
 
 .required-star {
   color: $error-color;
-  margin-left: 2px;
+  margin-left: 1px;
 }
 
 .custom-input-group {
@@ -48,7 +48,7 @@ input[type="number"] {
 }
 
 .custom-input-prefix {
-  padding: 0 12px;
+  padding: 0 0 0 12px;
   background-color: #ffffff;
   border-right: 1px solid #ffffff;
   color: #555;
@@ -64,6 +64,9 @@ input[type="number"] {
   display: flex;
   align-items: center;
   height: 100%;
+  &.hidden-icon {
+    visibility: hidden;
+  }
 }
 
 .custom-input-field {
@@ -75,6 +78,7 @@ input[type="number"] {
   height: 100%;
   background: transparent;
   border-radius: 6px;
+  padding: 12px;
 
   &::placeholder {
     color: #aaa;

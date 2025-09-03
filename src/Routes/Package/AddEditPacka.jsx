@@ -179,11 +179,12 @@ const AddEditPacka = () => {
               );
             }}
           />
-          <br />
-          <TableGrid
-            columns={columns}
-            data={items.filter((item) => saveItemID.includes(item._id))}
-          />
+          <div className="mt-1">
+            <TableGrid
+              columns={columns}
+              data={items.filter((item) => saveItemID.includes(item._id))}
+            />
+          </div>
         </div>
       </div>
       <div className="form-footer">

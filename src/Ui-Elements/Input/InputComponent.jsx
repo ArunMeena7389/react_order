@@ -52,9 +52,9 @@ const InputComponent = ({
           className={`custom-input-field ${inputClass}`}
           autoComplete="off"
         />
-        {suffixIcon && value && (
+        {suffixIcon && (
           <span
-            className="custom-input-suffix"
+            className={`custom-input-suffix ${!value ? "hidden-icon" : ""}`}
             onClick={() => {
               onClearClick();
             }}
