@@ -8,6 +8,7 @@ import InputComponent from "../../Ui-Elements/Input/InputComponent";
 import SvgIcon from "../../SvgIcon/SvgIcon";
 import BadgesComponent from "../../Ui-Elements/Badges/BadgesComponent";
 import { formatPrice } from "../../Common/utils";
+import HotelAutoRadiusChecker from "../../Common/HotelAutoRadiusChecker";
 
 const CustomerMain = () => {
   const location = useLocation();
@@ -250,6 +251,7 @@ const CustomerMain = () => {
         addedCartData={addedCartData}
         handleAddClick={handleAddClick}
       />
+       <HotelAutoRadiusChecker/>
     </div>
   );
 };
