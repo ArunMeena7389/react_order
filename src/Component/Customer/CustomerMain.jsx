@@ -10,7 +10,6 @@ import BadgesComponent from "../../Ui-Elements/Badges/BadgesComponent";
 import { formatPrice } from "../../Common/utils";
 
 const CustomerMain = () => {
-  // const dispatch = useDispatch();
   const location = useLocation();
   const customerMenuData = useSelector((state) => state?.customerMenu?.data);
   const customerPackageData = useSelector(
@@ -79,7 +78,7 @@ const CustomerMain = () => {
   return (
     <div className="customer-container">
       <div
-        className="customer-header d-flex align-items-center justify-content-between mb-1 p-1"
+        className="customer-header flex items-center justify-between mb-1 p-1"
         style={{
           backgroundColor: "#f8f9fa",
         }}
@@ -99,7 +98,7 @@ const CustomerMain = () => {
           style={{ fontSize: "30px" }}
           onClick={() => setOpenAddCartPopup(true)}
         >
-          <div className="position-relative d-inline-block">
+          <div className="relative inline-block">
             <SvgIcon
               name="Shopping"
               width={30}

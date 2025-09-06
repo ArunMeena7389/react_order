@@ -24,7 +24,6 @@ import {
 const OrderList = () => {
   const dispatch = useDispatch();
   const orderListData = useSelector((state) => state?.orderList?.data);
-  console.log(orderListData, "orderListData");
   const dataItem = useMemo(
     () => orderListData.data || [],
     [orderListData.data]
@@ -54,13 +53,12 @@ const OrderList = () => {
     connectSocket();
 
     added_new((newOrder) => {
-      console.log(newOrder, "1111111");
       setOrderList((prev) => [...prev, newOrder]);
     });
 
     return () => {
       off_new();
-      disconnectSocket(); // optional
+      disconnectSocket();
     };
   }, []);
 
@@ -68,10 +66,12 @@ const OrderList = () => {
     setOrderList(dataItem);
     // eslint-disable-next-line
   }, [dataItem]);
+
   useEffect(() => {
     dispatch(getorderDataAction());
     // eslint-disable-next-line
   }, []);
+
   const rowData = useCallback(() => {
     return orderList.map((item) => {
       return {
@@ -91,7 +91,7 @@ const OrderList = () => {
         ),
         action: (
           <div
-            onClick={(e) => {
+            onClick={() => {
               setShowDetailPopup(true);
               setSelectedOrder(item || []);
             }}
@@ -118,7 +118,7 @@ const OrderList = () => {
         order_accept: item.order_accept ? "Accepted" : "Pendding",
         action: (
           <div
-            onClick={(e) => {
+            onClick={() => {
               setShowDetailPopup(true);
               setSelectedOrder(item?.order_item || []);
             }}
@@ -136,7 +136,6 @@ const OrderList = () => {
     });
     // eslint-disable-next-line
   }, [selectedOrder?.order_item]);
-  console.log(orderList, "selectedOrder");
 
   const handleClose = () => {
     setShowDetailPopup(false);
@@ -148,9 +147,7 @@ const OrderList = () => {
         <TableGrid columns={columns} data={rowData()} />
         <PopupComponent
           isOpen={showDetailPopup}
-          onClose={() => {
-            handleClose();
-          }}
+          onClose={handleClose}
           title={`Order Item (${selectedOrder?.customer_name})`}
           width="90%"
           height="90vh"
@@ -164,9 +161,7 @@ const OrderList = () => {
               <ButtonComponent
                 name="Cancel"
                 variant="secondary"
-                onClick={() => {
-                  handleClose();
-                }}
+                onClick={handleClose}
               />
               <ButtonComponent
                 name="Save"

@@ -4,13 +4,7 @@ import { useNavigate } from "react-router-dom";
 import CustomDropdown from "../../Ui-Elements/CustomDropdown/CustomDropdown";
 import ButtonComponent from "../../Ui-Elements/Button/ButtonComponent";
 import RoundedCircle from "../../Ui-Elements/RoundedCircle/RoundedCircle";
-// import { useDispatch, useSelector } from 'react-redux';
 
-// let initialPayload = {
-//     "fields": ["name", "price", "image_url", "taste", "description"],
-//     "filter": {
-//     }
-// }
 const profileData = JSON.parse(localStorage.getItem("profile"));
 
 const Header = () => {
@@ -22,13 +16,9 @@ const Header = () => {
 
   return (
     <nav className="header">
-      <div
-        style={{
-          display: "flex",
-        }}
-      >
+      <div className="flex">
         <RoundedCircle size={40} content="αɱ" bgColor="bg-secondary" />
-        <div className="ms-1" style={{ width: "100px" }}>
+        <div className="ml-1" style={{ width: "100px" }}>
           <ButtonComponent
             name=" Add"
             onClick={handleAddClick}
@@ -36,11 +26,11 @@ const Header = () => {
             variant="secondary"
             fullWidth={true}
             icon="+"
-            className="ms-2"
+            className="ml-2"
           />
         </div>
       </div>
-      <div className="d-flex m-1" style={{ gap: 10 }}>
+      <div className="flex m-1" style={{ gap: 10 }}>
         <CustomDropdown
           triggerContent={
             <>
@@ -53,12 +43,14 @@ const Header = () => {
                         "https://images.ctfassets.net/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg?w=1200&h=992&fl=progressive&q=70&fm=jpg"
                       }
                       alt="Profile"
-                      className="rounded-circle w-100 h-100"
+                      className="rounded-full w-full h-full"
                     />
                   }
                 />
 
-                <span className="mx-2">{profileData?.name || "Arun Meena"}</span>
+                <span className="mx-2">
+                  {profileData?.name || "Arun Meena"}
+                </span>
               </button>
             </>
           }

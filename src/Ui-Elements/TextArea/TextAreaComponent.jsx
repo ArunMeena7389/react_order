@@ -31,7 +31,7 @@ const TextAreaComponent = ({
           </label>
         )}
 
-        <div className={`${error ? "error" : ""} position-relative`}>
+        <div className={`${error ? "error" : ""} relative`}>
           <textarea
             id={name}
             name={name}
@@ -44,7 +44,7 @@ const TextAreaComponent = ({
             required={required}
             rows={rows}
             className={`mg-text-area ${inputClass} ${
-              error ? "is-invalid" : ""
+              error ? "border-red-500" : ""
             }`}
             style={{ height: height }}
           ></textarea>
@@ -66,7 +66,7 @@ const TextAreaComponent = ({
         {(error || helperText) && (
           <div
             className={`custom-helper-text ${
-              error ? "text-danger" : "text-muted"
+              error ? "text-red-500" : "text-gray-500"
             }`}
           >
             {error || helperText}

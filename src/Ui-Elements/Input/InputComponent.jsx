@@ -64,7 +64,7 @@ const InputComponent = ({
                 name="clear"
                 width={16}
                 height={16}
-                className="text-secondary"
+                className="text-gray-500"
               />
             }
           </span>

@@ -29,10 +29,10 @@ const ImageUploader = ({
   };
 
   return (
-    <div className="d-flex flex-column align-items-start">
+    <div className="flex flex-col items-start">
       <div
-        className={`image-uploader d-flex align-items-center justify-content-center 
-          ${showError ? "is-invalid" : ""}`}
+        className={`image-uploader flex items-center justify-center 
+        ${showError ? "is-invalid" : ""}`}
         style={{ width: size + 10, height: size }}
         onClick={handleClick}
       >
@@ -45,8 +45,8 @@ const ImageUploader = ({
           />
         ) : (
           <div className="upload-placeholder">
-            {/* <FaUpload size={30} className="text-muted" /> */}
-            <p className="text-muted mb-0">Upload</p>
+            {/* <FaUpload size={30} className="text-gray-500" /> */}
+            <p className="text-gray-500 m-0">Upload</p>
           </div>
         )}
 
@@ -54,14 +54,12 @@ const ImageUploader = ({
           type="file"
           accept="image/*"
           ref={fileInputRef}
-          className="d-none"
+          className="hidden"
           onChange={handleFileChange}
         />
       </div>
 
-      {showError && (
-        <div className="invalid-feedback d-block">{errorMessage}</div>
-      )}
+      {showError && <div className="text-red-500 text-sm">{errorMessage}</div>}
     </div>
   );
 };

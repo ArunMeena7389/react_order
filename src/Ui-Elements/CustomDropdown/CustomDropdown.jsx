@@ -46,10 +46,7 @@ const CustomDropdown = ({
       }}
     >
       {/* Trigger element */}
-      <div
-        onClick={() => setOpen((prev) => !prev)}
-        style={{ cursor: "pointer" }}
-      >
+      <div onClick={() => setOpen((prev) => !prev)} className="cursor-pointer">
         {triggerContent}
       </div>
 

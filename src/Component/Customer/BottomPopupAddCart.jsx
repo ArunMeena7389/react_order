@@ -136,9 +136,7 @@ const BottomPopupAddCart = ({
           ))}
           {addedCartData.length ? (
             <div>
-              <p className="text-success">
-                5% extra discount if order above ₹1000.
-              </p>
+              <p className="">5% extra discount if order above ₹1000.</p>
               <Typography
                 variant="subtitle2"
                 sx={{ fontWeight: 600, minWidth: 50 }}

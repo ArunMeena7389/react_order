@@ -1,6 +1,4 @@
 import React, { useEffect, useState, useRef } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./TableGrid.scss";
 import SvgIcon from "../../SvgIcon/SvgIcon";
 
 const TableGrid = ({ columns = [], footerData = [], data = [] }) => {
@@ -57,8 +55,8 @@ const TableGrid = ({ columns = [], footerData = [], data = [] }) => {
   return (
     <div className="mg-table-grid mr-3">
       <div className="fixed-height-table">
-        <table className="table table-striped align-middle table-head">
-          <thead>
+        <table className="w-full border-collapse [&_th]:border-b [&_td]:border-b text-left">
+          <thead className="bg-gray-100">
             <tr>
               {columns.map((col) => (
                 <th
@@ -69,6 +67,7 @@ const TableGrid = ({ columns = [], footerData = [], data = [] }) => {
                     width: col.width || "auto",
                     minWidth: col.minWidth || "auto",
                   }}
+                  className="px-3 py-2 align-middle"
                 >
                   {col.label}
                   {getArrow(col.key)}
@@ -78,18 +77,18 @@ const TableGrid = ({ columns = [], footerData = [], data = [] }) => {
           </thead>
         </table>
 
-        <div className="scrollable-body">
-          <table className="table table-striped align-middle">
+        <div className="scrollable-body overflow-y-auto">
+          <table className="w-full border-collapse [&_td]:border-b text-left">
             <tbody>
               {tableData.length === 0 ? (
                 <tr>
-                  <td colSpan={columns.length} className="text-center">
+                  <td colSpan={columns.length} className="text-center py-3">
                     No data found
                   </td>
                 </tr>
               ) : (
                 tableData.map((row, idx) => (
-                  <tr key={idx}>
+                  <tr key={idx} className="hover:bg-gray-50">
                     {columns.map((col) => (
                       <td
                         key={col.key}
@@ -97,6 +96,7 @@ const TableGrid = ({ columns = [], footerData = [], data = [] }) => {
                           width: col.width || "auto",
                           minWidth: col.minWidth || "auto",
                         }}
+                        className="px-3 py-2 align-middle"
                       >
                         {col.type === "image" ? (
                           <img
@@ -111,7 +111,7 @@ const TableGrid = ({ columns = [], footerData = [], data = [] }) => {
                           />
                         ) : col.type === "action" ? (
                           <div
-                            className="position-relative d-inline-block"
+                            className="relative inline-block"
                             style={{ width: col.width }}
                           >
                             <div
@@ -124,20 +124,20 @@ const TableGrid = ({ columns = [], footerData = [], data = [] }) => {
                                   left: rect.right - 120 + window.scrollX,
                                 });
                               }}
-                              style={{ cursor: "pointer" }}
+                              className="cursor-pointer"
                             >
                               <SvgIcon
                                 name="threedot"
                                 width={20}
                                 height={20}
-                                style={{ cursor: "pointer" }}
+                                className="cursor-pointer"
                               />
                             </div>
 
                             {activeRowId === row._id && (
                               <div
                                 ref={popupRef}
-                                className="position-fixed bg-white border shadow rounded p-2"
+                                className="fixed bg-white border shadow rounded p-2"
                                 style={{
                                   top: popupPosition.top,
                                   left: popupPosition.left,
@@ -148,10 +148,9 @@ const TableGrid = ({ columns = [], footerData = [], data = [] }) => {
                                 {col.actions?.map((action, i) => (
                                   <div
                                     key={i}
-                                    className={`dropdown-item my-1 ${
+                                    className={`px-2 py-1 rounded hover:bg-gray-100 cursor-pointer ${
                                       action.className || ""
                                     }`}
-                                    style={{ cursor: "pointer" }}
                                     onClick={() => {
                                       action.onClick(row);
                                       setActiveRowId(null);
@@ -177,8 +176,8 @@ const TableGrid = ({ columns = [], footerData = [], data = [] }) => {
 
         <div className="table-footer">
           {footerData.length ? (
-            <table className="table mg-table-footer-header">
-              <thead>
+            <table className="w-full border-collapse [&_th]:border-b text-left">
+              <thead className="bg-gray-100">
                 <tr>
                   {footerData.map((col) => (
                     <th
@@ -188,6 +187,7 @@ const TableGrid = ({ columns = [], footerData = [], data = [] }) => {
                         width: col.width || "auto",
                         minWidth: col.minWidth || "auto",
                       }}
+                      className="px-3 py-2 align-middle"
                     >
                       {col.label}
                       {getArrow(col.key)}

@@ -1,5 +1,17 @@
 import React, { useEffect, useState } from "react";
-import "./BadgesComponent.scss";
+import "./BadgesComponent.scss"; // keep if you have custom CSS overrides
+
+// Tailwind variant mappings
+const badgeVariants = {
+  primary: "bg-blue-500 text-white",
+  secondary: "bg-gray-500 text-white",
+  success: "bg-green-500 text-white",
+  danger: "bg-red-500 text-white",
+  warning: "bg-yellow-400 text-black",
+  info: "bg-sky-500 text-white",
+  light: "bg-gray-200 text-black",
+  dark: "bg-gray-800 text-white",
+};
 
 const BadgesComponent = ({
   variant = "primary",
@@ -10,17 +22,20 @@ const BadgesComponent = ({
   onClick,
 }) => {
   const [textValue, setTextValue] = useState(text);
+
   useEffect(() => {
     setTextValue(text);
   }, [text]);
+
   if (!textValue) return null;
 
   return (
     <span
       onClick={onClick}
-      className={`badge bg-${variant} ${customClass} ${positionClass} ${
-        NotificationCount ? "mg-badge-count" : ""
-      }`}
+      className={`inline-block rounded px-2 py-1 text-xs font-medium 
+        ${badgeVariants[variant] || badgeVariants.primary} 
+        ${customClass} ${positionClass} 
+        ${NotificationCount ? "mg-badge-count" : ""}`}
     >
       {textValue}
     </span>
@@ -28,15 +43,3 @@ const BadgesComponent = ({
 };
 
 export default BadgesComponent;
-
-/* <span class="badge badge-primary">Primary</span>
-<span class="badge badge-secondary">Secondary</span>
-<span class="badge badge-success">Success</span>
-<span class="badge badge-danger">Danger</span>
-<span class="badge badge-warning">Warning</span>
-<span class="badge badge-info">Info</span>
-<span class="badge badge-light">Light</span>
-<span class="badge badge-dark">Dark</span> */
-
-// ai api key site
-// https://dashboard.cohere.com/api-keys

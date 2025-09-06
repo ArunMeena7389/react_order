@@ -1,16 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "bootstrap/dist/css/bootstrap.min.css";
 
-/**
- * Common Rounded Circle Avatar Component
- *
- * Props:
- * - size: number (diameter in pixels)
- * - content: string | JSX (text initials, HTML, image tag)
- * - bgColor: string (Bootstrap color class or custom)
- * - textColor: string (Bootstrap color class or custom)
- */
 const RoundedCircle = ({
   size = 50,
   content = "AM",
@@ -27,9 +17,9 @@ const RoundedCircle = ({
   };
 
   return (
-    <div className={`rounded-circle ${bgColor} ${textColor}`} style={style}>
+    <div className={`rounded-full ${bgColor} ${textColor}`} style={style}>
       {typeof content === "string" ? (
-        <span className="fw-bold">{content}</span>
+        <span className="font-bold">{content}</span>
       ) : (
         content
       )}

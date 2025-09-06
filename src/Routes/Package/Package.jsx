@@ -15,6 +15,18 @@ const Package = () => {
 
   const [packageData, setPackageData] = useState([]);
 
+  const fetchPackages = async () => {
+    dispatch(
+      getpackageDataAction((data) => {
+        setPackageData(data.data || []);
+      })
+    );
+  };
+
+  useEffect(() => {
+    fetchPackages();
+  }, []); // only run once
+
   const columns = [
     { label: "Image", key: "image_url", type: "image", width: "120px" },
     { label: "Package", key: "packageName", sort: true, width: "200px" },
@@ -28,44 +40,33 @@ const Package = () => {
       actions: [
         {
           label: "Edit",
-          className: "text-dark",
+          className: "text-blue-600 cursor-pointer",
           onClick: (row) => {
             navigate("/merchant/package/add", { state: row });
           },
         },
         {
           label: "Delete",
-          className: "text-danger",
+          className: "text-red-600 cursor-pointer",
           onClick: async (row) => {
             await dispatch(deletePackageDataAction(row._id));
-            await onPackageDataGet();
+            fetchPackages();
           },
         },
       ],
     },
   ];
 
-  const onPackageDataGet = () => {
-    dispatch(
-      getpackageDataAction((data) => {
-        let res = data.data;
-        setPackageData(res);
-      })
-    );
-  };
+  const rowData = useMemo(
+    () =>
+      packageData.map((item) => ({
+        ...item,
+        image_url: item.image_url || "",
+        price: formatPrice(item.price),
+      })),
+    [packageData]
+  );
 
-  useEffect(() => {
-    onPackageDataGet();
-    // eslint-disable-next-line
-  }, []);
-
-  const rowData = useMemo(() => {
-    return packageData.map((item) => ({
-      ...item,
-      image_url: item.image_url || "",
-      price: formatPrice(item.price),
-    }));
-  }, [packageData]);
   return (
     <Fragment>
       <ButtonComponent
@@ -74,9 +75,7 @@ const Package = () => {
         variant="primary"
         icon="+"
         onClick={() => {
-          navigate("/merchant/package/add", {
-            state: "selected",
-          });
+          navigate("/merchant/package/add");
         }}
       />
       <div className="mt-2">

@@ -3,7 +3,6 @@ import "./App.css";
 import "./Styles/Common.scss";
 import { Provider } from "react-redux";
 import { store, persistor } from "./Redux/store";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import PrivateRoute from "./Component/PrivateRoute";
 import { PersistGate } from "redux-persist/integration/react";

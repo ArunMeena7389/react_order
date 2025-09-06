@@ -6,7 +6,6 @@ import React, {
   useRef,
   useMemo,
 } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
 import TableGrid from "../../Ui-Elements/Table/TableGrid";
 import { deleteMenuDataAction, getmenueDataAction } from "../../Redux/Action";
 import { showCustomLoader } from "../../Common/showCustomLoader";
@@ -182,7 +181,7 @@ const ItemTable = () => {
   return (
     <Fragment>
       <div>
-        <div className="d-flex justify-content-end align-items-center gap-3 p-2 flex-wrap">
+        <div className="flex justify-end items-center gap-3 p-2 flex-wrap">
           {/* Input Field */}
           <div style={{ minWidth: "150px" }}>
             <InputComponent
@@ -195,7 +194,7 @@ const ItemTable = () => {
                   name="search"
                   width={16}
                   height={16}
-                  className="text-secondary"
+                  className="text-gray-500"
                 />
               }
               onChange={(e) => {
@@ -208,7 +207,7 @@ const ItemTable = () => {
 
           {/* PDF Button */}
           <div
-            className="border rounded px-3 py-2 bg-light d-flex align-items-center"
+            className="border rounded px-3 py-2 bg-gray-100 flex items-center"
             style={{
               cursor: "pointer",
               height: "40px", // 👈 Match input height
@@ -219,7 +218,7 @@ const ItemTable = () => {
               name="pdf"
               width={20}
               height={20}
-              className="text-secondary"
+              className="text-gray-500"
             />
           </div>
         </div>

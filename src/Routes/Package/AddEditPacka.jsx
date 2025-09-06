@@ -22,7 +22,7 @@ import {
   updatePackageDataAction,
 } from "../../Redux/Action";
 
-let initialPayload = {
+const initialPayload = {
   fields: ["name", "price", "image_url", "taste", "description", "business_id"],
   filter: {},
 };
@@ -57,28 +57,30 @@ const AddEditPacka = () => {
   });
   const [showItem, setShowItem] = useState(false);
   const onClickSave = async () => {
-    if (stateValue.packageName) {
-      if (selectedItem._id) {
-        await dispatch(
-          updatePackageDataAction(selectedItem._id, {
-            packageName: stateValue.packageName,
-            items: saveItemID,
-            discount: stateValue.discount,
-            image: stateValue.image,
-          })
-        );
-      } else {
-        dispatch(
-          await addPackageAction({
-            packageName: stateValue.packageName,
-            items: saveItemID,
-            discount: stateValue.discount,
-            image: stateValue.image,
-          })
-        );
-      }
-      navigate("/merchant/package");
+    if (!stateValue.packageName) {
+      setError((prev) => ({ ...prev, packageName: true }));
+      return;
     }
+    if (selectedItem._id) {
+      await dispatch(
+        updatePackageDataAction(selectedItem._id, {
+          packageName: stateValue.packageName,
+          items: saveItemID,
+          discount: stateValue.discount,
+          image: stateValue.image,
+        })
+      );
+    } else {
+      await dispatch(
+        addPackageAction({
+          packageName: stateValue.packageName,
+          items: saveItemID,
+          discount: stateValue.discount,
+          image: stateValue.image,
+        })
+      );
+    }
+    navigate("/merchant/package");
   };
 
   useEffect(() => {
@@ -90,14 +92,16 @@ const AddEditPacka = () => {
     // eslint-disable-next-line
   }, []);
 
-  const rowData = useCallback(() => {
+  const renderItemList = useCallback(() => {
     return (
       <div className="w-100">
         {items.map((item) => (
           <div
-            key={item.id}
+            key={item._id}
             className={`mg-item-contain d-flex align-items-center w-100 mb-2 border p-2
-       ${itemID.includes(item._id) ? "bg-primary text-white" : "bg-white"}`}
+              ${
+                itemID.includes(item._id) ? "bg-primary text-white" : "bg-white"
+              }`}
             onClick={() => {
               if (itemID.includes(item._id)) {
                 setItemID(itemID.filter((id) => id !== item._id));
@@ -109,13 +113,13 @@ const AddEditPacka = () => {
             <div style={{ width: "140px" }}>
               <img
                 src={item.image_url}
-                alt={item.image}
+                alt={item.name}
                 className="rounded me-2"
                 width="45"
                 height="45"
               />
             </div>
-            <h6 className="">{item.name}</h6>
+            <h6>{item.name}</h6>
             <p className="mb-0 text-muted ms-auto">
               {formatPrice(item?.price, "en-IN", "INR")}
             </p>
@@ -123,8 +127,13 @@ const AddEditPacka = () => {
         ))}
       </div>
     );
-    // eslint-disable-next-line
   }, [items, itemID]);
+  useEffect(() => {
+    if (selectedItem?.image_url) {
+      setPreview(selectedItem.image_url);
+    }
+  }, [selectedItem]);
+
   const handleOnChange = (val, type) => {
     if (type === "image" && val) {
       const objectUrl = URL.createObjectURL(val);
@@ -134,6 +143,7 @@ const AddEditPacka = () => {
       ...prev,
       [type]: val,
     }));
+    setError((prev) => ({ ...prev, [type]: false }));
   };
   return (
     <Fragment>
@@ -142,27 +152,39 @@ const AddEditPacka = () => {
           <ImageUploader
             image={preview || Image}
             required={error.image}
-            onChange={(e, file) => {
-              handleOnChange(file, "image");
-              error.image = false;
-              setError({ ...error });
-            }}
+            onChange={(e, file) => handleOnChange(file, "image")}
             size={200}
           />
           <br />
           <InputComponent
             label="Name Of Package"
-            name="Package"
+            name="packageName"
             type="text"
             placeholder="Enter"
             value={stateValue.packageName}
-            onChange={(e) => {
-              handleOnChange(e.target.value, "packageName");
-              error.name = false;
-              setError({ ...error });
-            }}
+            onChange={(e) => handleOnChange(e.target.value, "packageName")}
             required
-            error={error.name ? "required" : ""}
+            error={error.packageName ? "Required" : ""}
+          />
+          <br />
+          <InputComponent
+            label="Price"
+            name="price"
+            type="number"
+            placeholder="Enter"
+            value={stateValue.price}
+            onChange={(e) => handleOnChange(e.target.value, "price")}
+            error={error.price ? "Required" : ""}
+          />
+          <br />
+          <InputComponent
+            label="Discount (%)"
+            name="discount"
+            type="number"
+            placeholder="Enter"
+            value={stateValue.discount}
+            onChange={(e) => handleOnChange(e.target.value, "discount")}
+            error={error.discount ? "Required" : ""}
           />
           <br />
           <ButtonComponent
@@ -211,14 +233,14 @@ const AddEditPacka = () => {
         title="Items"
         width="600px"
         height="auto"
-        content={rowData()}
+        content={renderItemList()}
         footer={
           <>
             <ButtonComponent
               name="Add"
               variant="primary"
               onClick={() => {
-                setSaveItemID(itemID);
+                setSaveItemID([...itemID]);
                 setShowItem(false);
               }}
             />
