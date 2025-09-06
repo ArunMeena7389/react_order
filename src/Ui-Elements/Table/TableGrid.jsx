@@ -1,7 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
 import SvgIcon from "../../SvgIcon/SvgIcon";
 
-const TableGrid = ({ columns = [], footerData = [], data = [] }) => {
+const TableGrid = ({
+  columns = [],
+  footerData = [{ label: " ", key: " " }],
+  data = [],
+}) => {
   const [tableData, setTableData] = useState(data);
   const [sortConfig, setSortConfig] = useState({ key: "", direction: "asc" });
   const [activeRowId, setActiveRowId] = useState(null);
@@ -82,13 +86,16 @@ const TableGrid = ({ columns = [], footerData = [], data = [] }) => {
             <tbody>
               {tableData.length === 0 ? (
                 <tr>
-                  <td colSpan={columns.length} className="text-center py-3">
+                  <td
+                    colSpan={columns.length}
+                    className="text-center py-3 bg-white"
+                  >
                     No data found
                   </td>
                 </tr>
               ) : (
                 tableData.map((row, idx) => (
-                  <tr key={idx} className="hover:bg-gray-50">
+                  <tr key={idx} className="hover:bg-gray-100 bg-white">
                     {columns.map((col) => (
                       <td
                         key={col.key}
@@ -177,7 +184,7 @@ const TableGrid = ({ columns = [], footerData = [], data = [] }) => {
         <div className="table-footer">
           {footerData.length ? (
             <table className="w-full border-collapse [&_th]:border-b text-left">
-              <thead className="bg-gray-100">
+              <thead className="bg-white">
                 <tr>
                   {footerData.map((col) => (
                     <th

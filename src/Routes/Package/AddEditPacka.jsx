@@ -98,10 +98,8 @@ const AddEditPacka = () => {
         {items.map((item) => (
           <div
             key={item._id}
-            className={`mg-item-contain d-flex align-items-center w-100 mb-2 border p-2
-              ${
-                itemID.includes(item._id) ? "bg-primary text-white" : "bg-white"
-              }`}
+            className={`flex mg-item-contain d-flex align-items-center w-100 mb-2 border p-2
+              ${itemID.includes(item._id) ? "bg-gray-200" : "bg-white"}`}
             onClick={() => {
               if (itemID.includes(item._id)) {
                 setItemID(itemID.filter((id) => id !== item._id));
@@ -110,13 +108,11 @@ const AddEditPacka = () => {
               }
             }}
           >
-            <div style={{ width: "140px" }}>
+            <div style={{ width: "45px", height: "45px" }} className="mr-6">
               <img
                 src={item.image_url}
                 alt={item.name}
-                className="rounded me-2"
-                width="45"
-                height="45"
+                className="rounded object-cover w-full h-full"
               />
             </div>
             <h6>{item.name}</h6>

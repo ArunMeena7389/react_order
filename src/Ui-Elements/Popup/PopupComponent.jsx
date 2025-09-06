@@ -28,7 +28,7 @@ const PopupComponent = ({
         >
           <div
             className="bg-white rounded-lg shadow-lg flex flex-col w-full"
-            style={{ height }}
+            style={{ height: height, maxHeight: "90vh" }}
           >
             <div className="flex items-center justify-between p-4 border-b">
               {title && <h5 className="text-lg font-semibold">{title}</h5>}
