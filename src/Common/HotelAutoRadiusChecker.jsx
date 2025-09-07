@@ -2,8 +2,9 @@
 import React, { useEffect, useState } from "react";
 
 function HotelAutoRadiusChecker() {
-  const [hotelLocation, setHotelLocation] = useState(null);
+  const [hotelLocation] = useState({ lat: 23.02935, lng: 72.53524 }); // static hotel location
   const [customerLocation, setCustomerLocation] = useState(null);
+  const [samples, setSamples] = useState([]);
   const [result, setResult] = useState("");
 
   const toRad = (x) => (x * Math.PI) / 180;
@@ -25,16 +26,35 @@ function HotelAutoRadiusChecker() {
 
   useEffect(() => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
+      const watchId = navigator.geolocation.watchPosition(
         (pos) => {
-          setHotelLocation({ lat: pos.coords.latitude, lng: pos.coords.longitude });
-          setCustomerLocation({ lat: pos.coords.latitude, lng: pos.coords.longitude });
+          setSamples((prev) => {
+            const updated = [
+              ...prev,
+              { lat: pos.coords.latitude, lng: pos.coords.longitude },
+            ];
+            if (updated.length > 5) updated.shift(); // keep last 5 readings
+            return updated;
+          });
         },
-        (err) => alert(err.message)
+        (err) => alert(err.message),
+        { enableHighAccuracy: true, maximumAge: 0, timeout: 10000 }
       );
+
+      return () => navigator.geolocation.clearWatch(watchId);
     }
   }, []);
 
+  // Average readings
+  useEffect(() => {
+    if (samples.length) {
+      const avgLat = samples.reduce((s, v) => s + v.lat, 0) / samples.length;
+      const avgLng = samples.reduce((s, v) => s + v.lng, 0) / samples.length;
+      setCustomerLocation({ lat: avgLat, lng: avgLng });
+    }
+  }, [samples]);
+
+  // Calculate distance and check radius
   useEffect(() => {
     if (hotelLocation && customerLocation) {
       const distance = getDistance(
@@ -43,18 +63,26 @@ function HotelAutoRadiusChecker() {
         hotelLocation.lat,
         hotelLocation.lng
       );
-      setResult(distance <= 200 ? "✅ Inside 200m" : "❌ Outside 200m");
+      setResult(distance <= 250 ? "✅ Inside 200m (with buffer)" : "❌ Outside 200m");
     }
   }, [hotelLocation, customerLocation]);
 
   return (
     <div>
       <h3>Hotel Radius Checker</h3>
-      {hotelLocation && <p>Hotel: {hotelLocation.lat}, {hotelLocation.lng}</p>}
-      {customerLocation && <p>Customer: {customerLocation.lat}, {customerLocation.lng}</p>}
+      {hotelLocation && (
+        <p>
+          Hotel: {hotelLocation.lat.toFixed(5)}, {hotelLocation.lng.toFixed(5)}
+        </p>
+      )}
+      {customerLocation && (
+        <p>
+          Customer: {customerLocation.lat.toFixed(5)}, {customerLocation.lng.toFixed(5)}
+        </p>
+      )}
       {result && <p>{result}</p>}
     </div>
   );
 }
 
-export default HotelAutoRadiusChecker; // ✅ default export
+export default HotelAutoRadiusChecker;
