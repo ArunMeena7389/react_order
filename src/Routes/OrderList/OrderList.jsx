@@ -76,7 +76,7 @@ const OrderList = () => {
   }, []);
 
   const rowData = useCallback(() => {
-    return orderList.map((item) => {
+    return orderList?.map((item) => {
       return {
         ...item,
         total_price: formatPrice(item?.total_price, "en-IN", "INR"),
