@@ -6,7 +6,7 @@ import React, {
   useState,
 } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getorderDataAction } from "../../Redux/Action";
+import { getorderDataAction, updateOrderDataAction } from "../../Redux/Action";
 import TableGrid from "../../Ui-Elements/Table/TableGrid";
 import { formatPrice } from "../../Common/utils";
 import ButtonComponent from "../../Ui-Elements/Button/ButtonComponent";
@@ -20,10 +20,12 @@ import {
   disconnectSocket,
   off_new,
 } from "../../Common/SocketService";
+import InputComponent from "../../Ui-Elements/Input/InputComponent";
+import DropdownComponent from "../../Ui-Elements/Dropdown/DropdownComponent";
 
 const OrderList = () => {
   const dispatch = useDispatch();
-  const orderListData = useSelector((state) => state?.orderList?.data);
+  const orderListData = useSelector((state) => state?.orderList);
   const dataItem = useMemo(
     () => orderListData.data || [],
     [orderListData.data]
@@ -31,13 +33,15 @@ const OrderList = () => {
   const [orderList, setOrderList] = useState(dataItem);
   const [showDetailPopup, setShowDetailPopup] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
+  const [dropdownValue, setDropdownValue] = useState("today");
   const columns = [
     { label: "Detail", key: "action", width: "70px" },
-    { label: "Customer", key: "customer_name", width: "250px" },
+    { label: "Customer", key: "customer_name", width: "200px" },
+    { label: "Order ID", key: "order_id", sort: true, width: "100px" },
     { label: "Price", key: "total_price", width: "150px" },
     { label: "Payment Status", key: "payment_status", width: "150px" },
     { label: "Order Status", key: "order_status", sort: true, width: "150px" },
-    { label: "Accept Status", key: "order_accept", sort: true, width: "150px" },
     { label: "Order Time", key: "order_time", width: "150px" },
   ];
 
@@ -51,7 +55,6 @@ const OrderList = () => {
 
   useEffect(() => {
     connectSocket();
-
     added_new((newOrder) => {
       setOrderList((prev) => [...prev, newOrder]);
     });
@@ -79,14 +82,64 @@ const OrderList = () => {
         total_price: formatPrice(item?.total_price, "en-IN", "INR"),
         payment_status: (
           <BadgesComponent
-            variant={!item.payment_status ? "success" : "warning"}
+            title="Click for change payment status"
+            variant={item.payment_status === "Paid" ? "success" : "warning"}
             text={item.payment_status}
+            customClass="cursor-pointer"
+            onClick={() => {
+              dispatch(
+                updateOrderDataAction(
+                  item._id,
+                  {
+                    payment_status:
+                      item.payment_status === "Pending" ? "Paid" : "Pending",
+                  },
+                  (data) => {
+                    setOrderList((prev) =>
+                      prev.map((order) =>
+                        order._id === data._id ? data : order
+                      )
+                    );
+                  }
+                )
+              );
+            }}
           />
         ),
-        order_accept: (
+        order_status: (
           <BadgesComponent
-            variant={!item.order_accept ? "warning" : "success"}
-            text={item.order_accept ? "Accepted" : "Pending"}
+            title="Click for change order status"
+            variant={
+              item.order_status === "Ordered"
+                ? "warning"
+                : item.order_status === "Deliverd"
+                ? "success"
+                : ""
+            }
+            text={item.order_status}
+            customClass="cursor-pointer"
+            onClick={() => {
+              dispatch(
+                updateOrderDataAction(
+                  item._id,
+                  {
+                    order_status:
+                      item.order_status === "Ordered"
+                        ? "Accepted"
+                        : item.order_status === "Accepted"
+                        ? "Deliverd"
+                        : "Ordered",
+                  },
+                  (data) => {
+                    setOrderList((prev) =>
+                      prev.map((order) =>
+                        order._id === data._id ? data : order
+                      )
+                    );
+                  }
+                )
+              );
+            }}
           />
         ),
         action: (
@@ -140,10 +193,52 @@ const OrderList = () => {
   const handleClose = () => {
     setShowDetailPopup(false);
   };
+  const handleSearch = (e) => {
+    setSearchValue(e.target.value);
+  };
   return (
     <Fragment>
       <div className="mg-orderlist-main">
-        <h3>Order List</h3>
+        <div className="flex">
+          <h2>Order List</h2>
+          <div className="ml-4 mb-2">
+            <InputComponent
+              value={searchValue}
+              onChange={(e) => {
+                handleSearch(e);
+              }}
+              placeholder="Search by Order ID"
+              suffixIcon
+              prefix={
+                <SvgIcon
+                  name="search"
+                  width={16}
+                  height={16}
+                  className="text-gray-500"
+                />
+              }
+            />
+          </div>
+          <div
+            style={{
+              position: "absolute",
+              right: "30px",
+              width: "200px",
+            }}
+          >
+            <DropdownComponent
+              value={dropdownValue}
+              options={[
+                { label: "Today", value: "today" },
+                { label: "Yesterday", value: "yesterday" },
+                { label: "All", value: "all" },
+              ]}
+              onChange={(e) => {
+                setDropdownValue(e.target.value);
+              }}
+            />
+          </div>
+        </div>
         <TableGrid columns={columns} data={rowData()} />
         <PopupComponent
           isOpen={showDetailPopup}

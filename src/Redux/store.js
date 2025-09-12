@@ -18,7 +18,7 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-  user: menueDataReducer,
+  menuList: menueDataReducer,
   taste: tasteSelectDataReducer,
   customerMenu: customerMenuDataReducer,
   orderList: orderDataReducer,

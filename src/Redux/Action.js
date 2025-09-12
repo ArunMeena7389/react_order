@@ -2,6 +2,7 @@ import Config from "../Config";
 import { typeData } from "./type";
 import axios from "axios";
 import instance from "./axiosInstance";
+import { apiAction } from "./ApiAction";
 
 const token = localStorage.getItem("token");
 const selectTasteAction = (data) => {
@@ -11,55 +12,36 @@ const selectTasteAction = (data) => {
 };
 
 const getmenueDataAction = (datas, onSuccess) => {
-  return async (dispatch) => {
-    try {
-      const response = await instance.post(Config.url + "/menu", datas, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const data = response;
-      onSuccess(data);
-      dispatch({ type: typeData.GET_MENUE_DATA_SUCSESS, payload: data });
-    } catch (error) {
-      dispatch({ type: "FETCH_DATA_ERROR", payload: error });
-    }
-  };
+  return apiAction({
+    method: "post",
+    url: "/menu",
+    payload: datas,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    types: {
+      REQUEST: "GET_MENUE_DATA_REQUEST",
+      SUCCESS: "GET_MENUE_DATA_SUCSESS",
+      ERROR: "FETCH_DATA_ERROR",
+    },
+    onSuccess,
+  });
 };
 
 const addMenuDataAction = (payload) => {
-  return async (dispatch) => {
-    try {
-      const formData = new FormData();
+  const formData = new FormData();
+  Object.keys(payload).forEach((key) => formData.append(key, payload[key]));
 
-      Object.keys(payload).forEach((key) => {
-        formData.append(key, payload[key]);
-      });
-
-      const response = await instance.post(
-        `${Config.url}/menu/create`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            // Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      dispatch({
-        type: typeData.ADD_MENU_DATA_SUCCESS,
-        payload: response.data,
-      });
-    } catch (error) {
-      console.error("Error adding menu data:", error);
-
-      dispatch({
-        type: typeData.ADD_MENU_DATA_ERROR,
-        payload: error.response?.data || error.message,
-      });
-    }
-  };
+  return apiAction({
+    method: "post",
+    url: "/menu/create",
+    payload: formData,
+    types: {
+      REQUEST: "ADD_MENU_DATA_REQUEST",
+      SUCCESS: "ADD_MENU_DATA_SUCCESS",
+      ERROR: "ADD_MENU_DATA_ERROR",
+    },
+  });
 };
 
 const deleteMenuDataAction = (id) => {
@@ -173,21 +155,42 @@ const addOrderAction = (payloadData) => {
 
 const getorderDataAction = (datas) => {
   const businessID = localStorage.getItem("businessID");
-  console.log(businessID, "businessID");
+  return apiAction({
+    method: "get",
+    url: "/order",
+    headers: {
+      business_id: businessID,
+    },
+    types: {
+      REQUEST: "GET_ORDER_DATA_REQUEST",
+      SUCCESS: "GET_ORDER_DATA_SUCSESS",
+      ERROR: "GET_CUSTOMER_DATA_ERROR",
+    },
+  });
+};
 
+const updateOrderDataAction = (orderId, updateFields, onSuccess) => {
+  const businessID = localStorage.getItem("businessID");
   return async (dispatch) => {
     try {
-      const response = await axios.get(Config.url + "/order", {
-        headers: {
-          "Content-Type": "application/json",
-          business_id: businessID,
-        },
+      const response = await axios.patch(
+        `${Config.url}/order/${orderId}`,
+        updateFields,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            business_id: businessID,
+          },
+        }
+      );
+      onSuccess(response.data);
+      dispatch({
+        type: "UPDATE_ORDER_DATA_SUCCESS",
+        payload: response.data,
       });
-      const data = response;
-      dispatch({ type: typeData.GET_ORDER_DATA_SUCSESS, payload: data });
     } catch (error) {
       dispatch({
-        type: typeData.GET_CUSTOMER_DATA_ERROR,
+        type: "UPDATE_ORDER_DATA_ERROR",
         payload: error.response?.data || error.message,
       });
     }
@@ -404,4 +407,5 @@ export {
   updatePackageDataAction,
   deletePackageDataAction,
   getpackageCustomerDataAction,
+  updateOrderDataAction,
 };

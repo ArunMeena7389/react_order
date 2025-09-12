@@ -35,7 +35,7 @@ const DropdownComponent = ({
           onFocus={onFocus}
           disabled={disabled}
           required={required}
-          className={`custom-input-field ${selectClass}`}
+          className={`custom-input-field cursor-pointer ${selectClass}`}
         >
           <option value="" disabled>
             {placeholder}

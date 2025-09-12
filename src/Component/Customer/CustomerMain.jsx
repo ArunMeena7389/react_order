@@ -251,7 +251,7 @@ const CustomerMain = () => {
         addedCartData={addedCartData}
         handleAddClick={handleAddClick}
       />
-       <HotelAutoRadiusChecker/>
+      <HotelAutoRadiusChecker />
     </div>
   );
 };

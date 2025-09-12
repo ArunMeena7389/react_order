@@ -20,6 +20,7 @@ const BadgesComponent = ({
   NotificationCount = false,
   customClass = "",
   onClick,
+  title,
 }) => {
   const [textValue, setTextValue] = useState(text);
 
@@ -31,6 +32,7 @@ const BadgesComponent = ({
 
   return (
     <span
+      title={title}
       onClick={onClick}
       className={`inline-block rounded px-2 py-1 text-xs font-medium 
         ${badgeVariants[variant] || badgeVariants.primary} 

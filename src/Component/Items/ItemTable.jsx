@@ -38,7 +38,7 @@ const ItemTable = () => {
   ];
 
   const dispatch = useDispatch();
-  const selectorData = useSelector((state) => state.user.data);
+  const selectorData = useSelector((state) => state.menuList);
   const selectorDataTaste = useSelector((state) => state.taste.data);
   const dataItem = useMemo(() => selectorData.data || [], [selectorData.data]);
   const [ItemData, setItemData] = useState(dataItem);
