@@ -102,7 +102,6 @@ const CustomerVerfiedAccount = ({
                 order_status: "Ordered",
                 payment_status: "Pending",
                 order_time: nowTime.toLocaleString(),
-                order_accept: false,
               };
               dispatch(addOrderAction(orderPayload));
             }

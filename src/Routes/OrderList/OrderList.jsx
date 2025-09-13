@@ -168,7 +168,6 @@ const OrderList = () => {
       return {
         ...item,
         total_price: formatPrice(item?.total_price, "en-IN", "INR"),
-        order_accept: item.order_accept ? "Accepted" : "Pendding",
         action: (
           <div
             onClick={() => {
