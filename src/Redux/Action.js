@@ -391,6 +391,33 @@ const deletePackageDataAction = (id) => {
   };
 };
 
+const createTableAction = (datas, onSuccess) => {
+  return apiAction({
+    method: "post",
+    url: "/table/create",
+    payload: datas,
+    types: {
+      REQUEST: "CREATE_TABLE_REQUEST",
+      SUCCESS: "CREATE_TABLE_SUCCESS",
+      ERROR: "CREATE_TABLE_ERROR",
+    },
+    onSuccess,
+  });
+};
+
+const getTableAction = (onSuccess) => {
+  return apiAction({
+    method: "get",
+    url: "/table", // backend route
+    types: {
+      REQUEST: "GET_TABLES_REQUEST",
+      SUCCESS: "GET_TABLES_SUCCESS",
+      ERROR: "GET_TABLES_ERROR",
+    },
+    onSuccess,
+  });
+};
+
 export {
   selectTasteAction,
   getmenueDataAction,
@@ -408,4 +435,6 @@ export {
   deletePackageDataAction,
   getpackageCustomerDataAction,
   updateOrderDataAction,
+  createTableAction,
+  getTableAction,
 };

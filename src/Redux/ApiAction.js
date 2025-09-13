@@ -18,7 +18,7 @@ export const apiAction = ({
 
     try {
       const isFormData = payload instanceof FormData;
-
+      const businessID = localStorage.getItem("businessID");
       const response = await instance({
         method,
         url: `${Config.url}${url}`,
@@ -27,6 +27,7 @@ export const apiAction = ({
           ...(isFormData
             ? {} // don’t force Content-Type (axios sets automatically)
             : { "Content-Type": "application/json" }),
+          business_id: businessID || "",
           ...headers,
         },
       });

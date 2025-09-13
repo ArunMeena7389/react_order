@@ -2,16 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import "./customer.scss";
 import BottomPopupFilter from "./BottomPopupFilter";
-import { useLocation } from "react-router-dom";
 import BottomPopupAddCart from "./BottomPopupAddCart";
 import InputComponent from "../../Ui-Elements/Input/InputComponent";
 import SvgIcon from "../../SvgIcon/SvgIcon";
 import BadgesComponent from "../../Ui-Elements/Badges/BadgesComponent";
 import { formatPrice } from "../../Common/utils";
-import HotelAutoRadiusChecker from "../../Common/HotelAutoRadiusChecker";
 
 const CustomerMain = () => {
-  const location = useLocation();
   const customerMenuData = useSelector((state) => state?.customerMenu?.data);
   const customerPackageData = useSelector(
     (state) => state?.packageCustomer?.data
@@ -24,13 +21,7 @@ const CustomerMain = () => {
   const [openFilterPopup, setOpenFilterPopup] = useState(false);
   const [openAddCartPopup, setOpenAddCartPopup] = useState(false);
   const [addedCartData, setAddedCartData] = useState([]);
-  const [isShowPackage, setIsShowPacka] = useState(true);
-  const businessID = location.state?.businessID;
-
-  useEffect(() => {
-    // dispatch(getCustomerDataAction(businessID));
-    // eslint-disable-next-line
-  }, [businessID]);
+  const [isShowPackage, setIsShowPacka] = useState(false);
 
   useEffect(() => {
     const filterCartData = dataItemMenu.filter((item) => item.count);
@@ -251,7 +242,6 @@ const CustomerMain = () => {
         addedCartData={addedCartData}
         handleAddClick={handleAddClick}
       />
-      <HotelAutoRadiusChecker />
     </div>
   );
 };

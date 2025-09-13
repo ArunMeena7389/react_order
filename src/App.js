@@ -10,6 +10,7 @@ import CustomFallbackUi from "./Common/CustomFallbackUI";
 import Profile from "./Component/Profile/Profile";
 import Package from "./Routes/Package/Package";
 import AddEditPacka from "./Routes/Package/AddEditPacka";
+import TableSeating from "./Component/TableSeating/TableSeating";
 const ViewStream = lazy(() => import("./Stream/ViewStream"));
 const AddStream = lazy(() => import("./Stream/AddStream"));
 const ItemTable = lazy(() => import("./Component/Items/ItemTable"));
@@ -120,7 +121,16 @@ const AppContent = () => {
                     </PrivateRoute>
                   }
                 />
+                                <Route
+                  path="/merchant/table"
+                  element={
+                    <PrivateRoute>
+                      <TableSeating />
+                    </PrivateRoute>
+                  }
+                />
               </Route>
+              
             )}
 
             {/* Redirect unknown paths */}

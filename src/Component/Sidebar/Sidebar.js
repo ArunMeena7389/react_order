@@ -9,6 +9,7 @@ const RouteList = [
   { id: "4", name: "Setting", redirect_url: "/merchant/setting" },
   { id: "5", name: "Customer View", redirect_url: "/customer" },
   { id: "6", name: "Camera", redirect_url: "/add" },
+  {id:"7",name:"Tables",redirect_url:"/merchant/table"}
 ];
 
 const Sidebar = () => {
